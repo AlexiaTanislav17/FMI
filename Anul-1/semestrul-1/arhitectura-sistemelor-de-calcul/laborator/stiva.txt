@@ -1,0 +1,38 @@
+ site-ul de instalat gdb-ul ala peda: https://github.com/longld/peda
+ ------- git clone https://github.com/longld/peda.git ~/peda
+ ------- echo "source ~/peda/peda.py" >> ~/.gdbinit
+ ------- echo "DONE! debug your program with gdb and enjoy"
+
+
+ ----------------- Push-uri si pop-uri egale altfel ia foc -------------
+
+.data
+.text
+
+proc1:
+pushl $label
+pop %eax
+; push-uri si pop-uri in numar egal
+
+ret  
+; stiva arata ca la intrare in procedura,
+; in varf se afla deci adresa instructiunii mov 1, eax
+; salt la adresa din varf
+
+.global main
+
+main:
+mov $1, %eax
+pusha
+call proc1
+popa 
+mov %eax, %ebx
+; este adaugata pe stiva adresa lui mov 1, eax
+; salt la proc
+
+label:
+mov $2, %ebx
+
+mov $1, %eax
+xor %ebx, %ebx
+int $0x80

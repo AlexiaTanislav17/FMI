@@ -1,0 +1,34 @@
+.data
+#date in memorie
+
+x: .long 15  #int x = 15
+y: .byte 65  #char x = 65; char  y ='a'
+z: .asciz "Hello, 132!\n"  #string z ="hello ...."
+#x: 00 00 00 0f
+#y: 41
+#z: H e l l o , 1 3 2 ! \n \0
+
+.text
+
+.global main
+
+main:    			
+#inceputul programului propriu-zis  -  instructiunile
+mov $4, %eax
+mov %eax, x
+mov %eax, %ebx
+
+movl $4, x
+
+mov $4, %eax
+mov $1, %ebx  #     =0      =1      =2
+mov $z, %ecx
+mov $13, %edx
+
+int $0x80
+
+mov $1, %eax
+mov $0, %ebx
+int $0x80  #return 0
+	
+

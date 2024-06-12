@@ -1,0 +1,96 @@
+.data
+	x: .space 4
+	suma: .space 4
+	nou_x: .space 4
+	formatS: .asciz "%d"
+	formatPerf: .asciz "Numarul %d este perfect.\n"
+	formatNu: .asciz "Numarul %d NU este perfect.\n"
+.text
+
+perfect:
+	pushl %ebp
+	movl %esp, %ebp
+	
+	movl $0, suma
+	
+	xorl %edx, %edx
+	movl 8(%ebp), %eax
+	movl $2, %ecx
+	divl %ecx
+	movl %eax, nou_x
+	
+	movl $1, %ecx
+	
+	for_suma:
+		cmp  nou_x, %ecx
+		jg done
+		
+		movl 8(%ebp), %eax
+		xorl %edx, %edx
+		divl %ecx
+		
+		cmp $0, %edx
+		je adauga_div
+		
+		cont:
+			incl %ecx
+			jmp for_suma
+		
+		adauga_div:
+			addl %ecx, suma
+			jmp cont
+	done:
+		movl suma, %ecx
+		cmp 8(%ebp), %ecx
+		je modif
+		jne stop
+	modif:
+		movl $0, %eax
+		jmp stop
+	stop:
+		popl %ebp
+		ret
+	
+
+.global main
+
+main:
+	pushl $x
+	pushl $formatS
+	call scanf
+	addl $8, %esp
+	
+	movl $1, %eax       # ca un ok
+	
+	pushl x
+	call perfect
+	
+	cmp $0, %eax
+	je DA
+	jne NU
+	
+DA:
+	pushl x
+	pushl $formatPerf
+	call printf
+	addl $8, %esp
+	
+	pushl $0
+	call fflush
+	addl $4, %esp
+	
+	jmp et_exit
+NU:
+	pushl x
+	pushl $formatNu
+	call printf
+	addl $8, %esp
+	
+	pushl $0
+	call fflush
+	addl $4, %esp
+	
+et_exit:
+	mov $1, %eax
+	xorl %ebx, %ebx
+	int $0x80
