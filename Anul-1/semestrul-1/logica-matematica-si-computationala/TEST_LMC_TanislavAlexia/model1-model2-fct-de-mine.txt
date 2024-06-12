@@ -1,0 +1,27 @@
+% CRESCATOR
+% consec([]).
+% consec([_]).
+% consec([H1|[H2|T]]):- H1<H2, consec([H2|T]).
+
+
+% DESCRESCATOR
+% consec([]).
+% consec([_]).
+% consec([H1|[H2|T]]):- H1>H2, consec([H2|T]).
+
+
+
+
+% STRICT MAI MARE CA SALARIU PRAG
+% lista_angajati([],_,[]).
+% lista_angajati([angajat(Nume,Salariu)|T1], Prag, [Nume|T2]):- Salariu>Prag, lista_angajati(T1,Prag, T2).
+% lista_angajati([angajat(_,Salariu)|T1], Prag, T2):- Salariu=<Prag, lista_angajati(T1,Prag, T2).
+
+% STRICT MAI MIC CA SALARIU PRAG
+% lista_angajati([],_,[]).
+% lista_angajati([angajat(Nume,Salariu)|T1], Prag, [Nume|T2]):- Salariu<Prag, lista_angajati(T1,Prag, T2).
+% lista_angajati([angajat(_,Salariu)|T1], Prag, T2):- Salariu>=Prag, lista_angajati(T1,Prag, T2).
+
+% lista_angajati(ListaAngajati, SalariuPrag, ListaRezultat)
+% lista_angajati([angajat(ion, 1000), angajat(mirela, 4000),angajat(mihai, 1200), angajat(ioana, 3500)], 2000, R).
+% R = [mirela, ioana]

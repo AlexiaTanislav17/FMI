@@ -1,0 +1,31 @@
+ex1:
+
+lista_puncte([],_,[]).
+lista_puncte([punct(X,Y)|T1], Val, [punct(X,Y)|Lrez]):- Y>Val, lista_puncte(T1, Val, Lrez).
+lista_puncte([punct(_,Y)|T1], Val, Lrez):- Y=<Val, lista_puncte(T1, Val, Lrez).
+
+% varinata mea
+lista_puncte([],_,[]).
+lista_puncte([punct(X,Y)|T1], Val, [punct(X,Y)|T2]):- Y>Val, lista_puncte(T1,Val,T2).
+lista_puncte([punct(_,Y)|T1], Val, T2):- Y=<Val, lista_puncte(T1,Val,T2).
+
+ex2:
+
+dropN(L, R, N) :- append(R, L1, L), length(L1, N).
+
+
+% varianta mea
+dropN([],[],0).
+dropN(L,R,N):- append(R,S,L), length(S,N).
+
+ex3:
+
+rmdn(Phi, Phi) :- atom(Phi).
+rmdn(non(Phi), non(Phi)) :- atom(Phi).
+rmdn(non(non(Phi)), Psi) :- rmdn(Phi, Psi).
+rmdn(non(si(Phi,Psi)),non(A)) :- rmdn(si(Phi,Psi),A).
+rmdn(non(sau(Phi,Psi)),non(A)) :- rmdn(sau(Phi,Psi),A).
+rmdn(non(imp(Phi,Psi)),non(A)) :- rmdn(imp(Phi,Psi),A).
+rmdn(si(Phi, Psi), si(Phi1, Psi1)) :- rmdn(Phi, Phi1), rmdn(Psi, Psi1).
+rmdn(sau(Phi, Psi), sau(Phi1, Psi1)) :- rmdn(Phi, Phi1), rmdn(Psi, Psi1).
+rmdn(imp(Phi, Psi), imp(Phi1, Psi1)) :- rmdn(Phi, Phi1), rmdn(Psi, Psi1).
