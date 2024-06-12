@@ -1,0 +1,35 @@
+# ex 6
+# n=int(input("n = "))
+# frecv=[0,0,0,0,0,0,0,0,0,0]
+# nr=0
+# while n:
+#     c=n%10
+#     frecv[c]=frecv[c]+1
+#     n=n//10
+# for c in range(len(frecv)-1,-1,-1):
+#     if frecv[c]!=0:
+#         for i in range(frecv[c]):
+#             nr=nr*10+c
+# print(nr)
+
+# ex 7
+# x=int(input("lungime saritura: "))
+# n=int(input("la fiecare n sarituri: "))
+# p=int(input("procent micsorare saritura: "))
+# m=int(input("nr sarituri: "))
+# d=0
+# for i in range(1,m+1):
+#     d=d+x
+#     if i%n==0:
+#         x=x-((p*x)//100)
+#         print(x)
+# print(d)
+# sa t iau mortii in pl
+
+# ex 8
+# n=input("cuvant: ")
+# litera=n[0]
+# s=n.replace(litera,"")
+# print(s)
+
+# ex 9

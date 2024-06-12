@@ -1,0 +1,787 @@
+# ex 1
+# n=int(input("n = "))
+# copie=n
+# inv=0
+# while n:
+#     inv=inv*10+n%10
+#     n=n//10
+# if copie==inv:
+#     print("e palindrom")
+# else:
+#     print("nu e palindrom")
+import re
+import string
+
+
+# ex 2
+# n=int(input("n= "))
+# ieri=float(input("curs valutar ieri = "))
+# maxd=0
+# i=1
+# for i in range(n):
+#     azi=float(input("curs valutar azi ="))
+#     if azi>ieri:
+#         d=azi-ieri
+#         if d>maxd:
+#             maxd=d
+#     ieri=azi
+# print("max de crestere este: ", round(maxd, 2))
+
+
+# ex 3
+# L=int(input("lungime = "))
+# l=int(input("latime = "))
+# def cmmdc(lungime,latime):
+#     while latime!=0:
+#         rest=lungime%latime
+#         lungime=latime
+#         latime=rest
+#     return lungime
+# latura=cmmdc(L,l)
+# ariePodea=L*l
+# ariePlacuta=latura*latura
+# nrPlacute=ariePodea/ariePlacuta
+# print("latura placutelor este: ", latura)
+# print("nr de placute minime este: " , round(nrPlacute))
+
+# ex 4
+# n=int(input("n = "))
+# max=int(input("x = "))
+# max2=int(input("x = "))
+# i=2
+# for i in range(n):
+#     x=int(input("x = "))
+#     if x>max:
+#         max2=max
+#         max=x
+#     if x>max2 and x<max:
+#         max2=x
+# print("maximele: ", max, max2)
+
+# ex 5
+# a=int(input("a = "))
+# b=int(input("b = "))
+# c=int(input("c = "))
+# delta=b**2-4*a*c
+# if delta>0:
+#     x1=(-b-0.5*delta)/(2*a)
+#     x2=(-b+0.5*delta)/(2*a)
+#     print(x1,x2,sep='si')
+# elif delta==0:
+#     x=b/(2*a)
+#     print(x)
+# else:
+#     print("nu exista")
+
+# ex 6
+# n=int(input("n = "))
+# frecv=[0,0,0,0,0,0,0,0,0,0]
+# nr=0
+# while n:
+#     c=n%10
+#     frecv[c]=frecv[c]+1
+#     n=n//10
+# for c in range(len(frecv)-1,-1,-1):
+#     if frecv[c]!=0:
+#         for i in range(frecv[c]):
+#             nr=nr*10+c
+# print(nr)
+
+# ex 7
+# x=int(input("lungime saritura: "))
+# n=int(input("la fiecare n sarituri: "))
+# p=int(input("procent micsorare saritura: "))
+# m=int(input("nr sarituri: "))
+# d=0
+# for i in range(1,m+1):
+#     d=d+x
+#     if i%n==0:
+#         x=x-((p*x)//100)
+#         print(x)
+# print(d)
+# sa t iau mortii in pl
+
+# ex 8
+# n=input("cuvant: ")
+# litera=n[0]
+# s=n.replace(litera,"")
+# print(s)
+
+# ex 9
+# subsir=input("subsir de cautat: ")
+# sir=input("sir: ")
+# varianta 1
+# if subsir in sir:
+#     n=sir.count(subsir)
+#     contor=0
+#     while n:
+#         index=sir.find(subsir,contor)
+#         print(index)
+#         contor=index+len(subsir)
+#         n=n-1
+
+
+# ex 10
+# s=input("cuvant: ")
+# i=0
+# j=len(s)
+# while i<=j:
+#     print(s[i:j].center(30))
+#     i=i+1
+#     j=j-1
+
+# ex 11
+# s=input("sir: ")
+# subsir=input("subsir: ")
+# subsirNou=input("subsir nou: ")
+# # a
+# # s=s.replace(subsir,subsirNou)
+# # print(s)
+# # b
+# i=0
+# if s.count(subsir)>2:
+#     while i<2:
+#         s=s.replace(subsir,subsirNou)
+#         print(s)
+# else:
+#     print("are prea multe greseli")
+
+# ex 12
+# sir=" "+input("sir: ")+" "
+# cuv=input("cuvant: ")
+# cuvNou=input("cuvant nou: ")
+# sir=sir.replace(cuv,cuvNou)
+# print(sir)
+
+# ex 13
+# a
+# s=input("cuvant codificta: ")
+# sNou=""
+# j=c=0
+# for i in range(len(s)):
+#     if s[i].isalpha():
+#         nr=s[j:i]
+#         sNou=sNou+s[i]*int(nr)
+#         j=i+1
+# print(sNou)
+# b
+# s=input("cuvant decodificta: ")+" "
+# sNou=""
+# j=s[0]
+# c=0
+# for i in range(len(s)):
+#     if s[i]!=j:
+#         nr=len(s[c:i])
+#         sNou=sNou+str(nr)+j
+#         c=i
+#         j=s[c]
+# print(sNou)
+
+# ex 14
+# s=input("text: ").split()
+# suma=0
+# print(s)
+# for i in range(len(s)):
+#     if s[i].isdigit():
+#         print(s[i])
+#         suma=suma+int(s[i])
+# print(suma)
+
+# ex 15
+# s=input("nume-prenume: ").split()
+# corect=0
+# for i in range(len(s)):
+#     if len(s[i])>=3:
+#         if "-" in s[i]:
+#             prenume=s[i].split("-")
+#             if prenume[0][0].isupper() and prenume[1][0].isupper() and len(prenume)==2:
+#                 corect+=1
+#         else:
+#             if s[i][0].isupper():
+#                 corect+=1
+# if corect==2:
+#     print("e bun numele")
+# else:
+#     print("nu e bun numele")
+
+# ex 16
+# a
+# s=input("sir: ")
+# k=int(input("k = "))
+# sCriptat=""
+# for i in range(len(s)):
+#     if k+ord(s[i])>ord("z") and ord(s[i])>=ord("a") and ord(s[i])<=ord("z"):
+#         c=k+ord(s[i])-ord("z")+ord("a")
+#         sCriptat=sCriptat+chr(c)
+#     elif k+ord(s[i])>ord("Z") and ord(s[i])>=ord("A") and ord(s[i])<=ord("Z"):
+#         c=k+ord(s[i])-ord("Z")+ord("A")
+#         sCriptat = sCriptat + chr(c)
+#     else:
+#         c = k + ord(s[i])
+#         sCriptat = sCriptat + chr(c)
+# print(sCriptat)
+# b
+# s=input("sir: ")
+# k=int(input("k = "))
+# sCriptat=""
+# for i in range(len(s)):
+#     if ord(s[i])-k<ord("a") and ord(s[i])>=ord("a") and ord(s[i])<=ord("z"):
+#         c=ord(s[i])-k+ord("z")-ord("a")
+#         sCriptat=sCriptat+chr(c)
+#     elif ord(s[i])-k<ord("A") and ord(s[i])>=ord("A") and ord(s[i])<=ord("Z"):
+#         c=ord(s[i])-k+ord("Z")-ord("A")
+#         sCriptat = sCriptat + chr(c)
+#     else:
+#         c = ord(s[i])-k
+#         sCriptat = sCriptat + chr(c)
+# print(sCriptat)
+
+# ex 17
+# s1=input("cuv 1: ")
+# s2=input("cuv 2: ")
+# corect=0
+# if len(s1)==len(s2):
+#     for i in range(len(s1)):
+#         c1=s1.count(s1[i])
+#         if s1[i] in s2:
+#             c2=s2.count(s2[i])
+#             if c1==c2:
+#                 corect=1
+#             else:
+#                 corect=0
+#                 break
+#         else:
+#             corect=0
+#             break
+# if corect==0:
+#     print("nu anagrame")
+# else:
+#     print("amagrame")
+
+# ex 18
+# a
+# text=input("text: ")
+# vocale="aeiouAEIOU"
+# textNou=""
+# i=0
+# while i<=len(text)-3:
+#     if text[i] in vocale:
+#         textNou=textNou+text[i]
+#         i=i+3
+#     else:
+#         textNou = textNou + text[i]
+#         i=i+1
+# print(textNou)
+
+
+# ex 19
+# L=[chr(x) for x in range(ord("a"),ord("z")+1)]
+# print(L)
+
+# ex 20
+# l=[-x if x%2==1 else x for x in range(1,int(input("n= ")))]
+# print(l)
+
+# ex21
+# l=[int(x) for x in input("val: ").split()]
+# l2=[x for x in l if x%2==1]
+# print(l2)
+
+# ex 24
+# l=[int(x) for x in input("val: ").split()]
+# l2=[l[x] for x in range(len(l)) if x%2==l[x]%2]
+# print(l2)
+
+# ex 25
+# l=[int(x) for x in input("val: ").split()]
+# l2=[(l[x],l[x+1]) for x in range(len(l)-1)]
+# print(l2)
+
+# ex 26
+# def functie(n):
+#     l=[[f"{x}*{y}={x*y}" for x in range(n)] for y in range(n)]
+#     print(l)
+# functie(3)
+
+# ex 27
+# sir=input("sir: ")
+# l=[sir[x:]+sir[:x] for x in range(len(sir))]
+# print(l)
+
+# ex 28
+# def functie(n):
+#     l=[[y for x in range(y)] for y in range(n)]
+#     print(l)
+# functie(6)
+
+# ex 29
+# l=[int(x) for x in input("valori: ").split()]
+# print(sorted(l))
+
+# ex 30
+# l=[x for x in input("valori: ").split()]
+# print(sorted(l, key = (lambda x : x[::-1])))
+
+# ex 31
+# l=[int(x) for x in input("valori: ").split()]
+# print(sorted(l, key = lambda x: len(str(x)), reverse=True))
+
+# ex 32
+# l=[int(x) for x in input("valori: ").split()]
+# print(sorted(l, key=lambda x: len(set(str(x)))))
+
+# ex 33
+# l=[int(x) for x in input("val: ").split()]
+# print(sorted(l))
+
+# ex 34
+# l1=[int(x) for x in input("valori: ").split()]
+# l2=[int(x) for x in input("valori: ").split()]
+# i=0
+# while i in range(len(l1)):
+#     if i%2==0:
+#         l1[i]=l2[i]
+#     i=i+1
+# print(l1)
+
+# ex 35
+# l1=[int(x) for x in input("valori: ").split()]
+# i1=l1.index(0)
+# l1.remove(0)
+# i2=l1.index(0)
+# l1.remove(0)
+# for i in l1[i1:i2+1]:
+#     l1.remove(i)
+# print(l1)
+
+# ex 36
+# l1=[int(x) for x in input("valori: ").split()]
+# for i in l1:
+#     if i==0:
+#         l1.remove(i)
+# n=len(l1)-1
+# if l1[n]==0:
+#     print("h")
+#     l1.remove(0)
+# print(l1)
+
+# ex 37
+# L=[1,2,45,67,33,456,3,23,12,60,45]
+# n=len(L)
+# k=3
+# stg = 0
+# mins = sum(L)
+# s=0
+# el1 = 0
+# el2 = 0
+# dr=stg+k
+# while dr<=n:
+#     s = sum(L[stg:dr])
+#     if s<mins:
+#         mins=s
+#         el1 = stg
+#         el2 = dr
+#     dr +=1
+#     stg +=1
+# for i in L[el1:el2]:
+#     L.remove(i)
+# print(mins)
+# print(L)
+
+# ex 38
+# l=[1,2,2,2,3,3,45,67,67,67,89,900]
+# m=set(l)
+# l=list(m)
+# print(l)
+
+# # ex 39
+# l = [2, 3.5, -9, -7, 4.6, 33, -5.6, -92, -4]
+# i=0
+# while i<len(l):
+#     if l[i]<0:
+#         l.insert(i+1,0)
+#         i=i+2
+#     else:
+#         i=i+1
+# print(l)
+
+# ex 40
+# prop=input("prpo: ").split()
+# l=sorted(prop, key = lambda x : len(x), reverse=True)
+# print(l)
+
+# ex 41
+# def sumacfr(x):
+#     suma = 0
+#     while x:
+#         suma = suma + int(x) % 10
+#         x = int(x) / 10
+#     return suma
+# L = input("sir nr: ").split()
+# print(sorted(L,key = lambda x: sumacfr(x)))
+
+# # ex 42
+# n = int(input("n= "))
+# studenti = []
+# for i in range(n):
+#     linie = input("elev: ").split()
+#     nume = linie[0]
+#     prenume = linie[1]
+#     grupa = int(linie[2])
+#     note = [int(x) for x in linie[3:]]
+#     treceSauNu = 0
+#     for nota in note:
+#         if nota > 4:
+#             treceSauNu += 1
+#     if treceSauNu == len(note):
+#         promovare=True
+#     else:
+#         promovare=False
+#     studenti.append([nume, prenume, grupa, note, promovare])
+# print(studenti)
+# studenti.sort(key=lambda x:x[2])
+# print(studenti)
+# print(sorted(studenti,key=lambda x:x[0]))
+# studenti.sort(key=lambda x: (x[2], not x[4], -x[6], x[0]))  # asa testezi pt mai multe conditii cu prioritate
+# print(studenti)
+
+# ex 45
+# def sortare_personalizata(nr):
+#     return (-nr if nr % 2 == 0 else nr,)
+# numere = [7, 2, 9, 4, 1, 8, 6, 3, 5]
+# rezultat = sorted(numere, key=sortare_personalizata)
+# print(rezultat)
+
+# ex 46
+# # Citirea dimensiunilor matricei
+# m, n = map(int, input("Introduceți numărul de linii și coloane (m n): ").split())
+#
+# # Citirea matricei
+# matrice = [list(map(int, input(f"Introduceți elementele pentru linia {i + 1}: ").split())) for i in range(m)]
+#
+# # Construirea matricei transpuse utilizând comprehensiune
+# matrice_transpusa = [[matrice[j][i] for j in range(m)] for i in range(n)]
+#
+# # Afișarea matricei transpuse
+# print("Matricea transpusă:")
+# for linie in matrice_transpusa:
+#     print(" ".join(map(str, linie)))
+
+# ex 47
+# # Citirea dimensiunilor matricei
+# m, n = map(int, input("Introduceți numărul de linii și coloane (m n): ").split())
+#
+# # Citirea matricei
+# matrice = [list(map(int, input(f"Introduceți elementele pentru linia {i + 1}: ").split())) for i in range(m)]
+#
+# # Ordonați matricea crescător după prima coloană
+# matrice.sort(key=lambda x: x[0])
+#
+# # Afișați matricea obținută
+# print("Matricea ordonată crescător după prima coloană:")
+# for linie in matrice:
+#     for element in linie:
+#         print(f"{element:5}", end="")
+#     print()
+
+# ex 48
+# def generate_triangle(n):
+#     triangle = [[1]]
+#     for _ in range(1, n):
+#         row = [1] + [triangle[-1][i] + triangle[-1][i + 1] for i in range(len(triangle[-1]) - 1)] + [1]
+#         triangle.append(row)
+#     return triangle
+#
+# def print_pascal_triangle(triangle):
+#     max_digit_width = len(str(triangle[-1][-1])) + 1
+#     for row in triangle:
+#         for element in row:
+#             print(f"{element:{max_digit_width}}", end="")
+#         print()
+#
+# # Citirea valorii n
+# n = int(input("Introduceți numărul natural n (>2): "))
+#
+# # Generarea și afișarea triunghiului lui Pascal
+# triangle = generate_triangle(n)
+# print_pascal_triangle(triangle)
+
+# ex 49
+# def ciur_eratostene(n):
+#     is_prime = [True] * (n + 1)
+#     is_prime[0] = is_prime[1] = False
+#
+#     for i in range(2, int(n**0.5) + 1):
+#         if is_prime[i]:
+#             for j in range(i * i, n + 1, i):
+#                 is_prime[j] = False
+#
+#     return [num for num in range(n + 1) if is_prime[num]]
+#
+# # Citirea valorii n
+# n = int(input("Introduceți numărul natural n: "))
+#
+# # Afișarea numerelor prime până la n
+# prime_numbers = ciur_eratostene(n)
+# print("Numere prime până la", n, ":", prime_numbers)
+
+# ex 50
+# def reuneste_doua_multimi(multime1, multime2):
+#     reunire = []
+#     i = j = 0
+#
+#     while i < len(multime1) and j < len(multime2):
+#         if multime1[i] < multime2[j]:
+#             reunire.append(multime1[i])
+#             i += 1
+#         elif multime1[i] > multime2[j]:
+#             reunire.append(multime2[j])
+#             j += 1
+#         else:
+#             reunire.append(multime1[i])
+#             i += 1
+#             j += 1
+#
+#     # Adăugăm elementele rămase, dacă există
+#     reunire.extend(multime1[i:])
+#     reunire.extend(multime2[j:])
+#
+#     return reunire
+#
+# def intersecteaza_doua_multimi(multime1, multime2):
+#     intersectie = []
+#     i = j = 0
+#
+#     while i < len(multime1) and j < len(multime2):
+#         if multime1[i] < multime2[j]:
+#             i += 1
+#         elif multime1[i] > multime2[j]:
+#             j += 1
+#         else:
+#             intersectie.append(multime1[i])
+#             i += 1
+#             j += 1
+#
+#     return intersectie
+#
+# # Citirea mulțimilor ordonate crescător
+# multime1 = list(map(int, input("Introduceți elementele pentru prima mulțime: ").split()))
+# multime2 = list(map(int, input("Introduceți elementele pentru a doua mulțime: ").split()))
+#
+# # Reuniunea și intersecția
+# reuniune = reuneste_doua_multimi(multime1, multime2)
+# intersectie = intersecteaza_doua_multimi(multime1, multime2)
+#
+# # Afișarea rezultatelor
+# print("Reuniunea:", reuniune)
+# print("Intersecția:", intersectie)
+
+# ex  51
+# def fuct(*fisier):
+#     d={}
+#     for i in fisier:
+#         f=open(i)
+#         l=f.read().split()
+#         for cuv in l:
+#             if cuv not in d:
+#                 d[cuv]=1
+#             else:
+#                 d[cuv]+=1
+#     f.close()
+#     return d
+# d=fuct("unu.txt","doi.txt")
+# print(d)
+
+# ex 52
+# d=fuct("unu.txt","doi.txt")
+# d=sorted(d.items())
+# print(d)
+
+# ex 53
+# d=fuct("unu.txt","doi.txt")
+# d=sorted(d.items(),key=lambda x: -x[1])
+# print(d)
+
+# ex 54
+# d=fuct("unu.txt","doi.txt")
+# d=sorted(d.items())
+# max=0
+# for x in d:
+#     if x[1]>max:
+#         max=x[1]
+#         m=x[0]
+# sau
+# x=max(x[1] for x in d)
+# for i in range(len(d)):
+#     if d[i][1]==x:
+#         m=d[i][0]
+#         break
+# print(m)
+
+# ex 55
+# p=int(input("p="))
+# f=open(input("fisier: "))
+# d={}
+# s=f.read().split()
+# for cuv in s:
+#     k=len(cuv)-p
+#     if cuv[k:] not in d:
+#         d[cuv[k:]]=[cuv]
+#     else:
+#         d[cuv[k:]].append(cuv)
+# g=open(input("fisier: "),"a")
+# for i in d:
+#     for j in range(len(d[i])):
+#         g.write(f"{d[i][j]} ")
+#     g.write("\n")
+
+# ex 56
+# import re
+# f=open(input("fisier: "))
+# s=f.read()
+# s=re.split(r'[*=\n]',s)
+# c=1
+# k=0
+# g=open(input("fisier: "),"a")
+# i=0
+# while i<len(s)-3:
+#     c=int(s[i])*int(s[i+1])
+#     r=int(s[i+2])
+#     if c==r:
+#         g.write(f"{s[i]}*{s[i+1]}={r} corect")
+#     else:
+#         g.write(f"{s[i]}*{s[i + 1]}={r} gresit {c}")
+#     g.write("\n")
+#     i+=3
+
+# ex 57
+# import random
+# f=open(input("fisier: "))
+# s=f.read().split()
+# g=open(input("fisier: "), "a")
+# i=0
+# while i<len(s)-1:
+#     caractereM=''.join(random.choice(string.ascii_uppercase) for i in range(1))
+#     caracterem = ''.join(random.choice(string.ascii_lowercase) for i in range(3))
+#     cfr=''.join(random.choice(string.digits) for i in range(4))
+#     parola=caractereM+caracterem+cfr
+#     s1=s[i].lower()
+#     s2=s[i+1].lower()
+#     g.write(f"{s1}.{s2}@s.unibuc.ro, {parola}")
+#     g.write("\n")
+#     i+=2
+
+# ex 58
+# def funct(l):
+#     lp=[]
+#     ln=[]
+#     for i in range(len(l)):
+#         if int(l[i])<0:
+#             ln.append(l[i])
+#         elif int(l[i])>0:
+#             lp.append(l[i])
+#     return ln,lp
+# f=open(input("fisier: "))
+# s=f.read().split()
+# g=open(input("fisier: "),"a")
+# g.write(str(funct(s)))
+# g.write("\n")
+
+# ex 59
+# f=open(input("fisier: "))
+# s=f.read().split("\n")
+# studenti = {}
+# for linie in s:
+#     i=linie.split()
+#     cnp = i[0]
+#     nume = i[1]
+#     prenume = i[2]
+#     note = [int(x) for x in i[3:]]
+#     studenti[cnp]=[nume,prenume,note]
+# print(studenti)
+#
+# def funct(cnp,d):
+#     if d[cnp][2][0]==10:
+#         return None
+#     else:
+#         d[cnp][2][0] +=1
+#         return d
+# print(funct("2402900000041", studenti))
+#
+# def f(cnp,note,d):
+#     d[cnp][2]+=note
+#     print(d[cnp][2])
+# f("2402900000041",[5,6], studenti)
+#
+# # def delt(cnp,d):
+# #     if cnp in d:
+# #         d[cnp]=None
+# #         print(d)
+# #     else:
+# #         return None
+# # delt("2402900000041",studenti)
+#
+# lista=list(studenti.values())
+# print(sorted(lista, key = lambda x: ( sum(x[2])/len(x[2]), x[0]), reverse=True))
+
+# ex 60
+# def citire():
+#     l=[int(x) for x in input("nr= ").split()]
+#     return l
+# l=citire()
+# print(l)
+#
+# def poz(s,x,i=0,j=None):
+#     if j==None:
+#         j=len(s)
+#     for k in range(len(s[i:j])):
+#         if s[k]>x:
+#             return k
+# c=0
+# for i in range(len(l)-1):
+#     t=poz(l,l[i],i)
+#     if t==i+1:
+#         c+=1
+# l2=sorted(l,reverse=True)
+# if c==len(l):
+#     print("nu")
+# elif l2==l:
+#     print("da")
+
+# ex 61
+# rez=0
+# def func(x,*l):
+#     global rez
+#     c=0
+#     for i in range(len(l)):
+#         if x in l[i]:
+#             c+=1
+#     rez = c
+# nr=func(3, [1, 5, 7], [3], [1, 8, 3])
+# print(rez)
+
+#ex 62
+# def func(*x):
+#     l=[0]*len(x)
+#     nr=0
+#     for i in range(len(x)):
+#         cfr=str(x[i])
+#         cfr2=list(cfr)
+#         l[i]=cfr2
+#     l=sorted(l,reverse=True)
+#     print(l)
+#     for i in range(len(x)):
+#         nr=nr*10+int(max(l[i]))
+#     return nr
+# print(func(2,3,56,23454,123,988))
+#
+# n=func(10,1,100,11171,1010,101)
+# lista=list(str(n))
+# if len(lista)==sum(int(x) for x in lista):
+#     print("da")
+# else:
+#     print("nu")
+
+
+
+

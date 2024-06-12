@@ -1,0 +1,106 @@
+# sub 1
+# def citire_numere(fisier):
+#     fisier = open(fisier)
+#     s=fisier.read().split("\n")
+#     l=[0]*len(s)
+#     i=0
+#     for linie in s:
+#         line=linie.split()
+#         nr=[int(x) for x in line]
+#         l[i]=nr
+#         i+=1
+#     return l
+#
+# def prelucrare_lista(l):
+#     l2=[]
+#     l3=[0]*len(l)
+#     for j in l:
+#         l2=l2+j
+#     c=min(l2)
+#     for lista in l:
+#         gata=1
+#         while gata:
+#             if c in lista:
+#                 lista.remove(c)
+#             else:
+#                 gata=0
+#     print(l)
+#     mini=len(l2)
+#     for lista in l:
+#         if len(lista)<mini:
+#             mini=len(lista)
+#     k=0
+#     for lista in l:
+#         lista=lista[:mini]
+#         l3[k]=lista
+#         k+=1
+#     return l3
+#
+# L=citire_numere(input("fisier: "))
+# k=int(input("k= "))
+# g=open(input("fisier: "), "a")
+# # for lista in L:
+# #     for i in lista:
+# #         if len(str(i))==2:
+# s=set(i for lista in L for i in lista if len(str(i))==2)
+# Lista=sorted(list(s),reverse=True)
+# for i in Lista:
+#     g.write(f"{i} ")
+#
+# l1=prelucrare_lista(L)
+# print(l1)
+# for lista in l1:
+#     for i in lista:
+#         print(i, end=" ")
+#     print()
+
+# sub 2
+d={}
+f=open(input("fisier: "))
+s=f.read().split("\n")
+for linie in s:
+    i=linie.split("%")
+    nume_cinematograf=i[0]
+    nume_film=i[1]
+    ore_difuzare=i[2].split()
+    if nume_cinematograf not in d:
+        d[nume_cinematograf]=[[nume_film,ore_difuzare]]
+    else:
+        d[nume_cinematograf].append([nume_film,ore_difuzare])
+
+def sterge_ore(d,cinema,film,ore):
+    for f in d[cinema]:
+        if film==f[0]:
+            for i in f[1]:
+                if i==ore:
+                    f[1].remove(i)
+                    return d[cinema]
+
+def cinema_film(d,ora_minima,ora_maxima,*nume):
+    lt=[]
+    k=0
+    for n in range(len(nume)):
+        for f in d[nume[n]]:
+            for i in nume[n][1]:
+                if i>ora_maxima and i<ora_minima:
+                    nume[n][1].remove(i)
+        lt=lt+[(d[nume[n]], nume, nume[n][1])]
+    return lt
+
+# asta nu merge nush ce ar trb sa fac acum
+
+print(d)
+# c=input("cinema: ")
+# f=input("film: ")
+# o=input("ora: ")
+# l=sterge_ore(d,c,f,o)
+# print(l)
+# print(d)
+l2=cinema_film(d,"14:00", "22:00","Cinema 1 ", "Cinema 2 ")
+print(l2)
+
+
+
+
+
+

@@ -1,0 +1,171 @@
+# exercitiu 1
+# s=input("nr este ")
+# s2=s.replace(s[0],"")
+# print("dupa stererea literei: '{s[0]}'' sirul obtinut este \"{s2}\" de lungime {len(s2)}")
+# s3="".join(s.split(s[0]))
+# print(s.split(s[0]))
+# print("dupa stererea literei: '{}'' sirul obtinut este \"{}\" de lungime {len(s2)}".format(s[0],s3,len(s3)))
+
+# exceritiu 3
+# s=input("cuvant= ")
+# for i in range(len(s)//2+len(s)%2):
+#     print(s[i: len(s) - i].center(len(s),"!"))
+
+# exercitiu 4
+# s=input("cuvant= ")
+# corect=input("sir corect= ")
+# gresit=input("sir gresit= ")
+# # subpct a
+# sNou=s.replace(gresit,corect)
+# print(sNou)
+#subpct b
+# greseli=s.count(gresit)
+# if greseli>2:
+#     print("are prea multe greseli")
+# else:
+#     print(sNou)
+
+# exercitiu 5
+# prop=input("prop= ")
+# s=input("cuvant= ")
+# t=input("cuvant= ")
+#
+# l=prop.split()
+# for i in range(len(l)):
+#     if l[i]==s:
+#         l[i]=t
+# print(l)
+# nou=" ".join(l)
+# print(nou)
+
+#exercitiu 6
+# subpct a
+# text=input("text codficat: ")
+# textNou=[]
+# c=0
+# for i in text:
+#     if i.isdigit():
+#         c=c*10+int(i)
+#     else:
+#         textNou.append(i*c)
+#         c=0
+# textFinal="".join(textNou)
+# print(textFinal)
+#subpct b
+# text=input("text decodficat: ")
+# textNou=""
+# c=1
+# for i in range(1,len(text)):
+#     if text[i]==text[i-1]:
+#         c=c+1
+#     else:
+#         textNou=textNou+ str(c) + text[i-1]
+#         c=1
+# textNou=textNou+ str(c) + text[-1]
+# print(textNou)
+
+# exercitiu 7
+# jurnal=input("text din jurnal: ")
+# suma=0
+# lista=jurnal.split()
+# for i in range(lista):
+#     if i.isdigit():
+#         suma=suma+int(i)
+# print(suma,"RON",' ')
+
+# exercitiu 8
+# nume=input("nume: ")
+# corect=0
+# numePrenume=nume.split()
+# for i in range(len(numePrenume)):
+#     if len(numePrenume[i])>=3:
+#         if numePrenume[i].isalpha():
+#             if ord(numePrenume[i][0])>63 and ord(numePrenume[i][0])<91:
+#                 corect=1
+#         else:
+#             if len(numePrenume[i])>=7:
+#                 cratima = numePrenume[i].find("-")
+#                 cratimaCareNuArTrbSaExiste = numePrenume[i].rfind("-")
+#                 if cratima == cratimaCareNuArTrbSaExiste:
+#                     if ord(numePrenume[i][0]) > 63 and ord(numePrenume[i][0]) < 91 and ord(numePrenume[i][cratima + 1]) > 63 and ord(numePrenume[i][cratima + 1]) < 91:
+#                         corect = 1
+#     else:
+#         corect=0
+#     if corect==0:
+#         print("nu este un nume complet corect")
+#         break
+# if corect==1:
+#     print("este un nume complet corect")
+
+# exercitiu 9
+# subpct a
+# text=input("text: ")
+# k=int(input("nr nat: "))
+# cuvinte=text.split()
+# for i in range(len(cuvinte)):
+#     for j in range(len(cuvinte[i])):
+#         if ord(cuvinte[i][j])>96 and ord(cuvinte[i][j])<123:
+#             if ord(cuvinte[i][j])+k>122:
+#                 cuvinte[i] = cuvinte[i][:j] + chr(ord(cuvinte[i][j]) + k - 25) + cuvinte[i][j+1:]
+#             else:
+#                 cuvinte[i] = cuvinte[i][:j] + chr(ord(cuvinte[i][j]) + k) + cuvinte[i][j+1:]
+#         elif ord(cuvinte[i][j])>64 and ord(cuvinte[i][j])<91:
+#             if ord(cuvinte[i][j])+k>122:
+#                 cuvinte[i] = cuvinte[i][:j] + chr(ord(cuvinte[i][j]) + k - 25) + cuvinte[i][j+1:]
+#             else:
+#                 cuvinte[i] = cuvinte[i][:j] + chr(ord(cuvinte[i][j]) + k) + cuvinte[i][j+1:]
+# noulText=" ".join(cuvinte)
+# print(noulText)
+# subpct b
+# textCodat=input("text codat: ")
+# k=int(input("nr nat: "))
+# cuvinte=textCodat.split()
+# for i in range(len(cuvinte)):
+#     for j in range(len(cuvinte[i])):
+#         if ord(cuvinte[i][j])>96 and ord(cuvinte[i][j])<123:
+#             if ord(cuvinte[i][j])-k<97:
+#                 cuvinte[i] = cuvinte[i][:j] + chr(25 + (ord(cuvinte[i][j]) - k)) + cuvinte[i][j+1:]
+#             else:
+#                 cuvinte[i] = cuvinte[i][:j] + chr(ord(cuvinte[i][j]) - k) + cuvinte[i][j+1:]
+#         elif ord(cuvinte[i][j])>64 and ord(cuvinte[i][j])<91:
+#             if ord(cuvinte[i][j])-k<65:
+#                 cuvinte[i] = cuvinte[i][:j] + chr(25 + (ord(cuvinte[i][j]) - k)) + cuvinte[i][j+1:]
+#             else:
+#                 cuvinte[i] = cuvinte[i][:j] + chr(ord(cuvinte[i][j]) - k) + cuvinte[i][j+1:]
+# noulText=" ".join(cuvinte)
+# print(noulText)
+
+# exercitiu 10
+# cuvant1 = input("primul cuvant: ")
+# cuvant2 = input("al doilea cuvant: ")
+# frecv1=[]
+# frecv2=[]
+# anagram=1
+# for i in range(0,25):
+#     nr1=cuvant1.count(chr(i+97))
+#     frecv1.append(nr1)
+#     nr2 = cuvant2.count(chr(i+97))
+#     frecv2.append(nr2)
+# for i in range(0,25):
+#     if frecv1[i]!=frecv2[i]:
+#         anagram=0
+#         print("nu sunt anagrame")
+#         break
+# if anagram==1:
+#     print("sunt anagrame")
+
+# exercitiu 11
+# subpct a
+
+
+
+
+
+
+
+
+
+
+
+
+

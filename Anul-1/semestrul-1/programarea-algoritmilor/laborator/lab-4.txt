@@ -1,0 +1,144 @@
+# DICTIONARE
+# import random
+# exercitiu 1
+# def frecv_cuv(*nume_fisiere):
+#     d = {}
+#     for nume in nume_fisiere:
+#         f = open(nume)
+#         L_cuv = f.read().split()
+#         for cuv in L_cuv:
+#             if cuv not in d:
+#                 d[cuv] = 1
+#             else:
+#                 d[cuv] += 1
+#         f.close()
+#     return d
+
+# exercitiu 2
+# d1 = frecv_cuv("cuvinte.in","cuvinte2.in")
+# print(d1)
+# print(d1.items())
+# print(sorted(d1))
+
+# exercitiu 3
+# d2 = frecv_cuv("cuvinte.in")
+# print(d2)
+# print(sorted(d2.items(), key = lambda t: -t[1]))  # pt descresc
+
+# exercitiu 4
+# d3 = frecv_cuv("cuvinte2.in")
+# print(d3)
+# print(sorted(d3.items(), key = lambda t: (-t[1], t[0]) )[0])
+
+# exercitiu 5
+# def frecv_cuv(*nume_fisiere):
+#     d = {}
+#     for nume in nume_fisiere:
+#         f = open(nume)
+#         L_cuv = f.read().split()
+#         for cuv in L_cuv:
+#             if cuv not in d:
+#                 d[cuv] = 1
+#             else:
+#                 d[cuv] += 1
+#             d[cuv] = d.get(cuv,0) + 1
+#         f.close()
+#     return d
+#
+# d = frecv_cuv("cuvinte.in","cuvinte2.in")
+# d1 = frecv_cuv("cuvinte.in")
+# d2 = frecv_cuv("cuvinte2.in")
+# s = sum([d1.get(cuv, 0) * d2.get(cuv, 0) for cuv in d.keys()])
+# s1 = sum([frecv ** 2 for frecv in d1.values()])** 0.5
+# s2 = sum([frecv ** 2 for frecv in d2.values()])** 0.5
+# rez = s/(s1+s2)
+# print(rez) # trb sa dea 0.79 mie nu mi da sa mi bag pl
+
+
+# FISIERE
+
+# exercitiu 1
+# with open("test.in", "r") as f:
+#     L = []
+#     nota = 1
+#     for linie in f:
+#         aux, res =linie.split("=")
+#         x, y = aux.split("*")
+#         if int(x)*int(y)==int(res):
+#             nota +=1
+#             L.append(f"{linie.strip()} Corect")
+#         else :
+#             L.append(f"{linie.strip()} Gresit {int(x)*int(y)}")
+#     L.append(f"Nota{nota}")
+#
+# with open("test.out","w") as g:
+#     g.write("\n".join(L))
+
+# exercitiu 2
+# import string
+# def generare_parola():
+#     litere_mari = random.choice(string.ascii_uppercase)
+#     litere_mici = ''.join(random.choices(string.ascii_lowercase, k=3))
+#     cifre = ''.join(random.choices(string.digits, k=4))
+#     return litere_mari + litere_mici + cifre
+#
+# def generare_email(nume, prenume):
+#     return f"{prenume.lower()}.{nume.lower()}@s.unibuc.ro"
+#
+# f = open("date.in")
+# email = []
+# for linie in f.readlines():
+#     nume, prenume = linie.strip().split(' ')
+#     email = generare_email(nume, prenume)
+#     parola = generare_parola()
+#     print(email)
+#     print(parola)
+
+
+# FUNCTII
+
+# exercitiu 1
+# def negative_pozitive(list):
+#     Lpoz = [x for x in list if x>=0]
+#     Lneg = [x for x in list if x<0]
+#     return Lpoz,Lneg
+#
+# nume = input("nume fisier: ")   # numere.txt
+# with open("numere.txt","r") as f:
+#     Lnr = [int(x) for x in f.read().split()]
+#     print(Lnr)
+#
+# Lneg,Lpoz = negative_pozitive(Lnr)
+#
+# with open(nume, "a") as g:
+#     g.write("\n" + " ".join([str(x) for x in sorted(Lneg)]))
+
+# exercitiu 2
+# def notaNoua(cnp,elevi):
+#     if cnp in elevi:
+#         elevi[cnp][2][0] += 1
+#         return elevi[cnp][2][0]
+#     else:
+#         return None
+# 
+# f = open("elevi.in")
+# elevi = {}
+# for linie in f.readlines():
+#     info = linie.split(" ")
+#     cnp = info[0]
+#     nume = info[1]
+#     prenume = info[2]
+#     note = list(map(int, info[3:]))  # map converteste secventa(in cazul meu elem unie liste/lista in int)
+#     elevi[cnp]=(nume,prenume,note)
+# print(elevi)
+# CNP = input("cnp: ")
+# notaNoua(CNP,elevi)
+# print(elevi)
+
+
+
+
+
+
+
+

@@ -1,0 +1,72 @@
+# METODA GREEDY
+
+# exercitiu 1 - cuburi
+# def citire():
+#     f=open("cuburi.txt")
+#     L=[]
+#     n=int(f.readline())
+#     for linie in f:
+#         lat,cul=linie.split()
+#         L.append((int(lat),cul))
+#     f.close()
+#     return n,L
+
+# def greedy(Lcuburi):
+#     Lcuburi.sort()
+#     Sol=[Lcuburi[0]]
+#     h=Lcuburi[0][0]
+#     for lat,cul in Lcuburi[1:]:
+#         if cul!=Sol[-1][1]:
+#             Sol.append((lat,cul))
+#             h+=lat
+#     return Sol,h
+
+# def afisare(Sol,h):
+#     g=open("turn.txt", "w")
+#     Lafisare=[]
+#     for cub in Sol:
+#         Lafisare.append("{} {}\n".format(*cub))
+#     Lafisare.append(f"\nInaltime totala: {h}")
+#     g.writelines(Lafisare)
+#     g.close()
+
+# n,Lcuburi=citire()
+# LTurn, hturn=greedy(Lcuburi)
+# print(LTurn,hturn)
+# afisare(LTurn,hturn)
+
+# exercitiu 2 - minimizarea intarzierii maxime a unor activitati
+# def citire():
+#     f=open("activitati.txt")
+#     L=[]
+#     n=int(f.readline())
+#     for linie in f:
+#         durata,termen=linie.split()
+#         L.append((int(durata),int(termen)))
+#     f.close()
+#     return L
+
+# def greedy(Lactivitati):
+#     Lactivitati.sort(key=lambda t: t[1])
+#     intazriere_max = 0
+#     t_curent = 0
+#     Sol =[] # start durata termen inatrziere
+#     for durata,termen in Lactivitati:
+#         intarziere = max(0,(t_curent+durata)) - t_curent
+#         if intazriere_max < intarziere:
+#             intazriere_max = intarziere
+#         Sol.append((t_curent,durata,termen,))
+#         t_curent += durata
+#     return Sol
+
+# def afisare(Sol,h):
+#     g=open("intarzieri.txt", "w")
+#     g.write("Interval\t Termen\t Intarziere\n")
+#     for start,durata,termen,intarzieri in Sol:
+#         g.write(f"({start}-->{start+durata})\t{termen}\t\t{intarzieri}\n")
+
+# L = citire()
+# print(L)
+# Sol,intarzieri_max = greedy(L)
+# print(Sol,intarzieri_max)
+# afisare(Sol,intarzieri_max)

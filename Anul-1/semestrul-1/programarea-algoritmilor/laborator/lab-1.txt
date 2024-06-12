@@ -1,0 +1,99 @@
+# exercitiu 1
+# n=int(input("n= "))
+# k=n
+# inv=0
+# while n!=0:
+#     inv=inv*10+n%10
+#     n=n//10
+# if k==inv:
+#     print("e palindrom")
+# else:
+#     print("nu e palindrom")
+
+# exercitiu 2
+# n=int(input("n= "))
+# m=0
+# ieri=float(input("ieri= "))
+# zi=1
+# i=1
+# while i<n:
+#     azi=float(input("azi= "))
+#     d=azi-ieri
+#     if m<d:
+#         m=d
+#         zi=1
+#     i=i+1
+#     ieri=azi
+# if m==0:
+#     print("nu a existat nicio crestere")
+# else:
+#     print("cresterea a fost de ",round(m,2))
+
+# exercitiu 3
+# L1=int(input("latura1= "))
+# L2=int(input("latura2= "))
+# def cmmdc(a,b):
+#     while b!=0:
+#         r=a%b
+#         a=b
+#         b=r
+#     return a
+#
+# if L1>L2:
+#     l=cmmdc(L1,L2)
+# else:
+#     l=cmmdc(L2,L1)
+#
+# ariePlacuta=l**2
+# arieBucatarie=L1*L2
+# nrPlacute=arieBucatarie/ariePlacuta
+
+# exercitiu 4
+# n=int(input("n= "))
+# max1=None
+# max2=None
+# for i in range(n):
+#     x=int(input("x= "))
+#     if max1<x:
+#         max1=x
+#     if max2<x and x<max1:
+#         max2=x
+# print(max1,max2,sep=' ')
+
+# exercitiu 5
+# a=int(input("a= "))
+# b=int(input("b= "))
+# c=int(input("c= "))
+# delta=b**2-4*a*c
+# if delta==0:
+#     x=b/(2*a)
+#     print(x)
+# if delta>0:
+#     x1=(-b-0.5*delta)/(2*a)
+#     x2=(-b+0.5*delta)/(2 * a)
+#     print(x1,x2,sep=' ')
+# if delta<0:
+#     print('nu are solutii')
+
+# exercitiu 6
+# cel mai mic si cel mai mare nr din cfr lui n
+# n=int(input('n= '))
+# arr=[0,0,0,0,0,0,0,0,0,0]
+# mare=0
+# mic=0
+# while n:
+#     cfr=int(n%10)
+#     arr[cfr]=arr[cfr]+1
+#     n=n/10
+# for i in range(9,0,-1):
+#     for j in range(arr[i]):
+#         mare=mare*10+i
+# print(mare)
+# for i in range(1,9):
+#     for j in range(arr[i]):
+#         mic=mic*10+i
+# print(mic)
+
+# exercitiu 7
+# ceva cu greieri
+

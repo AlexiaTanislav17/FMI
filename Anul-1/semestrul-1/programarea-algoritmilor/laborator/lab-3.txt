@@ -1,0 +1,211 @@
+# Exercitiu 1
+
+# Subpct a
+# L = [chr(a) for a in range(ord('a'),ord('z')+1)]
+# print(L)
+
+# Subptc b
+# L = [x if x%2==1 else -x for x in range(1,int(input("n= "))+1)]
+# print(L)
+
+# Subpct c
+# L = [1,3,24,56,75,43,89,8,6,35]
+# L = [x for x in L if x%2 != 0]
+# print(L)
+
+# Subpct d
+# L = [1,3,24,56,75,43,89,8,6,35]
+# L = [ L[i] for i in range(len(L)) if i%2 != 0 ]
+# print(L)
+
+# Subpct e
+# L = [2,4,1,7,5,1,8,10]
+# L = [L[i] for i in range(len(L)) if i%2 == L[i]%2]
+# print(L)
+
+# Subpct f
+# L = [1,2,3,4,5,6,7]
+# L = [(L[x], L[x+1]) for x in range(len(L)-1)]
+# print(L)
+
+# Subpct g
+# M = [[(linie,coloana) for coloana in range(4)] for linie in range(3)]
+# print(*M , sep="\n")
+# n = int(input("n= "))
+# L = [[f'{x}*{y}={x*y}'] for y in range (1,n+1) for x in range (1,n+1)]
+# for linie in L:
+#     print(*linie,sep="\n")
+
+# Subpct h
+# sir="abcde"
+# L =[sir[p:]+sir[:p] for p in range(len(sir))]
+# print(L)
+
+# Subpct i
+# L =[[x]*x for x in range(int(input("n= ")))]
+# print(L)
+
+
+# Exercitiu 2
+
+# Subpct a
+# L =  [1,4444,7,432225,2,5,87]
+# print(sorted(L,key=lambda x:str(x)))
+# print(sorted(L,key=str))
+
+# Subpct b
+# L =  [1,4444,7,432225,2,5,87]
+# print(sorted(L,key=lambda x:len((str(x))),reverse=True))
+# print(sorted(L,key=lambda x:len(set(str(x)))))
+
+# Subpct c
+# L = [2, 34, 5612, 432145, 67892]
+# L =[str(x) for x in range(len(L))]
+# print(sorted(L, key=len))
+# nush dc plm nu ne-a dat direct crescator ca e acelasi lucru
+
+# Subpct d ?
+# L = [22,  33345, 4545445, 666666, 1]
+# dict = {22: 0, 33345: 0, 4545445: 0, 666666: 0, 1: 0}
+# for x in range(len(L)):
+#     nr = x/10
+#     dict[x] = nr
+
+# Subptc e
+# combinatie intre subpct c si sortarea normala dupa val crescator
+
+
+# Exercitiu 3
+
+# Subpct a
+# l1 =[2,3,4,5,6]
+# l2 =[23,34,45,56,67]
+# n = len(l1)
+# for i in range(n):
+#     if i%2 == 0:
+#         l1[i]=l2[i]
+# print(l1)
+
+# Subpct b
+# L=[1,2,0,3,4,5,6,0,7,8,9]
+# poz1 = L.index(0)
+# L.remove(0)
+# poz2 = L.index(0)
+# for i in L[poz1:poz2+1]:
+#     L.remove(i)
+# print(L)
+
+# Subpct c
+# L = [1,0,3,4,5,6,3,0,4,0,0,0,0,5,8,5,0]
+# gata = 1
+# while gata:
+#     if 0 in L:
+#         L.remove(0)
+#     else:
+#         gata=0
+# print(L)
+
+# Subpct d
+# k = int(input("k= "))
+# n = int(input("n= "))
+# L = [int(input("L[x]= ")) for x in range(n)]
+# stg = 0
+# mins = sum(L)
+# s=0
+# el1 = 0
+# el2 = 0
+# dr=stg+k
+# while dr<=n:
+#     s = sum(L[stg:dr])
+#     if s<mins:
+#         mins=s
+#         el1 = stg
+#         el2 = dr
+#     dr +=1
+#     stg +=1
+# for i in L[el1:el2]:
+#     L.remove(i)
+# print(mins)
+# print(L)
+
+# Subpct e
+# L = [1,2,2,2,3,3,4,5,6,6,6,7,7,8,8,8,8,8,9,10,11,11]
+# gata = 1
+# n = len(L)
+# i = 0
+# while gata:
+#     ap = L.count(L[i])
+#     if ap > 1:
+#         L.remove(L[i])
+#         n -= 1
+#     else:
+#         i += 1
+#     if i == n:
+#         gata = 0
+# print(L)
+
+# Subpct f
+# L = [2, 3.5, -9, -7, 4.6, 33, -5.6, -92, -4]
+# for i in range(len(L)):
+#     if L[i]<0:
+#         L.insert(i+1,0)
+#         print("koi")
+#     else:
+#         print("nu koi")
+#     print(L)
+#     print(len(L))
+# nu merge in pisicii lui de cod se opreste rularea aiurea
+
+
+# Exercitiu 4
+
+# Subpct a
+# L = input("propozitie: ").split()
+# L1 = []
+# for x in L:
+#     print(len(x))
+#     if len(x)>1:
+#         L1 = L1 + [x]
+# print(sorted(L1,key=len,reverse=True))
+
+# Subpct b
+# def sumacfr(x):
+#     suma = 0
+#     while x:
+#         suma = suma + int(x) % 10
+#         x = int(x) / 10
+#     return suma
+# L = input("sir nr: ").split()
+# print(sorted(L,key = lambda x: sumacfr(x)))
+
+# Subpct c
+# n = int(input("n= "))
+# studenti = []
+# for i in range(n):
+#     linie = input("elev: ").split()
+#     nume = linie[0]
+#     prenume = linie[1]
+#     grupa = int(linie[2])
+#     note = [int(x) for x in linie[3:]]
+#     treceSauNu = 0
+#     for nota in note:
+#         if nota > 4:
+#             treceSauNu += 1
+#     if treceSauNu == len(note):
+#         promovare=True
+#     else:
+#         promovare=False
+#     studenti.append([nume, prenume, grupa, note, promovare])
+# print(studenti)
+# print(sorted(studenti,key=lambda x:studenti[2]))
+
+
+
+
+
+
+
+
+
+
+
