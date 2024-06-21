@@ -1,0 +1,49 @@
+body{
+    /* background-color: #6962AD;  */
+    background-color: black;
+    background-image: url("flower4.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+    
+}
+
+.header {
+    padding: 5px;
+    text-align: center;
+    /* background-color: #F5EDF7; */
+    background-color: #6962AD;
+    font-size: 20px;
+    border-style: solid;
+    border-color: #83C0C1;
+    border-width: 5px;
+    border-radius: 20px;
+}
+
+table, th, td {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    border: 5px;
+    border-style: solid;
+    border-spacing: 5px;
+    border-color: #83C0C1;
+    border-radius: 10px;
+    }
+
+td{
+    padding: 15px;
+    background-color: #3d1860b1;
+    border-style: solid;
+    border-color: #96E9C6;
+}
+
+th{
+    padding: 15px;
+    background-color: #3d1860b1;
+    border-style: solid;
+    border-color: #96E9C6;
+}
+
+

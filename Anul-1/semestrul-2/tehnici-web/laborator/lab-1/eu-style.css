@@ -1,0 +1,129 @@
+body{
+    /* background-color: #6962AD;  */
+    background-color: black;
+    background-image: url("flower4.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+    
+}
+
+.header {
+    padding: 5px;
+    text-align: center;
+    /* background-color: #F5EDF7; */
+    background-color: #6962AD;
+    font-size: 20px;
+    border-style: solid;
+    border-color: #83C0C1;
+    border-width: 5px;
+    border-radius: 20px;
+}
+
+.me-box{
+    float: left;
+    margin: 30px;
+    background-color: #3D1860;
+    height: 700px;
+    width: 550px;
+    border-radius: 20px;
+    padding: 20px;
+    text-align: center;
+}
+
+.my-image{
+    width: 550px;
+    height: 700px;
+    border-radius: 20px;
+}
+
+.about-me-box{
+    float: right;
+    margin: 30px;
+    width: 1100px;
+    height: 740px;
+    background-color: #3D1860;
+    text-align: center;
+    font-size: 20px;
+    border-radius: 20px;
+    position: relative;
+}
+
+table, th, td {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    border: 5px;
+    border-style: solid;
+    border-spacing: 5px;
+    border-color: #83C0C1;
+    border-radius: 10px;
+}
+
+table{
+    table-layout: fixed;
+    width: 900px;
+    height: 400px;
+    word-wrap: normal;
+}
+
+td{
+    padding: 15px;
+    background-color: #3d1860b1;
+    border-style: solid;
+    border-color: #96E9C6;
+}
+
+th{
+    padding: 15px;
+    background-color: #3d1860b1;
+    border-style: solid;
+    border-color: #96E9C6;
+}
+
+.slides {
+    display: none;
+    padding: 80px;
+    text-align: center;
+}
+  
+/* Next & previous buttons */
+.prev {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: auto;
+    margin-top: 30px;
+    margin-left: -525px;
+    padding: 10px;
+    color: #96E9C6;
+    font-weight: bold;
+    font-size: 20px;
+    border-radius: 0 3px 3px 0;
+    user-select: none;
+}
+
+.next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: auto;
+    margin-top: 30px;
+    margin-left: 495px;
+    padding: 10px;
+    color: #96E9C6;
+    font-weight: bold;
+    font-size: 20px;
+    border-radius: 0 3px 3px 0;
+    user-select: none;
+}
+
+/* hr{
+    margin: 40px;
+    /* border-top: 5px dashed #340065;
+    border-bottom: 5px dashed #e6dcee;  
+    border-top: 5px solid #96E9C6;
+    border-bottom: 5px solid #6962AD;
+} */
+

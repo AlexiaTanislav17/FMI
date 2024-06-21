@@ -1,0 +1,71 @@
+body{
+    /* background-color: #6962AD;  */
+    /* background-color: black; */
+    background-image: url("flower4.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+    
+}
+
+.header {
+    padding: 5px;
+    text-align: center;
+    /* background-color: #F5EDF7; */
+    background-color: #6962AD;
+    font-size: 20px;
+    border-style: solid;
+    border-color: #83C0C1;
+    border-width: 5px;
+    border-radius: 20px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.animals::after{
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.card {
+    float: left;
+    margin: 30px; 
+    padding: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    text-align: center;
+    background-color: #3D1860;
+    transition: 0.3s;
+    max-width: 400px;
+    max-height: 500px;
+    border-radius: 20px;
+    }
+    
+.card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    }
+    
+img {
+    object-fit: contain;
+    max-width: 400px;
+    max-height: 500px;
+    border-radius: 20px;
+    }
+    
+.container {
+    padding: 2px 16px;
+    }
+
+.divider{
+    max-height: 10px;
+    text-align: center;
+    color:#96E9C6;
+    padding: auto;
+    border-color: #96E9C6;
+    border-radius: 20px;
+    background-color: #96E9C6;
+    margin: 40px;
+}
