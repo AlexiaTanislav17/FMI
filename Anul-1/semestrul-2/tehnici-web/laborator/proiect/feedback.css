@@ -1,0 +1,99 @@
+body{
+    background-color: #8CB9BD;
+    height: auto;
+    width: auto;
+}
+
+.cadran {
+    background-image: url("bkg-intro-cadran-3.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    color: #FEFBF6;
+    background-color: #B67352;
+    height: 600px;
+    padding: 50px;
+    text-align: center;
+    margin-top: 100px;
+    margin-left: 100px;
+    margin-right: 100px;
+    border: 8px solid #ECB159;
+    border-radius: 25px;
+    box-shadow: 0 50px 200px 0 rgba(0, 0, 0, 0.2), 0 50px 200px 0 rgba(0, 0, 0, 0.19);
+}
+
+.descriere {
+    font-size: x-large;
+    text-align: center;
+    font-family: "Copperplate", "Papyrus", fantasy;
+    font-weight: bold;
+    color: #FEFBF6;
+    background-color: #B67352;
+    margin: 30px auto;
+    position: relative;
+    padding: 5px;
+    max-width: 700px;
+    border-radius: 25px;
+    box-shadow: 0 50px 200px 0 rgba(0, 0, 0, 0.2), 0 50px 200px 0 rgba(0, 0, 0, 0.19);
+}
+
+.link-descriere{
+    font-size: x-large;
+    text-align: center;
+    font-family: "Copperplate", "Papyrus", fantasy;
+    font-weight: bold;
+    color: #FEFBF6;
+    background-color: #B67352;
+    margin: 100px auto;
+    position: relative;
+    padding: 5px;
+    max-width: 250px;
+    border-radius: 25px;
+    box-shadow: 0 50px 200px 0 rgba(0, 0, 0, 0.2), 0 50px 200px 0 rgba(0, 0, 0, 0.19);
+    transition: 0.5s ease-in-out;
+}
+
+.link-descriere:hover{
+    background-color: #794c36;
+}
+
+a {
+    color: #FEFBF6;
+    text-decoration: none;
+}
+
+
+input[type=text] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #794c36;
+    font-weight: bold;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-top: 6px;
+    margin-bottom: 16px;
+    resize: vertical;
+  }
+
+  input[type=submit] {
+    font-size: x-large;
+    text-align: center;
+    font-family: "Copperplate", "Papyrus", fantasy;
+    font-weight: bold;
+    color: #FEFBF6;
+    background-color: #B67352;
+    padding: 12px 20px;
+    border: #794c36;
+    border-radius: 25px;
+    cursor: pointer;
+    box-shadow: 0 50px 200px 0 rgba(0, 0, 0, 0.2), 0 50px 200px 0 rgba(0, 0, 0, 0.19);
+    transition: 0.5s ease-in-out;
+  }
+  
+  input[type=submit]:hover {
+    background-color: #794c36;
+  }
+
+  .hidden {
+    display: none;
+}

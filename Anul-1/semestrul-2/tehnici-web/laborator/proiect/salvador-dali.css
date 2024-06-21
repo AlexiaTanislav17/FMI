@@ -1,0 +1,126 @@
+body{
+    background-color: #44000D;
+    height: auto;
+    width: auto;
+}
+
+header{
+    background-color: #83142C;
+    color: #F9D276;
+    text-align: center;
+    font-size: large;
+    font-family: "Copperplate", "Papyrus", fantasy;
+    font-weight: bold;
+    border-radius: 25px;
+    padding: 10px;
+}
+
+.overlay {
+    height: 0%;
+    width: 100%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: rgba(173,29,69, 0.718);
+    overflow-y: hidden;
+    transition: 0.5s;
+}
+
+.overlay-content {
+    position: relative;
+    top: 25%;
+    width: 100%;
+    text-align: center;
+    margin-top: 30px;
+}
+
+.overlay a {
+    padding: 8px;
+    text-decoration: none;
+    font-size: 36px;
+    font-weight: bold;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: #F9D276;
+    display: block;
+    transition: 0.3s;
+}
+
+.overlay a:hover, .overlay a:focus {
+    color: #caaa60;
+}
+
+.overlay .closebtn {
+    position: absolute;
+    top: 20px;
+    right: 45px;
+    font-size: 60px;
+}
+
+
+
+.title {
+    text-align: center;
+    font-size: 36px;
+    font-weight: bold;
+    font-family: "Copperplate", "Papyrus", fantasy;
+    color: #F9D276;
+}
+
+.text-slide {
+    color: #F9D276;
+    font-weight: bold;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.slideshow-container {
+    max-height: 600px;
+    /* object-fit: scale-down; */
+    /* border: #77529e; */
+    margin-bottom: 5%;
+}
+
+.slide {
+    height: 100%;
+    display: none;
+    padding: 80px;
+    text-align: center;
+}
+  
+.prev, .next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: auto;
+    margin-top: -30px;
+    padding: 16px;
+    color: #F9D276;
+    font-weight: bold;
+    font-size: 20px;
+    border-radius: 0 3px 3px 0;
+    user-select: none;
+}
+  
+.next {
+    position: absolute;
+    right: 0;
+    border-radius: 3px 0 0 3px;
+}
+  
+
+.prev:hover, .next:hover {
+    background-color: #AD1D45;
+    color: #83142C;
+}
+  
+
+
+/* @media screen and (max-height: 450px) {
+    .overlay {overflow-y: auto;}
+    .overlay a {font-size: 20px}
+    .overlay .closebtn {
+        font-size: 40px;
+        top: 15px;
+        right: 35px;
+    }
+} */

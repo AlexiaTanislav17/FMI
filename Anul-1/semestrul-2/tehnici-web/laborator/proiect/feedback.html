@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Feedback</title>
+        <link rel="stylesheet" href="feedback.css">
+        <link rel="icon" href="picture-frame.png">
+        <script type="text/javascript" src="feedback.js"></script>
+    </head>
+
+    <body>
+        <!-- <section>
+            palette:    warm white: #FEFBF6
+                        light blue: #8CB9BD
+                        chocolate brown: #B67352
+                        mustard yellow: #ECB159
+        </section> -->
+        <section class="cadran">
+             
+            <form id="feedbackForm">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+                <label for="email">Email:</label>
+                <input type="text" id="email" name="email" required>
+                <label for="feedback">Feedback:</label>
+                <textarea id="feedback" name="feedback" rows="4" required></textarea>
+                <button type="submit">Submit</button>
+            </form>
+            <div id="feedbackMessage" class="hidden">Thank you for your feedback!</div>
+            <div id="feedbackList"></div>
+
+
+            <p class="link-descriere">
+                <a href="file:///C:/Users/Alexia/Desktop/facultate/sem-2/tehnici-web/laborator/proiect/museum.html">
+                    Inapoi acasa!🖌️
+                </a>
+            </p>
+        </section>
+
+    </body>
+</html>
