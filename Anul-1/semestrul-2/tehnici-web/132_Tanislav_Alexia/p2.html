@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Problema 2</title>
+  </head>
+  <style>
+
+    .buton {
+        width: 100px;
+        height: 40px;
+        border-radius: 25px;
+        background-color: green; 
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 10px 10px;
+        cursor: pointer;
+    }
+
+  </style>
+
+<script>
+
+    window.onload=function(){
+
+        for(var i=0;i<6;i++) {
+
+            let div=document.createElement("div"); 
+            document.body.appendChild(div);
+        
+            div.className="buton"; 
+
+            let buton=document.createElement("buton");
+            if ((i+1)%2==0){
+                // document.body.appendChild(buton);
+                buton.style.backgroundColor = "green";
+                buton.style.color = "white";
+                div.classList.add("buton");
+            }else{
+                // document.body.appendChild(buton);
+                buton.style.backgroundColor = "yellow";
+                buton.style.color = "black";
+                div.classList.add("buton");
+            }
+            div.innerHTML="Buton " + (i+1);
+        
+            //var initial= parseInt(window.getComputedStyle(div).height); 
+        
+            div.onclick=function(event){ //click pe div
+                div.style.backgroundColor=parseInt(getComputedStyle(div).backgroundColor = 'red');
+                setTimeout(function(){var divuri=document.getElementsByClassName("buton", 3000)});
+                event.stopPropagation(); 
+            }}
+            document.body.onclick=function(){ //click pe body
+                setTimeout(function(){var divuri=document.getElementsByClassName("buton");
+                for(d of divuri) d.style.height=initial +'px';},3000);
+        }
+    }
+</script>
+  <body>
+
+
+  </body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

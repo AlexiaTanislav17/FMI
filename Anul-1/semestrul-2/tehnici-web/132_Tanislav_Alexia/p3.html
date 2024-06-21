@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Problema 3</title>
+  </head>
+
+  <script>
+    window.onload=function(){
+
+        var input=document.getElementById("info");
+        const date = new Date();
+        const hour = date.getHours();
+
+        const sizes = ["1px", "2px", "3px", "4px","5px", "6px", "7px","8px", "9px","10px"]
+        function randomColor(sizes) {
+            return sizes[Math.floor(Math.random() * sizes.length)];
+        }
+
+        window.onkeydown=function(event){
+            if(event.key =="a"){
+                window.onkeydown=null;	
+                var c=setInterval(function(){
+                var x;
+                document.getElementById("info").style.display = 'block'
+
+                document.body.remove(input);  
+                document.body.remove(date); 
+                document.body.remove(hour); 
+                clearInterval(c);
+                localStorage.setItem("date",date);
+                localStorage.setItem("date",date);
+                
+                },3000);
+            }   
+        }
+    }
+
+  
+</script>
+  <style>
+
+  </style>
+  <body>
+
+    <p id="info">pararaf paragraf paragraf</p>
+
+  </body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Problema 3</title>
+
+</head>
+<body>
+
+<input id="numar" type="text">
+
+<p>Azi este o zi cu soare</p>
+<p>Azi este o zi calduroasa</p>
+<p>Azi este marti</p>
+<p>Azi este o zi cu soare</p>
+<p>Azi este o zi foarte calda</p>
+<p>Azi este o zi cu soare</p>
+<p>Azi este o zi</p>
+<p>Azi</p>
+<p>O zi cu soare</p>
+<p>Azi este o zi cu soare</p>
+
+</body>
+</html> -->

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Problema 1</title>
+  </head>
+  <style>
+
+    .parinte{
+      height: 500px;
+      width: 50vw;
+      border: 5px solid green;
+      padding: 7px;
+      display:grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      column-gap: 10px;
+      row-gap: 10px;
+      background-color: white;
+    }
+
+    .item-1{
+      grid-column:1/4;
+      grid-row:1/2;
+      background-color: orange;
+      text-align: center;
+      font-size: 15px;
+      justify-items: center;
+      align-items: center;
+
+    }
+
+    .item-2 {
+      grid-column: 1/2;
+      grid-row: 2/4;
+      background-color: pink;
+      text-align: center;
+      font-size: 15px;
+      justify-items: center;
+      align-items: center;
+    }
+
+    .item-3{
+      grid-column:2/4;
+      grid-row:2/3;
+      background-color: red;
+      text-align: center;
+      font-size: 15px;
+      justify-items: center;
+      align-items: center;
+    }
+
+    .item-4{
+      grid-column:2/3;
+      grid-row:3/4;
+      background-color: purple;
+      text-align: center;
+      font-size: 15px;
+      justify-items: center;
+      align-items: center;
+    }
+
+    .item-5{
+      grid-column:3/4;
+      grid-row:3/4;
+      background-color: purple;
+      text-align: center;
+      font-size: 15px;
+      justify-items: center;
+      align-items: center;
+    }
+
+    .item-6{
+      grid-column:1/4;
+      grid-row:4/5;
+      background-color: orange;
+      text-align: center;
+      font-size: 15px;
+      justify-items: center;
+      align-items: center;
+    }
+
+    @keyframes color{
+        0%{background-color:black;
+        font-weight: normal;}
+
+        100%{background-color:blue;
+          font-weight: bold;}
+
+    }
+
+    @media screen and (max-width:600px) and (min-width:300px){
+
+        .parinte{ 
+            display:block;
+            height: 100%;
+            grid-template-areas:
+                ".item-6"
+                ".item-5"
+                ".item-4"
+                ".item-3"
+                ".item-2"
+                ".item-1";
+        }
+
+        .item-5:hover{
+          background-color: blue;
+          font-style: bold;
+          transition: font-weight 3s, color 2s;
+          animation: color 3s linear;
+        }
+
+        .item-3:hover{
+          background-color: blue;
+          font-style: bold;
+          transition: font-weight 3s, color 2s;
+          animation: color 3s linear;
+        }
+
+        .item-1:hover{
+          background-color: blue;
+          font-style: bold;
+          transition: font-weight 3s, color 2s;
+          animation: color 3s linear;
+        }
+        
+        /* .parinte > div {
+            transition: font-style 3s, color 2s;
+            animation: color 3s linear;
+        } */
+    } 
+
+  </style>
+  <body>
+
+    <div id="parinte" class="parinte">
+      <div class="item-1">DIV 1</div>
+      <div class="item-2">DIV 2</div>
+      <div class="item-3">DIV 3</div>
+      <div class="item-4">DIV 4</div>
+      <div class="item-5">DIV 5</div>
+      <div class="item-6">DIV 6</div>
+    </div>
+
+  </body>
+</html>
+
+
+
+
+
+
+
+
+
