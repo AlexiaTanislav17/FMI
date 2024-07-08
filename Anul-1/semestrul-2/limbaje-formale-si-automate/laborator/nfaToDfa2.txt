@@ -1,0 +1,193 @@
+
+def nfaToDfa(nfa, dfa, stariDfa, litere):
+    for (stare, litera) in dfa.keys():
+        # if " " in dfa[stare, litera]:
+        #     listaStare = dfa[stare, litera].split(" ")              #oare aici?
+        #     stareNoua = set()
+        #     for q in listaStare:
+        #         if (q,litera) in nfa.keys():
+        #             for i in nfa[q,litera].split(" "):
+        #                 stareNoua.add(i)
+        #     stareNoua = sorted(stareNoua)
+        #     stareNoua = " ".join(stareNoua)
+        #     if stareNoua == "":
+        #         dfa[dfa[stare, litera], litera] = "vid"
+        #     else:
+        #         dfa[dfa[stare, litera],litera] = stareNoua.strip()     #oare aici?
+        #         stariDfa.add(stareNoua.strip())
+        #     stariDfa.add(dfa[stare, litera])
+        if " " in stare:
+            listaStare = stare.split(" ")
+            stareNoua = set()
+            for q in listaStare:
+                if (q, litera) in nfa.keys():
+                    for i in nfa[q, litera].split(" "):
+                        stareNoua.add(i)
+            stareNoua = sorted(stareNoua)
+            stareNoua = " ".join(stareNoua)
+            if stareNoua == "":
+                dfa[stare, litera] = "vid"
+            else:
+                dfa[stare, litera] = stareNoua.strip()
+                stariDfa.add(stareNoua.strip())
+    check = 0
+    for s in stariDfa:
+        for l in litere:
+            if (s, l) not in dfa.keys() and " " in s:
+                check = 1
+                dfa[s,l] = "vid"
+    if check == 1:
+        nfaToDfa(nfa, dfa, stariDfa, litere)
+
+
+
+def d_tilda(q,w,m,col,nrStari):
+    if len(w)==1:
+        return delta(q,w[0],m,col,nrStari)
+    else:
+        if q==0:
+            return 0
+        else:
+            return d_tilda(delta(q,w[0],m,col,nrStari),w[1:],m,col,nrStari)
+
+def delta(q,a,m,col,nrStari):
+    poz=0
+    poz2=0
+    for j in range(1,col):
+        if a==m[0][j]:
+            poz=j
+    for k in range(1,nrStari+1):
+        if mat[k][0] == q:
+            poz2=k
+    if m[poz2][poz]!=0:
+        return m[poz2][poz]
+    else:
+        return 0
+
+
+
+# citim datele pt nfa
+f = open(input("fisier: "),'r')
+
+nrStariNfa = int(f.readline())
+stariNfa = f.readline().split()
+nrLitereNfa = int(f.readline())
+litere = f.readline().split()
+stareinit = f.readline().strip()
+nrStariFinaleNfa = int(f.readline())
+stariFinaleNfa = f.readline().split()
+nrTranzitiiNfa = int(f.readline())
+
+nfa = {}
+dfa = {}
+
+nrStariDfa = 0
+stariDfa = set()
+nrLitereDfa = nrLitereNfa
+nrStariFinaleDfa = 0
+stariFinaleDfa = set()
+nrTranzitiiDfa = 0
+
+for i in range(nrTranzitiiNfa):
+    line = f.readline().split()
+    stare1 = line[0]
+    litera = line[1]
+    stare2 = line[2]
+    if (stare1,litera) in nfa.keys():
+        nfa[stare1, litera].append(stare2)
+    else:
+        nfa[stare1, litera] = [stare2]
+
+# facem nfa ul
+for i in nfa:
+    if len(nfa[i])==1:
+        nfa[i] = "".join(nfa[i])
+    else:
+        stareNoua = ""
+        for j in nfa[i]:
+            stareNoua = stareNoua + " " + j
+        nfa[i] = stareNoua.strip()
+    stariDfa.add(nfa[i])
+
+# afisare nfa
+for i in nfa:
+    print(i, "cu starea: ", nfa[i])
+
+#pregatim dfa ul de transformare in nfa
+for litera in litere:
+    for stare in stariDfa:
+        if (stare, litera) not in dfa.keys():
+            if (stare, litera) in nfa.keys():
+                dfa[stare, litera] = nfa[stare, litera]
+            elif " " in stare:
+                dfa[stare, litera] = "vid"
+
+# print("\n")
+# for i in dfa:
+#     print(i, "cu starea: ", dfa[i])
+
+# aici transformam din nfa in dfa
+nfaToDfa(nfa, dfa, stariDfa, litere)
+print("\n")
+stariDfa = sorted(stariDfa)
+# print(stariDfa)
+
+for i in sorted(dfa):
+    print(i, "cu starea: ", dfa[i])
+
+# print("\n")
+# for (s,l) in sorted(dfa):
+#     print(s," -> ", l," -> ", dfa[s,l])
+
+
+# aici facem restu de date necesare pt cuv dfa
+for i in stariFinaleNfa:
+    for s in stariDfa:
+        if i in s:
+            stariFinaleDfa.add(s)
+
+stariFinaleDfa = sorted(stariFinaleDfa)
+nrStariDfa = len(stariDfa)
+nrTranzitiiDfa = len(dfa)
+nrStariFinaleDfa = len(stariFinaleDfa)
+
+
+
+# dfa in mat pt cuv :')
+mat = [["litere"]]
+for i in range(nrLitereDfa):
+    mat[0].append(litere[i])
+for i in range(1,nrStariDfa+1):
+     l=[]
+     l.append(stariDfa[i-1])
+     for j in range(nrLitereDfa):
+         l.append(-1)
+     mat.append(l)
+
+for (s,l) in sorted(dfa):
+    stare1=s
+    tranzitia=l
+    stare2=dfa[s, l]
+    for j in range(nrLitereDfa+1):
+        if tranzitia==mat[0][j]:
+            p=j
+    for k in range(1,nrStariDfa+1):
+        if stare1==mat[k][0]:
+            poz=k
+    mat[poz][p]=stare2
+
+print(mat)
+
+nrCuvinte=int(f.readline())
+cuv=[]
+for i in range(nrCuvinte):
+    cuvant=f.readline().strip()
+    cuv.append(cuvant)
+
+for i in cuv:
+    verif=d_tilda(stareinit,i,mat,nrLitereDfa+1,nrStariDfa)
+    # print(verif)
+    if verif in stariFinaleDfa:
+        print("DA")
+    else:
+        print("NU")

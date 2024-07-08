@@ -1,0 +1,87 @@
+
+def d_tilda(q,w,m,col,nrStari):
+    if len(w)==1:
+        return delta(q,w[0],m,col,nrStari)
+    else:
+        if q==0:
+            return 0
+        else:
+            return d_tilda(delta(q,w[0],m,col,nrStari),w[1:],m,col,nrStari)
+
+def delta(q,a,m,col,nrStari):
+    poz=0
+    poz2=0
+    for j in range(1,col):
+        if a==m[0][j]:
+            poz=j
+    for k in range(1,nrStari+1):
+        if int(mat[k][0]) == int(q):
+            poz2=k
+    if m[poz2][poz]!=0:
+        return m[poz2][poz]
+    else:
+        return 0
+
+
+
+f=open(input("fisier: "),'r')
+
+nrStari=int(f.readline())
+s=f.readline().split()
+
+mat=[['litere']]
+nrLitere=int(f.readline())
+litere=f.readline().split()
+for i in range(nrLitere):
+    litera=litere[i]
+    mat[0].append(litera)
+for i in range(1,nrStari+1):
+     l=[]
+     l.append(s[i-1])
+     for j in range(nrLitere+1):
+         l.append(0)
+     mat.append(l)
+
+
+stareInit=int(f.readline())
+nrStariFinale=int(f.readline())
+stariFinale=f.readline().split()
+sf=[]
+for i in range(nrStariFinale):
+    sf.append(int(stariFinale[i]))
+
+
+nrTranzitii=int(f.readline())
+for i in range(nrTranzitii):
+    line=f.readline().split()
+    stare1=int(line[0])
+    tranzitia=line[1]
+    stare2=int(line[2])
+    for j in range(nrLitere+1):
+        if tranzitia==mat[0][j]:
+            p=j
+    for k in range(1,nrStari+1):
+        if stare1==int(mat[k][0]):
+            poz=k
+    mat[poz][p]=stare2
+
+nrCuvinte=int(f.readline())
+cuv=[]
+for i in range(nrCuvinte):
+    cuvant=f.readline().strip()
+    cuv.append(cuvant)
+
+
+# print(mat)
+# print(cuv)
+# print(sf)
+# print(d_tilda(1,"abba",mat,nrLitere+1))
+
+for i in cuv:
+    verif=d_tilda(stareInit,i,mat,nrLitere+1,nrStari)
+    # print(verif)
+    if verif in sf:
+        print("DA")
+    else:
+        print("NU")
+

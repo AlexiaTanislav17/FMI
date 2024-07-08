@@ -1,0 +1,75 @@
+def transf(dfa,nfa, litera, stareNouaDfa, litere):
+    listaStari = stareNouaDfa.split()
+    stareNoua = []
+    for stare in listaStari:
+        if (stare,litera) in nfa.keys():
+            if len(nfa[stare, litera])==1:
+                if nfa[stare, litera] not in stareNoua and stareNoua == []:
+                    stareNoua = nfa[stare, litera]
+                elif nfa[stare, litera] not in stareNoua and stareNoua != []:
+                    stareNoua.append("".join(nfa[stare, litera]))
+            else:
+                for j in nfa[stare, litera]:
+                    if j not in stareNoua and stareNoua == []:
+                        stareNoua = [j]
+                    elif j not in stareNoua and stareNoua != []:
+                        stareNoua.append(j)
+    sn = set(stareNoua)
+    sN = list(sn)
+    sN.sort()
+    stNoDfa = " ".join(sN).strip()
+    dfa[stareNouaDfa, litera] = stNoDfa
+    for l in litere:
+        if (stNoDfa, l) not in dfa.keys():
+            transf(dfa, nfa, l, stNoDfa, litere)
+
+
+f = open(input("fisier: "),'r')
+
+nrStari = int(f.readline())
+stari = f.readline().split()
+nrLitere = int(f.readline())
+litere = f.readline().split()
+stareinit = f.readline().strip()
+nrStariFinale = int(f.readline())
+stariFinale = f.readline().split()
+nrTranzitii = int(f.readline())
+
+nfa = {}
+dfa = {}
+
+for i in range(nrTranzitii):
+    line = f.readline().split()
+    stare1 = line[0]
+    litera = line[1]
+    stare2 = line[2]
+    if (stare1,litera) in nfa.keys():
+        nfa[stare1, litera].append(stare2)
+    else:
+        nfa[stare1, litera] = [stare2]
+
+print(nfa)
+
+for i in nfa:
+    if len(nfa[i])==1:
+        dfa[i] = "".join(nfa[i])
+        # print(nfa[i])
+        # print(i)
+    else:
+        stareNoua = ""
+        for j in nfa[i]:
+            stareNoua = stareNoua + " " + j
+        dfa[i] = stareNoua.strip()
+        transf(dfa, nfa, i[1], dfa[i], litere)
+
+# for i in dfa:
+#     if len(dfa[i]) != 1:
+#         transf(dfa, nfa, i[1], dfa[i], litere)
+
+
+
+# imi ia stari care nu ar trb sa existe
+# inca imi pune dubluri pe alocuri
+
+for i in dfa:
+    print(i, "cu starea: ", dfa[i])

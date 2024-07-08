@@ -1,0 +1,302 @@
+17
+6688 6138 6435 7945 6154 6352 4529 9107 2811 5269 4374 6294 3802 1050 6747 7262 5695 
+8
+h y m s l q f j 
+7262
+11
+6688 6435 6154 6352 4529 5269 4374 6294 3802 6747 7262 
+124
+6435 h 7945
+6138 l 6688
+6138 l 4529
+6138 l 6747
+6138 m 6747
+6138 q 1050
+6352 h 6688
+6352 h 7945
+6688 m 2811
+7262 j 3802
+7262 j 6154
+5695 j 4529
+5695 j 1050
+1050 q 6294
+6688 s 4529
+6688 s 5695
+7945 f 4529
+7945 f 1050
+7945 f 7945
+7945 f 5695
+6747 j 6352
+6747 j 6138
+6747 j 6435
+5695 f 4529
+5695 f 4374
+5695 s 6294
+7262 s 6688
+7262 s 6435
+7262 f 6154
+6294 f 6688
+6294 f 2811
+6747 m 6435
+6154 q 6747
+6138 f 6352
+6138 f 1050
+6138 f 6294
+3802 j 7262
+5269 l 6688
+5269 l 6747
+5269 l 2811
+5269 l 6352
+5695 q 7945
+5695 q 5269
+5695 m 3802
+3802 l 5269
+6747 y 6154
+6747 y 9107
+3802 h 4374
+6154 y 6688
+4374 f 5695
+6294 s 6138
+6294 s 5269
+6435 j 3802
+5695 h 2811
+6154 l 6294
+7262 q 6747
+7262 q 9107
+6435 y 6688
+6435 y 7945
+4374 j 6747
+6294 l 6688
+6294 l 2811
+6435 s 6352
+6435 s 7262
+4529 m 6154
+4529 m 1050
+5695 y 2811
+2811 l 6435
+7262 h 6747
+9107 m 7262
+1050 j 7262
+4529 h 6747
+4529 h 2811
+7945 l 6154
+4529 y 4529
+5269 q 6688
+5269 q 6154
+7945 j 6138
+6154 h 6294
+9107 q 7945
+6688 j 6352
+6688 j 6435
+6688 l 1050
+6294 q 7945
+6294 q 6747
+6688 q 4374
+4529 q 5269
+1050 s 1050
+7945 s 6294
+6352 q 4529
+7945 m 6352
+7945 m 1050
+6294 y 6294
+7262 m 7945
+7262 m 6154
+4374 l 7262
+1050 h 5695
+7262 l 6154
+7262 l 5269
+7945 q 6294
+6154 j 6352
+6154 j 6435
+6688 h 1050
+4529 f 4529
+4529 f 4374
+3802 m 7945
+3802 m 4529
+5269 y 6294
+6747 l 6352
+4374 y 9107
+4529 j 2811
+6352 s 6747
+7945 y 9107
+7945 y 5269
+4374 h 7945
+4374 q 5695
+5695 l 5695
+6435 m 9107
+2811 j 6435
+6688 f 3802
+1050 y 6138
+4374 s 6688
+7262 y 3802
+3802 y 4374
+168
+hsy
+hsm
+hss
+hsl
+yly
+yqj
+yfh
+yfy
+yjl
+msy
+msm
+mss
+msl
+mqy
+mqm
+smh
+smy
+smm
+smq
+smf
+smj
+sqy
+sqm
+sqj
+sfh
+sfq
+sff
+sfj
+sjh
+sjy
+sjm
+sjs
+sjl
+lhf
+lhj
+lyh
+lyy
+lym
+lmf
+lmj
+lsh
+lsy
+lsm
+lss
+lsl
+lsq
+lqj
+lfh
+ljh
+ljy
+ljm
+ljs
+ljl
+ljq
+ljf
+ljj
+qhh
+qhy
+qhm
+qhs
+qhl
+qhq
+qhf
+qhj
+qmj
+qsh
+qss
+qsl
+qsq
+qsf
+qsj
+qqq
+qqj
+qfh
+qfy
+qfm
+qfs
+qfl
+qfq
+qjh
+qjy
+qjm
+qjj
+fhh
+fhq
+fhf
+fhj
+fyh
+fyy
+fym
+fys
+fyl
+fyq
+fyf
+fyj
+fmh
+fmy
+fsm
+fss
+fsl
+fsq
+fsf
+fsj
+flh
+fly
+flm
+fls
+fll
+ffh
+ffy
+ffm
+ffs
+jjj
+hyjq
+hyjf
+hyjj
+hmhh
+hmhy
+hlyq
+hlyf
+hlyj
+hlmh
+hlmy
+hlmm
+hlms
+hlml
+yhfq
+ymmy
+ymmm
+ysyf
+yllm
+yqjh
+yfjy
+mhsm
+mmyq
+mmyf
+msfj
+mlfm
+mjfj
+smqs
+sfmq
+lhjh
+lyml
+lsyj
+llhj
+qqmq
+qjqs
+fljf
+fqys
+jmmm
+hmmhj
+hslyh
+hlmqq
+hqmhh
+yhyjy
+yyyjf
+ymlhj
+ysslf
+yljqj
+myyjh
+mssyl
+mfqsq
+shjmq
+slfjq
+sqsll
+lhlfq
+lqmqs
+qfmfy
+fffff

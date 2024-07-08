@@ -1,0 +1,224 @@
+17
+8256 2756 4710 7815 7495 6251 620 7724 4623 6800 2608 8623 5427 83 403 118 1143
+8
+o t a k y b f e
+4623
+11
+8256 2756 4710 7495 7815 6251 620 7724 2608 403 118
+124
+7724 f 8256
+7724 f 6251
+8256 o 2756
+403 t 7815
+4623 y 6251
+4623 y 7495
+4623 y 4623
+4710 a 403
+4710 a 7495
+4710 a 7815
+7724 e 620
+1143 o 6251
+6251 y 2756
+6251 y 7495
+83 k 5427
+83 k 4623
+620 k 620
+620 k 4710
+620 k 7815
+7815 k 2608
+7815 k 7815
+83 y 6800
+83 y 83
+83 y 7815
+7815 b 4710
+7724 a 7495
+7724 a 7815
+7724 o 7495
+4710 o 4710
+83 f 7724
+83 f 1143
+6251 a 6251
+1143 y 83
+83 o 4710
+620 e 2608
+620 e 7724
+620 e 4623
+8256 k 5427
+4710 t 2756
+4710 t 620
+4710 t 4623
+83 b 83
+118 t 6251
+118 t 1143
+2608 y 2756
+2608 y 8623
+7495 f 2756
+4710 b 5427
+2756 t 6800
+2756 t 4710
+2756 t 4623
+2756 y 1143
+8623 t 620
+5427 y 5427
+4623 b 83
+4623 b 7495
+7495 y 6800
+5427 t 83
+118 y 7724
+118 y 4623
+403 e 8256
+403 e 83
+4710 f 403
+7815 o 6800
+7815 o 620
+7815 o 7495
+2608 f 2756
+2608 f 1143
+1143 t 2608
+1143 t 5427
+1143 t 7724
+7495 e 7495
+7495 e 4623
+1143 b 2756
+2608 o 2756
+8623 y 8623
+620 f 7724
+620 f 4710
+620 f 4623
+7815 f 620
+7815 f 7495
+4623 a 6800
+4623 a 7495
+6251 k 8256
+6800 o 7495
+8623 k 83
+1143 a 403
+5427 f 5427
+2756 o 7815
+1143 k 7724
+1143 k 118
+620 b 403
+8256 e 7815
+620 t 2756
+83 t 8256
+403 b 118
+8623 o 7815
+4623 o 83
+7495 t 6251
+7724 y 6800
+1143 e 83
+4623 t 118
+4623 e 5427
+4623 e 6251
+118 o 4623
+2756 e 7724
+2756 e 7815
+7495 k 7724
+7495 k 1143
+83 e 7495
+2608 a 403
+7495 a 7815
+4710 e 2756
+4710 e 7495
+6800 k 2756
+6800 k 4710
+8256 y 403
+8623 e 83
+118 f 6800
+5427 k 6800
+7724 k 4623
+8623 a 1143
+6251 f 403
+8256 b 83
+50
+kayot
+kayoa
+kayok
+kayoy
+kayob
+kayof
+kayoe
+kayto
+kaytt
+kayta
+kaytk
+kayty
+kaytb
+kaytf
+kayte
+kayao
+kayat
+kayaa
+kayak
+kayay
+yefbb
+yefbf
+yefbe
+yeffo
+yefft
+yeffa
+yeffk
+yeffy
+yeffb
+yefff
+yeffe
+yefeo
+yefet
+yefea
+yefek
+yefey
+yefeb
+yefef
+yefee
+yeeoo
+yeeot
+yeeoa
+yeeok
+yeeoy
+yeeob
+yeeof
+yeeoe
+yeeto
+yeett
+yeeta
+yeetk
+yeety
+yeetb
+yeetf
+yeete
+yeeao
+yeeat
+yeeaa
+fkobt
+fkoba
+fkobk
+fkoby
+fkobb
+fkobf
+fkobe
+fkofo
+fkoft
+fkofa
+fkofk
+fkofy
+fkofb
+fkoff
+fkofe
+fkoeo
+fkoet
+fkoea
+fkoek
+fkoey
+fkoeb
+fkoef
+fkoee
+fktoo
+fktot
+fktoa
+fktok
+fktoy
+fktob
+fktof
+fktoe
+fktto
+fkttt
