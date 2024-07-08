@@ -1,0 +1,33 @@
+-- AF NUMELE, DEP, SALARIU I TITLE JOB AL NGAJATILOR AL CAROR SAARIU SI COMISION
+--COINCID CU SALARIU SI COMISION UNUI ANGAJAT DIN OXFORD
+
+
+select e.employee_id, e.salary, e.job_id, e.commission_pct
+from employees e, jobs j
+where e.job_id = j.job_id
+and (e.salary,e.commission_pct) in (select salary, commission_pct
+                                        from employees e
+                                        join departments d on d.department_id = e.department_id
+                                        join locations l on l.location_id=d.location_id
+                                        join jobs j on j.job_id=e.job_id
+                                        where lower(l.city) like lower('OXFORD'));
+                                        
+
+--af angajatii care au comision si sefl direct are si el comision
+select e.first_name, e.last_name, d.department_name, e.salary
+from employees e, departments d
+where e.department_id = d.department_id(+)
+and e.commission_pct is not null
+and e.manager_id in (select e.employee_id
+                        from employees e
+                        where e.commission_pct is not null);
+
+
+--care e salariu minim dn frima
+select min(salary)
+from employees;
+
+select employee_id, first_name, last_name,salary
+from employees
+where salary = (select min(salary)
+                from employees);

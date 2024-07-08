@@ -1,0 +1,93 @@
+SELECT employee_id, last_name, e.department_id, department_name
+FROM employees e, departments d
+WHERE (e.department_id = d.department_id);
+
+SELECT employee_id, last_name, e.department_id, department_name
+FROM employees e, departments d
+WHERE (e.department_id(+) = d.department_id);
+-- plusul  => departamentul exista dar nu are inf despre el deci completeaza cu null
+-- af departamentele care nu au angajati dar exista practic
+
+SELECT employee_id, last_name, e.department_id, department_name
+FROM employees e, departments d
+WHERE (e.department_id = d.department_id(+));
+--af angajatii care nu au departament si completeaza cu null acolo
+
+SELECT employee_id, last_name, e.department_id, department_name
+FROM employees 
+JOIN departments d
+ON(e.department_id = d.department_id);
+
+SELECT employee_id, last_name, e.department_id, department_name
+FROM employees e 
+left outer JOIN departments d
+ON(e.department_id = d.department_id);
+--left outer join returns all records from the left table (table1), and the matching records from the right table (table2). The result is 0 records from the right side, 
+--if there is no match.
+
+SELECT employee_id, last_name, e.department_id, department_name
+FROM employees e 
+full outer JOIN departments d
+ON(e.department_id = d.department_id);
+-- full outer join keyword returns all records when there is a match in left (table1) or right (table2) table records.
+
+SELECT employee_id, last_name, department_name
+FROM employees e, departments d
+WHERE e.department_id = d.department_id(+)    --inclusi ang care nu au departament
+UNION
+SELECT employee_id, last_name, department_name
+FROM employee e, department d
+WHERE e.department_id(+) = d.department_id;    --inclusiv depatamentele care nu au ang
+
+
+--af codurile de tara, locatie, depart, ang inclusiv pt tarile, depart, locatiile 
+--in care nu lucreaza nimeni
+SELECT c.country_id, l.location_id, d.department_id, e.employee_id
+FROM employees e, departments d, countries c, locations l
+WHERE e.department_id(+) = d.department_id
+AND d.location_id(+) = l.location_id
+AND l.country_id(+) = c.country_id;
+
+
+SELECT l.city, d.department_name dep
+FROM locations l, departments d
+WHERE l.location_id(+) = d.location_id
+ORDER BY dep desc;
+
+
+--SE CER CODURILE DEPART AL CAROR NUME CONTINE SIRUL "re" sau in care
+-- lucreaza angajatii avand codul jobului "SA_REP"
+
+SELECT d.department_id, d.department_name
+FROM departments d, employees e
+WHERE ((d.department_name LIKE '%re%') OR (e.job_id='SA%REP')); -- asta nu e bun
+
+
+SELECT department_id
+FROM departments
+WHERE lower(department_name) LIKE '%re%'
+UNION
+SELECT department_id
+FROM employees
+WHERE lower(job_id)=lower('SA_REP');
+
+
+--numele si salariul pt toti colegii din acelasi dep cu king
+SELECT last_name, salary
+FROM employees
+WHERE department_id = ANY(SELECT department_id
+                        FROM employees
+                        WHERE lower(last_name) = 'king')
+AND lower(last_name) <> 'king';  -- <> la fel cu !=
+--any ii cere orice tip de data, daca nu puneam, mi-l punea string
+
+
+--ASTA DE JOS NU E BUN LA UN EX DAR NU STIU CE ERA BUN
+SELECT department_id, salary
+FROM employees
+WHERE (department_id, salary) IN (SELECT department_id, salary
+                                    FROM employees
+                                    WHERE commission_pct IS NOT NULL)
+AND department_id IN (SELECT department_id
+                        FROM employees
+                        WHERE commission_pct IS NOT NULL);

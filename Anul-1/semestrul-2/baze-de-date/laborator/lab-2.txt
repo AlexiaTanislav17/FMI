@@ -1,0 +1,118 @@
+SELECT last_name
+FROM employees
+WHERE last_name LIKE '%a';   --daca ultm litera e a
+
+SELECT last_name
+FROM employees
+WHERE last_name LIKE 'a%';   --daca prima litera e a
+
+SELECT last_name
+FROM employees
+WHERE last_name LIKE '_a%';  --daca are a doua litera a
+
+SELECT last_name
+FROM employees
+WHERE last_name LIKE '%a%';  --daca contine litera a
+
+SELECT last_name, first_name
+FROM employees
+WHERE (department_id=30 OR manager_id=102)
+AND last_name LIKE '%L%L%';             --daca numele conitne 2 de L
+
+SELECT last_name, first_name
+FROM employees
+WHERE (lower(job_id) LIKE lower('%CLERK%') OR lower(job_id) LIKE lower('%REP%'))
+AND salary NOT IN (3200,2700,2500,3100,6200);
+--lower() converteste stringul in litere mici
+--exista si upper() care le face litere mari
+
+SELECT first_name, last_name
+FROM employees
+WHERE manager_id IS NULL;    --luam angajatii fara manager
+
+SELECT first_name, last_name
+FROM employees
+WHERE department_id IS NULL;    --luam angajatii fara departament
+
+SELECT department_id, department_name
+FROM departments
+WHERE manager_id IS NULL;    --luam departamentele fara manager
+
+SELECT substr('primavara', 4) --iti ia de pe poz 4 pana la final
+FROM dual;
+
+SELECT substr('primavara',4,1) --iti ia de pe poz 4 un singur caracter
+FROM dual;
+
+SELECT substr('primavara',4,3) --iti ia de pe poz 4 inca 3 caracter
+FROM dual;
+
+SELECT substr('primavara',-4) --iti ia ultimele 4 caractere
+FROM dual;
+
+SELECT substr('primavara',length('primavara')-3) --iti ia ultimele 4 caractere
+FROM dual;
+
+SELECT rtrim('XXXprimavarXaXXXX','X')  --elimina de la dr caracterele x pana nu mai gaseste
+FROM dual;   --XXXprimavarXa
+
+SELECT rtrim('XXXprimavarXaXXXX','Xa') --elimina caracterele de la dr lui Xa pana la final
+FROM dual;  --XXXprimavar
+
+SELECT ltrim('XXXprimavarXaXXXX','X')  --elimina caracterele x de la stg
+FROM dual;
+
+SELECT trim(both 'X' from 'XXXprimavarXaXXXX')  -- nu exista trim singur doar cu both intre paranteze
+FROM dual;
+
+select replace('XXXprimavarXaXXX', 'X', '*')
+from dual; --**primavar*a**
+
+select translate('12 12 13 1', '12', 'ab')
+from dual; --ab ab a3 a
+
+select translate('12 12 13 1', '123', 'abc')
+from dual; --ab ab ac a
+
+select translate('12 12 13 1', '123 ', 'abcd')
+from dual; --abdabdacda
+
+select rtrim('Ionel Popescu        ',  ' ')
+from dual;
+
+SELECT first_name || ' ' || Last_name || ' castiga ' || salary || ' lunar dar doreste ' || salary*3 "SALARIU IDEAL"
+FROM employees;
+
+SELECT concat(concat(first_name, ' '),Last_name) || ' castiga ' || salary || ' lunar dar doreste ' || salary*3 "SALARIU IDEAL"
+FROM employees;
+
+SELECT concat(upper(substr(first_name,1,1)), lower(substr(first_name,2))) || ' ' || upper(last_name) 
+|| ' ' || length(last_name)
+FROM employees
+WHERE (last_name LIKE 'J%' OR last_name LIKE 'M%' OR last_name LIKE '__a%')
+ORDER BY length(last_name) DESC;
+
+SELECT sysdate +2
+FROM dual;  --iti intoarce ziua de peste 2 zile curente
+
+SELECT add_months(sysdate, 2)
+FROM dual;  --iti intoarce ziua de peste 2 luni curente
+
+SELECT nvl(null,1) --verif daca primul arg e null si af 1 daca e null
+FROM dual;
+
+SELECT nvl(20,1)  --verif daca primul arg e null si af 1 daca e null, va af 20 pt ca nu e null
+FROM dual;
+
+SELECT nvl('a',1)  --a nu e null deci af a
+FROM dual;
+
+SELECT nvl(1,'2')  --af 1
+FROM dual;
+
+ SELECT nvl(1,'ab')  --nu poti sa af sir de caractere, incaerca cinv in nr si nu poate
+ FROM dual;
+
+
+
+

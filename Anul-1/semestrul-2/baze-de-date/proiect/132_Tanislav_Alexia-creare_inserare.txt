@@ -1,0 +1,387 @@
+create table HOTEL(
+    id_hotel number(4) not null constraint pk_hotel primary key,
+    denumire varchar(30) not null,
+    email varchar(30) not null,
+    nr_telefon number(15) not null,
+    id_oras number(4) not null,
+    constraint fk_id_oras foreign key(id_oras) references ORAS(id_oras)
+);
+
+create table ORAS(
+    id_oras number(4) not null constraint pk_oras primary key,
+    denumire varchar(30) not null,
+    id_tara number(4) not null, 
+    constraint fk_id_tara foreign key(id_tara) references TARA(id_tara)
+);
+
+create table TARA(
+    id_tara number(4) not null constraint pk_tara primary key,
+    denumire varchar(30) not null,
+    nr_tel_urgente number(15)not null
+);
+
+create table CAMERA(
+    id_camera number(5) not null constraint pk_camera primary key,
+    nr_camera number(5) not null,
+    etaj number(2) not null,
+    id_tip_camera number(5) not null,
+    id_hotel number(4) not null,
+    constraint fk_id_tip_camera foreign key(id_tip_camera) references TIP_CAMERA(id_tip_camera),
+    constraint fk_id_hotel foreign key(id_hotel) references HOTEL(id_hotel)
+);
+
+create table TIP_CAMERA(
+    id_tip_camera number(5) not null constraint pk_tip_camera primary key,
+    denumire varchar(30) not null,
+    nr_paturi number(2) not null,
+    capacitate_pers number(2) not null
+);
+
+create table REZERVARE(
+    id_rezervare number(10) not null constraint pk_rezervare primary key,
+    data_venire date not null,
+    data_plecare date not null,
+    nr_persoane number(2) not null,
+    mod_plata varchar(5) not null check (mod_plata in ('cash', 'card')),
+    moneda varchar(10) not null,
+    id_camera number(5) not null,
+    id_client number(10) not null,
+    constraint fk_id_camera foreign key(id_camera) references CAMERA(id_camera),
+    constraint fk_id_client foreign key(id_client) references CLIENT(id_client)
+);
+
+create table CLIENT(
+    id_client number(10) not null constraint pk_client primary key,
+    nume varchar(30) not null,
+    prenume varchar(30) not null,
+    email varchar(30) not null,
+    nr_telefon number(15) not null
+);
+
+create table ANGAJAT(
+    id_angajat number(10) not null constraint pk_angajat primary key,
+    nume varchar(30) not null,
+    prenume varchar(30) not null,
+    email varchar(30) not null,
+    nr_telefon number(15) not null,
+    data_angajare date not null,
+    data_stop date,
+    id_hotel number(4) not null,
+    id_job number(7) not null,
+    constraint fk_id_hotel2 foreign key(id_hotel) references HOTEL(id_hotel),
+    constraint fk_id_job foreign key(id_job) references JOB(id_job)
+);
+
+create table JOB(
+    id_job number(7) not null constraint pk_job primary key,
+    denumire varchar(30) not null,
+    salariu number(10)not null
+);
+
+create table RECENZIE(
+    id_client number(10) not null,
+    id_hotel number(4) not null,
+    nr_stele number(1) not null check (nr_stele between 1 and 5),
+    constraint pk_id_recenzie primary key(id_client, id_hotel),
+    constraint fk_id_client2 foreign key(id_client) references CLIENT(id_client),
+    constraint fk_id_hotel3 foreign key(id_hotel) references HOTEL(id_hotel)
+);
+
+
+drop table HOTEL;
+drop table ORAS;
+drop table TARA;
+drop table CAMERA;
+drop table TIP_CAMERA;
+drop table REZERVARE;
+drop table CLIENT;
+drop table ANGAJAT;
+drop table JOB;
+drop table RECENZIE;
+
+
+create sequence hotel_secv start with 1 increment by 1 nocache nocycle;
+create sequence job_secv start with 1 increment by 1 nocache nocycle;
+
+
+
+---------------------------------------hoteluri
+insert into HOTEL
+        values (hotel_secv.nextval, 'Hotel-GrandA', 'hotelgrandA@gmail.com', 40213456789, 100); --1romania
+insert into HOTEL (id_hotel, denumire, email, nr_telefon, id_oras) 
+        values (hotel_secv.nextval, 'Hotel-GrandB', 'hotelgrandB@gmail.com', 49301234567, 250); --2germania
+insert into HOTEL (id_hotel, denumire, email, nr_telefon, id_oras) 
+        values (hotel_secv.nextval, 'Hotel-GrandC', 'hotelgrandC@gmail.com', 39068765432, 124); --3italia
+insert into HOTEL (id_hotel, denumire, email, nr_telefon, id_oras) 
+        values (hotel_secv.nextval, 'Hotel-GrandD', 'hotelgrandD@gmail.com', 39044456332, 125); --4italia
+insert into HOTEL (id_hotel, denumire, email, nr_telefon, id_oras) 
+        values (hotel_secv.nextval, 'Hotel-GrandE', 'hotelgrandE@gmail.com', 39068799856, 126); --5italia
+insert into HOTEL (id_hotel, denumire, email, nr_telefon, id_oras) 
+        values (hotel_secv.nextval, 'Hotel-GrandF1', 'hotelgrandF1@gmail.com', 34912345678, 544); --6spania
+insert into HOTEL (id_hotel, denumire, email, nr_telefon, id_oras) 
+        values (hotel_secv.nextval, 'Hotel-GrandF2', 'hotelgrandF2@gmail.com', 34913434668, 544); --7spania
+insert into HOTEL (id_hotel, denumire, email, nr_telefon, id_oras) 
+        values (hotel_secv.nextval, 'Hotel-GrandG', 'hotelgrandG@gmail.com', 31201234567, 768); --8olanda
+insert into HOTEL (id_hotel, denumire, email, nr_telefon, id_oras) 
+        values (hotel_secv.nextval, 'Hotel-GrandH', 'hotelgrandH@gmail.com', 31202387967, 769); --9olanda
+insert into HOTEL (id_hotel, denumire, email, nr_telefon, id_oras) 
+        values (hotel_secv.nextval, 'Hotel-GrandI', 'hotelgrandI@gmail.com', 41441234567, 333); --10elvetia
+insert into HOTEL (id_hotel, denumire, email, nr_telefon, id_oras) 
+        values (hotel_secv.nextval, 'Hotel-GrandJ', 'hotelgrandJ@gmail.com', 3223456789, 941); --11belgia
+
+
+---------------------------------------orase
+insert into ORAS (id_oras, denumire, id_tara) values (100, 'Bucuresti', 11); --romania
+insert into ORAS (id_oras, denumire, id_tara) values (250, 'Berlin', 34); --germania
+insert into ORAS (id_oras, denumire, id_tara) values (124, 'Florenta', 55); --italia
+insert into ORAS (id_oras, denumire, id_tara) values (125, 'Roma', 55); --italia
+insert into ORAS (id_oras, denumire, id_tara) values (126, 'Milano', 55); --italia
+insert into ORAS (id_oras, denumire, id_tara) values (544, 'Madrid', 41); --spania
+insert into ORAS (id_oras, denumire, id_tara) values (768, 'Amsterdam', 99); --olanda
+insert into ORAS (id_oras, denumire, id_tara) values (769, 'Eindhoven', 99); --olanda
+insert into ORAS (id_oras, denumire, id_tara) values (333, 'Berna', 22); --elvetia
+insert into ORAS (id_oras, denumire, id_tara) values (941, 'Bruxelles', 62); --belgia
+
+
+---------------------------------------tari
+insert into TARA (id_tara, denumire, nr_tel_urgente) values (11, 'Romania', 112);
+insert into TARA (id_tara, denumire, nr_tel_urgente) values (34, 'Germania', 132);
+insert into TARA (id_tara, denumire, nr_tel_urgente) values (55, 'Italia', 667);
+insert into TARA (id_tara, denumire, nr_tel_urgente) values (41, 'Spania', 753);
+insert into TARA (id_tara, denumire, nr_tel_urgente) values (99, 'Olanda', 248);
+insert into TARA (id_tara, denumire, nr_tel_urgente) values (62, 'Belgia', 855);
+insert into TARA (id_tara, denumire, nr_tel_urgente) values (22, 'Elvetia', 916);
+
+
+---------------------------------------camere
+insert into CAMERA (id_camera, nr_camera, etaj, id_tip_camera, id_hotel) --romania
+    values (100, 2, 1, 1, 1);
+insert into CAMERA (id_camera, nr_camera, etaj, id_tip_camera, id_hotel) 
+    values (101, 3, 2, 1, 1);
+insert into CAMERA (id_camera, nr_camera, etaj, id_tip_camera, id_hotel) 
+    values (102, 4, 3, 4, 1);
+    
+insert into CAMERA (id_camera, nr_camera, etaj, id_tip_camera, id_hotel) --germania
+    values (200, 2, 1, 2, 2);
+insert into CAMERA (id_camera, nr_camera, etaj, id_tip_camera, id_hotel) 
+    values (201, 3, 2, 1, 2);
+insert into CAMERA (id_camera, nr_camera, etaj, id_tip_camera, id_hotel) 
+    values (202, 4, 2, 5, 2);
+    
+insert into CAMERA (id_camera, nr_camera, etaj, id_tip_camera, id_hotel) --italia f
+    values (300, 2, 1, 1, 3);
+insert into CAMERA (id_camera, nr_camera, etaj, id_tip_camera, id_hotel) 
+    values (301, 3, 2, 2, 3);
+insert into CAMERA (id_camera, nr_camera, etaj, id_tip_camera, id_hotel) 
+    values (302, 4, 3, 3, 3);
+    
+insert into CAMERA (id_camera, nr_camera, etaj, id_tip_camera, id_hotel) --italia r
+    values (303, 2, 1, 1, 4);
+insert into CAMERA (id_camera, nr_camera, etaj, id_tip_camera, id_hotel) 
+    values (304, 3, 1, 3, 4);
+insert into CAMERA (id_camera, nr_camera, etaj, id_tip_camera, id_hotel) 
+    values (305, 4, 2, 4, 4);
+    
+insert into CAMERA (id_camera, nr_camera, etaj, id_tip_camera, id_hotel) --italia m
+    values (306, 2, 1, 1, 5);
+insert into CAMERA (id_camera, nr_camera, etaj, id_tip_camera, id_hotel) 
+    values (307, 3, 2, 2, 5);
+insert into CAMERA (id_camera, nr_camera, etaj, id_tip_camera, id_hotel) 
+    values (308, 4, 3, 4, 5);
+insert into CAMERA (id_camera, nr_camera, etaj, id_tip_camera, id_hotel) 
+    values (309, 5, 4, 5, 5);
+
+insert into CAMERA (id_camera, nr_camera, etaj, id_tip_camera, id_hotel) --spania m6
+    values (400, 2, 1, 1, 6);
+insert into CAMERA (id_camera, nr_camera, etaj, id_tip_camera, id_hotel) 
+    values (401, 3, 2, 3, 6);
+
+insert into CAMERA (id_camera, nr_camera, etaj, id_tip_camera, id_hotel) --spania m7
+    values (402, 2, 1, 1, 7);
+insert into CAMERA (id_camera, nr_camera, etaj, id_tip_camera, id_hotel) 
+    values (403, 3, 2, 5, 7);
+
+insert into CAMERA (id_camera, nr_camera, etaj, id_tip_camera, id_hotel) --olanda a
+    values (500, 2, 1, 1, 8);
+insert into CAMERA (id_camera, nr_camera, etaj, id_tip_camera, id_hotel) 
+    values (501, 3, 2, 3, 8);
+
+insert into CAMERA (id_camera, nr_camera, etaj, id_tip_camera, id_hotel) --olanda e
+    values (502, 2, 1, 1, 9);
+insert into CAMERA (id_camera, nr_camera, etaj, id_tip_camera, id_hotel) 
+    values (503, 3, 2, 4, 9);
+
+insert into CAMERA (id_camera, nr_camera, etaj, id_tip_camera, id_hotel) --elvetia
+    values (600, 2, 1, 1, 10);
+insert into CAMERA (id_camera, nr_camera, etaj, id_tip_camera, id_hotel) 
+    values (601, 3, 2, 2, 10);
+
+insert into CAMERA (id_camera, nr_camera, etaj, id_tip_camera, id_hotel) --belgia
+    values (700, 2, 1, 1, 11);
+insert into CAMERA (id_camera, nr_camera, etaj, id_tip_camera, id_hotel) 
+    values (701, 3, 2, 3, 11);
+
+
+---------------------------------------tipuri camere
+insert into TIP_CAMERA (id_tip_camera, denumire, nr_paturi, capacitate_pers) 
+    values (1, 'normal', 1, 2);
+insert into TIP_CAMERA (id_tip_camera, denumire, nr_paturi, capacitate_pers) 
+    values (2, 'familie', 3, 4);
+insert into TIP_CAMERA (id_tip_camera, denumire, nr_paturi, capacitate_pers) 
+    values (3, 'apartament', 4, 5);
+insert into TIP_CAMERA (id_tip_camera, denumire, nr_paturi, capacitate_pers) 
+    values (4, 'apartament-dublu', 6, 8);
+insert into TIP_CAMERA (id_tip_camera, denumire, nr_paturi, capacitate_pers) 
+    values (5, 'lux', 1, 2);
+
+
+
+---------------------------------------rezervari
+insert into REZERVARE (id_rezervare, data_venire, data_plecare, nr_persoane, mod_plata, moneda, id_camera, id_client) 
+    values (1, '12-10-2000', '15-10-2000', 2, 'cash', 'euro', 600, 1);
+insert into REZERVARE (id_rezervare, data_venire, data_plecare, nr_persoane, mod_plata, moneda, id_camera, id_client) 
+    values (2, '29-05-2018', '03-06-2018', 1, 'card', 'euro', 400, 2);
+insert into REZERVARE (id_rezervare, data_venire, data_plecare, nr_persoane, mod_plata, moneda, id_camera, id_client) 
+    values (3, '15-12-2008', '26-12-2008', 4, 'cash', 'leu', 301, 3);
+insert into REZERVARE (id_rezervare, data_venire, data_plecare, nr_persoane, mod_plata, moneda, id_camera, id_client) 
+    values (4, '12-10-2010', '15-10-2010', 5, 'card', 'coroana', 302, 4);
+insert into REZERVARE (id_rezervare, data_venire, data_plecare, nr_persoane, mod_plata, moneda, id_camera, id_client) 
+    values (5, '05-02-2013', '17-02-2013', 4, 'cash', 'euro', 302, 5);
+insert into REZERVARE (id_rezervare, data_venire, data_plecare, nr_persoane, mod_plata, moneda, id_camera, id_client) 
+    values (6, '01-01-2023', '15-01-2023', 2, 'card', 'zlot', 403, 6);
+insert into REZERVARE (id_rezervare, data_venire, data_plecare, nr_persoane, mod_plata, moneda, id_camera, id_client) 
+    values (7, '06-06-2006', '09-06-2006', 2, 'cash', 'euro', 202, 1);
+insert into REZERVARE (id_rezervare, data_venire, data_plecare, nr_persoane, mod_plata, moneda, id_camera, id_client) 
+    values (8, '30-04-2000', '04-05-2000', 1, 'cash', 'dinar', 500, 7);
+insert into REZERVARE (id_rezervare, data_venire, data_plecare, nr_persoane, mod_plata, moneda, id_camera, id_client) 
+    values (9, '13-09-2004', '23-09-2004', 4, 'cash', 'euro', 501, 8);
+insert into REZERVARE (id_rezervare, data_venire, data_plecare, nr_persoane, mod_plata, moneda, id_camera, id_client) 
+    values (10, '29-05-2018', '03-06-2018', 6, 'card', 'franc', 503, 9);
+insert into REZERVARE (id_rezervare, data_venire, data_plecare, nr_persoane, mod_plata, moneda, id_camera, id_client) 
+    values (11, '08-08-2015', '20-08-20015', 5, 'cash', 'leu', 503, 10);
+insert into REZERVARE (id_rezervare, data_venire, data_plecare, nr_persoane, mod_plata, moneda, id_camera, id_client) 
+    values (12, '14-11-2001', '15-11-2001', 2, 'card', 'euro', 700, 1);
+insert into REZERVARE (id_rezervare, data_venire, data_plecare, nr_persoane, mod_plata, moneda, id_camera, id_client) 
+    values (13, '12-10-2017', '15-10-2017', 5, 'card', 'zlot', 701, 2);
+insert into REZERVARE (id_rezervare, data_venire, data_plecare, nr_persoane, mod_plata, moneda, id_camera, id_client) 
+    values (14, '07-04-2009', '26-04-2009', 8, 'cash', 'coroana', 308, 3);
+insert into REZERVARE (id_rezervare, data_venire, data_plecare, nr_persoane, mod_plata, moneda, id_camera, id_client) 
+    values (15, '15-09-2020', '15-11-2020', 2, 'cash', 'franc', 309, 9);
+insert into REZERVARE (id_rezervare, data_venire, data_plecare, nr_persoane, mod_plata, moneda, id_camera, id_client) 
+    values (16, '08-08-2021', '17-08-2021', 2, 'cash', 'euro', 403, 10);
+insert into REZERVARE (id_rezervare, data_venire, data_plecare, nr_persoane, mod_plata, moneda, id_camera, id_client) 
+    values (17, '12-03-2013', '20-03-2013', 2, 'card', 'leva', 101, 3);
+
+
+
+---------------------------------------clienti
+insert into CLIENT (id_client, nume, prenume, email, nr_telefon) 
+    values (1, 'Popescu', 'Maria', 'mariapopescu@gmail.com', 765123456);
+insert into CLIENT (id_client, nume, prenume, email, nr_telefon) 
+    values (2, 'Pop', 'Ion', 'popion@gmail.com', 732987654);
+insert into CLIENT (id_client, nume, prenume, email, nr_telefon) 
+    values (3, 'Cristache', 'George', 'cristachegeorge@gmail.com', 786456789);
+insert into CLIENT (id_client, nume, prenume, email, nr_telefon) 
+    values (4, 'Garcia', 'Alejandro', 'agarcia@gmail.com', 678123456);
+insert into CLIENT (id_client, nume, prenume, email, nr_telefon) 
+    values (5, 'Nowac', 'Jakub', 'jnowac@gmail.com', 512345678);
+insert into CLIENT (id_client, nume, prenume, email, nr_telefon) 
+    values (6, 'Kowalski', 'Magdalena', 'magdkow@gmail.com', 602987654);
+insert into CLIENT (id_client, nume, prenume, email, nr_telefon) 
+    values (7, 'Smith', 'John', 'smithjohn@gmail.com', 7700900123);
+insert into CLIENT (id_client, nume, prenume, email, nr_telefon) 
+    values (8, 'Kelley', 'Lorena', 'lorenak@gmail.com', 7812345678);
+insert into CLIENT (id_client, nume, prenume, email, nr_telefon) 
+    values (9, 'Lotte', 'Jansen', 'jansenlotte@gmail.com', 612345678);
+insert into CLIENT (id_client, nume, prenume, email, nr_telefon) 
+    values (10, 'Berg', 'Daan', 'bergdaan@gmail.com', 687654321);
+
+
+---------------------------------------angajati
+insert into ANGAJAT (id_angajat, nume, prenume, email, nr_telefon, data_angajare, data_stop, id_hotel, id_job) 
+    values (1, 'Caliman', 'Cornela', 'ccaliman@gmail.com', 761811113, '03-04-2000', NULL, 1, 1);
+insert into ANGAJAT (id_angajat, nume, prenume, email, nr_telefon, data_angajare, data_stop, id_hotel, id_job) 
+    values (2, 'Meier', 'Lisa', 'lmeier@gmail.com', 17612345678, '12-10-2000', NULL, 2, 1);
+insert into ANGAJAT (id_angajat, nume, prenume, email, nr_telefon, data_angajare, data_stop, id_hotel, id_job) 
+    values (3, 'Rossi', 'Marco', 'rmarco@gmail.com', 3351234567, '03-06-2002', NULL, 3, 1);
+insert into ANGAJAT (id_angajat, nume, prenume, email, nr_telefon, data_angajare, data_stop, id_hotel, id_job) 
+    values (4, 'Leclerq', 'Sophie', 'lsophie@gmail.com', 470123456, '17-04-2003', NULL, 4, 1);
+insert into ANGAJAT (id_angajat, nume, prenume, email, nr_telefon, data_angajare, data_stop, id_hotel, id_job) 
+    values (5, 'Muller', 'Luca', 'lmuller@gmail.com', 761234567, '24-05-2001', NULL, 5, 1);
+insert into ANGAJAT (id_angajat, nume, prenume, email, nr_telefon, data_angajare, data_stop, id_hotel, id_job) 
+    values (6, 'Jong', 'Pieter', 'pieterj@gmail.com', 612345678, '13-08-2004', NULL, 6, 1);
+insert into ANGAJAT (id_angajat, nume, prenume, email, nr_telefon, data_angajare, data_stop, id_hotel, id_job) 
+    values (7, 'Garcia', 'Marta', 'mgarciam@gmail.com', 678901234, '15-10-2007', NULL, 7, 1);
+insert into ANGAJAT (id_angajat, nume, prenume, email, nr_telefon, data_angajare, data_stop, id_hotel, id_job) 
+    values (8, 'Ivanov', 'Dimitar', 'dimiv@gmail.com', 876123456, '26-10-2000', NULL, 8,1);
+insert into ANGAJAT (id_angajat, nume, prenume, email, nr_telefon, data_angajare, data_stop, id_hotel, id_job) 
+    values (9, 'Petrovici', 'Ana', 'anapetrovici@gmail.com', 641234567, '17-11-2000', NULL, 9,1);
+insert into ANGAJAT (id_angajat, nume, prenume, email, nr_telefon, data_angajare, data_stop, id_hotel, id_job) 
+    values (10, 'Kamer', 'Paul', 'kamerp@gmail.com', 6641234567, '02-01-2001', NULL, 10,1);
+insert into ANGAJAT (id_angajat, nume, prenume, email, nr_telefon, data_angajare, data_stop, id_hotel, id_job) 
+    values (11, 'Martin', 'Elise', 'elisem@gmail.com', 623456789, '11-09-2002', NULL, 11,1);
+
+insert into ANGAJAT (id_angajat, nume, prenume, email, nr_telefon, data_angajare, data_stop, id_hotel, id_job) 
+    values (12, 'Bianchi', 'Giovanni', 'gbianchi@gmail.com', 3479876543, '04-05-2001', NULL, 1, 2);
+insert into ANGAJAT (id_angajat, nume, prenume, email, nr_telefon, data_angajare, data_stop, id_hotel, id_job) 
+    values (13, 'Dupont', 'Thomas', 'dthomas@gmail.com', 499876543, '13-11-2000', NULL, 2, 2);
+insert into ANGAJAT (id_angajat, nume, prenume, email, nr_telefon, data_angajare, data_stop, id_hotel, id_job) 
+    values (14, 'Fischer', 'Laura', 'lafis@gmail.com', 792345678, '04-07-2002', NULL, 3, 2);
+insert into ANGAJAT (id_angajat, nume, prenume, email, nr_telefon, data_angajare, data_stop, id_hotel, id_job) 
+    values (15, 'Rodriguez', 'Marcel', 'mrodriguez@gmail.com', 655432198, '16-03-2003', NULL, 4, 2);
+insert into ANGAJAT (id_angajat, nume, prenume, email, nr_telefon, data_angajare, data_stop, id_hotel, id_job) 
+    values (16, 'Schmidt', 'Julia', 'juliasc@gmail.com', 15198765432, '25-06-2001', NULL, 5, 2);
+insert into ANGAJAT (id_angajat, nume, prenume, email, nr_telefon, data_angajare, data_stop, id_hotel, id_job) 
+    values (17, 'Enoteca', 'Vanessa', 'venoteca@gmail.com', 6123232345, '12-08-2004', NULL, 6, 2);
+insert into ANGAJAT (id_angajat, nume, prenume, email, nr_telefon, data_angajare, data_stop, id_hotel, id_job) 
+    values (18, 'Petrova', 'Maria', 'mariapetrova@gmail.com', 888876543, '15-10-2008', NULL, 7, 2);
+insert into ANGAJAT (id_angajat, nume, prenume, email, nr_telefon, data_angajare, data_stop, id_hotel, id_job) 
+    values (19, 'Wagner', 'Lena', 'lenawagner@gmail.com', 6609876543, '22-10-2002', NULL, 8, 2);
+
+insert into ANGAJAT (id_angajat, nume, prenume, email, nr_telefon, data_angajare, data_stop, id_hotel, id_job) 
+    values (20, 'Ferrari', 'Cami', 'ferraricami@gmail.com', 3401234567, '04-05-2011', NULL, 1, 3);
+insert into ANGAJAT (id_angajat, nume, prenume, email, nr_telefon, data_angajare, data_stop, id_hotel, id_job) 
+    values (21, 'Romano', 'Chiara', 'chromano@gmail.com', 3498765432, '14-11-2001', NULL, 2, 3);
+insert into ANGAJAT (id_angajat, nume, prenume, email, nr_telefon, data_angajare, data_stop, id_hotel, id_job) 
+    values (22, 'Dubois', 'Emma', 'emmad@gmail.com', 487654321, '05-06-2003', NULL, 3, 3);
+insert into ANGAJAT (id_angajat, nume, prenume, email, nr_telefon, data_angajare, data_stop, id_hotel, id_job) 
+    values (23, 'Moretti', 'Luca', 'lmoretti@gmail.com', 763456789, '16-02-2004', NULL, 4, 3);
+insert into ANGAJAT (id_angajat, nume, prenume, email, nr_telefon, data_angajare, data_stop, id_hotel, id_job) 
+    values (24, 'Viers', 'Lars', 'larsviers@gmail.com', 634567890, '24-06-2002', NULL, 5, 3);
+insert into ANGAJAT (id_angajat, nume, prenume, email, nr_telefon, data_angajare, data_stop, id_hotel, id_job) 
+    values (25, 'Becker', 'Leon', 'beckerl@gmail.com', 17287654321, '11-07-2005', NULL, 9, 3);
+insert into ANGAJAT (id_angajat, nume, prenume, email, nr_telefon, data_angajare, data_stop, id_hotel, id_job) 
+    values (26, 'Huber', 'Don', 'huberd@gmail.com', 66487654321, '12-11-2009', NULL, 11, 3);
+insert into ANGAJAT (id_angajat, nume, prenume, email, nr_telefon, data_angajare, data_stop, id_hotel, id_job) 
+    values (27, 'Paralla', 'Fiona', 'parallaf@gmail.com', 0889765432, '27-03-2003', NULL, 8, 3);
+
+insert into ANGAJAT (id_angajat, nume, prenume, email, nr_telefon, data_angajare, data_stop, id_hotel, id_job)
+    values (28, 'Laurant', 'Antoine', 'antlaur@gmail.com', 634567890, '25-06-2001', '14-10-2008', 7, 2);
+insert into ANGAJAT (id_angajat, nume, prenume, email, nr_telefon, data_angajare, data_stop, id_hotel, id_job) 
+    values (29, 'Fan', 'Perry', 'fperry@gmail.com', 6123666645, '12-08-2004', '03-05-2011', 1, 3);
+
+
+
+---------------------------------------joburi
+insert into JOB (id_job, denumire, salariu) values (job_secv.nextval, 'sef', 25000);  ---1
+insert into JOB (id_job, denumire, salariu) values (job_secv.nextval, 'camerist', 3400);  ---2
+insert into JOB (id_job, denumire, salariu) values (job_secv.nextval, 'receptioner', 7600);  ---3
+
+
+
+---------------------------------------recenzii
+insert into RECENZIE (id_client, id_hotel, nr_stele) values (1, 11, 3);
+insert into RECENZIE (id_client, id_hotel, nr_stele) values (2, 11, 2);
+insert into RECENZIE (id_client, id_hotel, nr_stele) values (3, 1, 4);
+insert into RECENZIE (id_client, id_hotel, nr_stele) values (4, 3, 4);
+insert into RECENZIE (id_client, id_hotel, nr_stele) values (5, 3, 3);
+insert into RECENZIE (id_client, id_hotel, nr_stele) values (6, 7, 5);
+insert into RECENZIE (id_client, id_hotel, nr_stele) values (1, 10, 4);
+insert into RECENZIE (id_client, id_hotel, nr_stele) values (2, 6, 3);
+insert into RECENZIE (id_client, id_hotel, nr_stele) values (10, 9, 3);
+insert into RECENZIE (id_client, id_hotel, nr_stele) values (7, 8, 4);
+insert into RECENZIE (id_client, id_hotel, nr_stele) values (8, 8, 4);
+insert into RECENZIE (id_client, id_hotel, nr_stele) values (1, 2, 5);
+insert into RECENZIE (id_client, id_hotel, nr_stele) values (3, 3, 3);
+insert into RECENZIE (id_client, id_hotel, nr_stele) values (9, 9, 1);
+insert into RECENZIE (id_client, id_hotel, nr_stele) values (10, 7, 2);

@@ -1,0 +1,68 @@
+
+-- care e salariu mediu pt fiecare dept
+select avg(salary)
+from employees
+group by department_id;
+
+--cea mai mare val dintre toate aceste salarii medii
+select max(avg(salary))
+from employees
+group by department_id;
+
+
+-- dept cu cel mai mare salariu mediu
+select round(avg(salary)), d.department_name, d.department_id
+from employees e, departments d
+where e.department_id = d.department_id
+group by d.department_id, d.department_name
+having round(avg(e.salary)) = (
+                                select max(round(avg(salary)))
+                                from employees e
+                                group by e.department_id
+                                );
+                                
+
+--codu, numele dept si nr de ng care lucreaz in acelasi dept pt dept in care lucreaza<4 ang
+select e.department_id, d.department_name, count(employee_id)
+from employees e, departments d
+where e.department_id = d.department_id
+group by e.department_id, d.department_name
+having count(employee_id)<4;
+
+
+--codu, numele dept si nr de ng care lucreaz in acelasi dept pt dept in care exista nr max ang
+select e.department_id, d.department_name, count(employee_id)
+from employees e, departments d
+where e.department_id = d.department_id
+group by e.department_id, d.department_name
+having count(employee_id) = (
+                                select max(count(employee_id))
+                                from employees
+                                group by department_id
+                                );
+                                
+
+
+--salariatii care au fost angajaati in aceeasi zi a lunii 
+--in care cei mai multi salariati au fost angajati
+select *
+from employees
+where to_char(hire_date, 'DD') in (select to_char(hire_date, 'DD')
+                                    from employees
+                                    group by to_char(hire_date, 'DD')
+                                    having count(*) = (select max(count(*))
+                                                        from employees
+                                                        group by to_char(hire_date, 'DD')));
+                                                        
+
+--cod, dept, id manager dept, suma salariilor pe dept
+select department_id, manager_id, sum(salary)
+from employees
+group by department_id;
+
+
+select d.department_id, d.department_name, nvl(a.suma, 0)
+from departments d, (select department_id, sum(salary) suma
+                    from employees
+                    group by department_id) a
+where d.department_id = a.department_id(+);

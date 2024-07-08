@@ -1,0 +1,134 @@
+
+--ang cu salariu max din fiecare departament
+select first_name, last_name, e.employee_id, e.department_id, e.salary
+from employees e
+where (salary,e.department_id) in (select max(salary), department_id
+from employees
+group by department_id);
+
+
+--ang cu salariu min din fiecare departament
+select first_name, last_name, e.employee_id, e.department_id, e.salary
+from employees e
+where (salary,e.department_id) in (select min(salary), department_id
+from employees
+group by department_id);
+
+
+--functia count numara angajatii (sau ce ii dai sa nr)
+--functia count(*) intoarce toti agajati incusiv null (cred?)
+
+--cat ang sunt in fiecare depart
+select count(employee_id), department_id
+from employees
+group by department_id;
+
+select count(*), department_id
+from employees
+group by department_id;
+
+
+
+--min, max, suma, si media salariilor pt fiecare job pe care lucreaza ang
+select min(salary), max(salary), sum(salary), avg(salary) 
+from employees
+group by job_id;
+
+
+--si titlu jobului
+select min(salary), max(salary), sum(salary), avg(salary), e.job_id, j.job_title
+from employees e, jobs j
+where e.job_id=j.job_id
+group by e.job_id, j.job_title;
+
+
+--aduagam si nr de angajati pe job
+select job_id, count(*)
+from employees
+group by job_id
+order by 2;
+
+select min(salary), max(salary), sum(salary), avg(salary), e.job_id, j.job_title, count(*)
+from employees e, jobs j
+where e.job_id=j.job_id
+group by e.job_id, j.job_title
+order by 2;
+
+
+--jobul cu nr max de ang
+select max(nr)
+from (select job_id, count(*) nr
+    from employees
+    group by job_id) joburi;
+
+--echivalent cu cel de mai jos--
+
+select max(count(*)) nr
+from employees
+group by job_id;
+
+
+--having e folosit cu functiile de agregare cum e count
+--nu punem where count !!!
+--punem having in loc de where  DOAR LA FUNCTII E AGREGARE
+
+--salariatii care lcreaza pe job la care sunt angajati cei mai ulti salariati
+
+select e.employee_id
+from employees e, jobs j
+where (e.job_id,j.job_title) in (
+    select e.job_id, j.job_title
+    from employees e, jobs j
+    where e.job_id=j.job_id
+    group by e.job_id, j.job_title
+    having count(*) = (select max(count(*)) nr
+                        from employees
+                        group by job_id)
+);
+
+-- acelasi lucru dar cu min
+select e.employee_id
+from employees e, jobs j
+where (e.job_id,j.job_title) in (
+    select e.job_id, j.job_title
+    from employees e, jobs j
+    where e.job_id=j.job_id
+    group by e.job_id, j.job_title
+    having count(*) = (select min(count(*)) nr
+                        from employees
+                        group by job_id)
+);
+
+
+-- nr de ang care sunt sefi directi, etichetati col nr manageri
+select count(*)
+from employees
+where employee_id in
+    (
+    select e.manager_id
+    from employees e, departments d
+    where e.department_id = d.department_id(+)
+    and e.manager_id in (select e.employee_id
+                            from employees e)
+    );
+
+--sau asa--
+select count(distinct manager_id)
+from employees;
+
+
+--depart, city, nr de ang si salariu mediu(avg) pt anajatii din acel depart
+select avg(salary), e.department_id, d.department_name, l.city
+from employees e, departments d, locations l
+where e.department_id = d.department_id
+and d.location_id = l.location_id
+group by e.department_id, d.department_name, l.city;
+
+
+--la fel ca mai sus dar care sa aiba nr de ang mai marea ca 4
+select avg(salary), e.department_id, d.department_name, l.city
+from employees e, departments d, locations l
+where e.department_id = d.department_id
+and d.location_id = l.location_id
+group by e.department_id, d.department_name, l.city
+having count(employee_id)>4;

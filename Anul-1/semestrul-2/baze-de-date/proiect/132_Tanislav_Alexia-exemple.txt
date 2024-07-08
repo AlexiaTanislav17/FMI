@@ -1,0 +1,156 @@
+-------------------------------------------------------------------------------------------------------------------------------
+
+--1.Să se afișeze rezervările care: au primit mai mult (strict) de 2 stele de la 
+--clienții al căror nume începe cu ”p%” sau lungimea prenumelui clientului este mai mare ca 5 și au rezervat 
+--camere cu data de venire în anul 2013 sau cu data de plecare în luna a 4-a. Rezolvarea cuprinde subcerere 
+--sincronizată în care intervin cel puțin 3 tabele, 2 funcții pe șiruri de caractere, 1 funcție pe date calendaristice.
+select *
+from rezervare
+where id_client in (select r.id_client 
+                    from recenzie r, client c 
+                    where nr_stele>2
+                    and c.id_client = r.id_client
+                    and (lower(c.nume) like 'p%' or length(c.prenume) >= 5))
+  and id_camera in (select id_camera 
+                    from rezervare r 
+                    where (extract(year from data_venire) = '2013')
+                    or extract(month from data_plecare) = '04');
+
+
+
+-- 2.Să se afișeze numele și prenumele clienților ale căror email-uri încep cu litera ”m%” și 
+--care au lăsat recenzii de 3 stele. Rezolvarea cuprinde subcerere nesincronizată în clauza from, 
+--o funcție pe șiruri de caractere.
+select t1.nume, t2.prenume
+from (select nume, prenume 
+        from client 
+        where email like 'm%') t1,
+     (select nume, prenume 
+        from client c, recenzie r 
+        where c.id_client = r.id_client
+        and r.nr_stele = 3) t2
+where t1.nume = t2.nume;
+
+
+
+
+--3.Să se afișeze numele hotelului cu cele mai multe recenzii 
+--și angajații care lucrează sau au lucrat la hotelul respectiv. Rezolvarea cuprinde 
+--grupări de date, funcții grup, filtrare la nivel de grupuri cu subcereri 
+--nesincronizate în clauza having, în care intervin cel puțin 3 tabele.
+select a.id_angajat, a.nume, a.prenume, a.id_hotel, h.denumire
+from ANGAJAT a, HOTEL h
+where a.id_hotel in (select r.id_hotel
+                    from RECENZIE r
+                    group by r.id_hotel
+                    having count(id_hotel) = (select max(count(id_hotel))
+                                            from RECENZIE
+                                            group by id_hotel
+                                            )
+)
+and h.id_hotel = a.id_hotel;
+
+
+-- 4.sa se afiseze pentru toti angajatii: numele, prenumele, id-ul, denumirea jobului
+--(folosind functia decode, coloana avand numele post),vechimea rotunjita calculata in numar de luni 
+--(inlcusiv a celor care inca lucreaza in prezent), iar in functie de vechime
+--sa se afiseze rangul angajatului (daca are vechimea mai mica de 150 de luni este junior, 
+--vechimea intre 150 de luni si 250 este medior, orice alta vechime este senior)
+
+select a.id_angajat, a.nume, a.prenume, a.vechime,
+case 
+when a.vechime < 150 then 'junior'
+when a.vechime >= 150 and vechime < 250 then 'medior'
+else 'senior'
+end as Rang,
+decode (a.id_job, 1, 'sef', 2, 'camerist', 3, 'receptioner') Post
+from(
+select id_angajat, nume, prenume, id_job, round(months_between(nvl(data_stop, sysdate), data_angajare)) as vechime
+from ANGAJAT
+) a
+order by a.vechime;
+
+
+--5.Să se afișeze numele, prenumele clienților care au plătit cu cardul rezervările 
+--și denumirele hotelurilor la care au lăsat recenzii, iar in funcție de câte stele 
+--au lăsat recenzie, să se afișeze descrierea recenzilor folosind CASE (daca numărul 
+--de stele = 3, se afișează 'este ok', stele = 4, se afișează 'a fost foarte bine', 
+--stele = 4, se afișează 'excelent hotel. recomand!', orice altă varinată se afișează 
+--'hotel de evitat'). Rezolvarea cuprinde utilizarea unui bloc de cerere cu clauză with, 
+--utilizarea expresiei CASE.
+with prov as (
+    select distinct c.nume, c.prenume, c.id_client
+    from CLIENT c, REZERVARE r
+    where r.id_client = c.id_client
+    and r.mod_plata = 'card'
+)
+select h.denumire, p.nume, p.prenume,
+case
+when r.nr_stele = 3 then 'este ok'
+when r.nr_stele = 4 then 'a fost foarte bine'
+when r.nr_stele = 5 then 'excelent hotel. recomand!'
+else 'hotel de evitat'
+end as DescriereRecenzie
+from RECENZIE r, HOTEL h, prov p
+where r.id_hotel = h.id_hotel
+and p.id_client = r.id_client
+order by r.nr_stele;
+
+
+
+----------------------------------------------------------------------------------------------------------------
+
+
+--1.Să se actualizeze salariul (cu valoarea 3200) angajatului al carui număr de telefon este 3479876543.
+update JOB
+set salariu = 3200
+where id_job = (select id_job
+                from angajat a
+                where a.nr_telefon = 3479876543);
+   
+
+
+-- 2.Să se actualizeze denumirea tipului de camera al camerei  care a fost rezervata in perioada           
+update TIP_CAMERA t
+set t.denumire = 'apartament-studio'
+where t.id_tip_camera = (select id_tip_camera
+                        from camera c
+                        where c.id_camera = (select id_camera
+                                            from rezervare r
+                                            where r.data_venire = '07-04-2009' and r.data_plecare = '26-04-2009'
+                                            and r.moneda = 'coroana'));        --308
+                                            
+--3.Să se steargă toate recenziile de la clienții care au stat in camera 503.                                           
+delete from RECENZIE r
+where r.id_client in (select id_client
+                        from rezervare 
+                        where id_camera = 503);
+                        
+                        
+-------------------------------------------------------------------------------------------------------------------
+create view VIEW1 as
+select cl.nume, cl.prenume, tc.denumire, t.nr_tel_urgente, c.etaj
+from client cl, rezervare r, tara t, camera c, tip_camera tc, oras o, hotel h 
+where c.id_tip_camera = tc.id_tip_camera
+and c.id_hotel = h.id_hotel
+and h.id_oras = o.id_oras
+and o.id_tara = t.id_tara
+and c.id_camera = r.id_camera
+and cl.id_client = r.id_client
+and r.id_camera in (
+                    select c.id_camera
+                    from CAMERA c 
+                    join TIP_CAMERA tc on c.id_tip_camera = tc.id_tip_camera
+                    join HOTEL h on c.id_hotel = h.id_hotel
+                    join ORAS o on h.id_oras = o.id_oras
+                    join TARA t on o.id_tara = t.id_tara
+                    where tc.denumire in ('normal', 'lux')
+
+);
+
+drop view VIEW1;
+
+select * from VIEW1;
+
+update VIEW1 SET nr_tel_urgente = 112;
+

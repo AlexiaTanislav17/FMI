@@ -1,0 +1,71 @@
+SELECT employee_id, first_name, last_name, nvl(to_char(commission_pct),'nu are comision')
+FROM employees;
+
+SELECT employee_id, first_name, last_name, nvl2(commission_pct,to_char(commission_pct),'nu are comision')
+FROM employees;
+
+--CROSSJOIN   si    JOIN
+SELECT e.*, d.*                       --aliasuri pt tabele, nu se folosesc in general
+FROM employees e, departments d;
+
+SELECT e.*, d.*
+FROM employees e
+JOIN departments d ON e.department_id = d.department_id;
+
+SELECT e.last_name || ' ' || e.first_name, d.department_name, e.department_id
+FROM employees e 
+JOIN departments d
+ON e.departemnt_id = d.department_id;
+
+
+SELECT e.last_name || ' ' || e.first_name, d.department_name, department_id
+FROM employees e 
+JOIN departments d
+USING (department_id);
+
+-- ori folosim ON PE FIECARE TABELA CU CONDITIE ORI FOLOSIM USING SI AND PT CONDITII
+-- numele, salariu, orasul, tara si titlul jobului in care lucreaza angajatii condusi direct de managerul cu id 100
+SELECT e.first_name, e.last_name, e.salary, j.job_title, c.country_name, l.city
+FROM employees e
+JOIN departments d ON e.department_id = d.department_id
+JOIN jobs j ON e.job_id = j.job_id
+JOIN locations l ON d.location_id = l.location_id
+JOIN countries c ON l.country_id = c.country_id
+WHERE e.manager_id = 100;
+-- la join oridnea conteaza ca altfel nu se leaga cum trb
+
+SELECT e.first_name, e.last_name, e.salary, j.job_title, c.country_name, l.city
+FROM employees e,jobs j,locations l,countries c, departments d
+WHERE e.manager_id = 100
+AND e.department_id = d.department_id
+AND e.job_id = j.job_id
+AND d.location_id = l.location_id
+AND l.country_id = c.country_id;
+-- cand folosesti where si and nu mai conteaza ordinea
+
+--joburile care au salariu maxim mai mic decat salariul angajatului cu id 100
+SELECT j.job_title, e.salary, j.max_salary
+FROM jobs j, employees e
+WHERE j.max_salary<e.salary
+AND e.employee_id =100;
+
+SELECT *
+FROM jobs
+WHERE max_salary<(SELECT salary FROM employees WHERE employee_id=100);    -- recomandat ca e mai usor
+
+-- salariatii care au fost angajati dupa Gates
+SELECT last_name, hire_date
+FROM employees
+WHERE hire_date>(SELECT hire_date FROM employees WHERE last_name = 'Gates');
+
+--angajatii care lucreaza in acelasi departament cu cel putin un angajat al carui nume contine litera t
+SELECT DISTINCT e.last_name, e.employee_id      --distinct iti alege din aceeasi tabele e pers dif
+FROM employees e, employees e2
+WHERE e.department_id=e2.department_id
+AND lower(e2.last_name) LIKE '%t%';
+
+SELECT DISTINCT e.last_name, e.employee_id
+FROM employees e
+JOIN employees e2
+ON (e.department_id=e2.department_id
+AND lower(e2.last_name) LIKE '%t%');

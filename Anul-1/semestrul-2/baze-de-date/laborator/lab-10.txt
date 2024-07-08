@@ -1,0 +1,59 @@
+
+
+
+--ang cu salariu mai mare decat salariul mediu
+select e.last_name, e.salary, e.department_id
+from employees e
+where e.salary > (select avg(salary)
+                    from employees
+                    where department_id = e.department_id)
+order by 3;
+
+
+
+-- ca cerinta precendenta dar sa afisam si numele departamentului
+select e.last_name, e.salary, e.department_id, aux.department_name
+from employees e, (select dd.department_name, dd.department_id, avg(salary), count(*)
+                    from departments dd, employees ee
+                    where dd.department_id = ee.department_id
+                    group by dd.department_name, dd.department_id) aux
+where e.salary > (select avg(salary)
+                    from employees
+                    where department_id = e.department_id)
+and e.department_id = aux.department_id
+order by 3;
+
+
+--
+--select e.last_name, e.salary, e.department_id, (select round(avg(salary))
+--                                                from employees
+--                                                where department_id = e.department_id
+--                                                )media,
+--                                                (select department_name
+--                                                from departments
+--                                                where department_id = e.department_id
+--                                                )media,
+--                                                (select round(avg(salary))
+--                                                from employees
+--                                                where department_id = e.department_id
+--                                                )media,
+--from employees e
+--where e.salary > (select avg(salary)
+--                    from employees
+--                    where department_id = e.department_id)
+--order by 3;
+--
+
+
+
+---pt fiecare departament sa se obtina denumirea acestuia, numele salariatului cu cea mai mare vechime din departament, sa se ordoneze rezultatul dupa numele departamentului
+select d.department_name, e.department_id
+from departments d, employees e 
+where e.department_id = d.department_id
+and (e.hire_date, e.department_id) in (
+                    select min(e.hire_date), e.department_id
+                    from employees e, departments d
+                    where e.department_id = d.department_id
+                    group by e.department_id
+                    )
+order by d.department_name;

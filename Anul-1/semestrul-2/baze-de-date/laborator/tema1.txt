@@ -1,0 +1,128 @@
+--------------------------tema 1-----------------------------------
+
+--1
+--Sa se afiseze orasul si codul locatiei in care lucreaza in prezent salariatii angajati pe un job al carui titlu se termina 
+--in "clerk" sau care se gaseste intr-o tara a carei denumire are pe a 4-a sau a 5-a pozitie litera "a".
+
+--fara join
+SELECT DISTINCT l.location_id, l.city
+FROM employees e, jobs j, locations l, countries c, departments d
+WHERE ((e.job_id = j.job_id) AND (c.country_id = l.country_id) 
+AND (d.department_id = e.department_id) AND (d.location_id = l.location_id)
+AND (lower(j.job_title) LIKE '%clerk'))
+UNION
+SELECT DISTINCT l.location_id, l.city
+FROM locations l, countries c
+WHERE c.country_name LIKE '____a%' OR c.country_name LIKE '___a%';
+
+
+
+--2A
+--Sa se afiseze numele complet, job-ul (titlul) actual si departamentul (numele) actual
+--pentru angajatii care in prezent lucreaza intr-un departament si pe un job
+--pe care au lucrat in trecut si alti salariati angajati dupa 29-Octombrie-1993.
+--Se va tine cont atat de job, cat si de departament. Ordonati rezultatele 
+--descrescator in functie de codul departamentului si  apoi dupa titlul jobului.
+
+--SELECT DISTINCT e1.first_name, e1.last_name , j.job_title, d.department_name,e1.department_id
+--FROM employees e1, departments d, jobs j,
+--(SELECT e.employee_id, h.job_id, h.department_id FROM employees e 
+--JOIN job_history h ON e.employee_id = h.employee_id
+--WHERE e.hire_date > '29-10-1993'
+--)e2
+--WHERE e1.job_id = e2.job_id 
+--AND e1.employee_id != e2.employee_id 
+--AND e1.department_id = e2.department_id
+--AND e1.department_id = d.department_id
+--AND e1.job_id = j.job_id
+--ORDER BY e1.department_id DESC, j.job_title DESC;
+
+
+SELECT DISTINCT e1.first_name, e1.last_name , j.job_title, d.department_name,e1.department_id
+FROM employees e1
+LEFT JOIN departments d ON e1.department_id = d.department_id
+LEFT JOIN jobs j ON e1.job_id = j.job_id
+WHERE 
+e1.department_id IN 
+(SELECT DISTINCT h.department_id FROM employees e 
+JOIN job_history h ON e.employee_id = h.employee_id
+WHERE e.hire_date > '29-10-1993' )
+AND
+e1.job_id IN 
+(SELECT DISTINCT h.job_id FROM employees e 
+JOIN job_history h ON e.employee_id = h.employee_id
+WHERE e.hire_date > '29-10-1993')
+ORDER BY e1.department_id DESC, j.job_title DESC;
+
+
+
+
+--2B
+--Modificati cererea anterioara astfel incat sa se tina cont doar de lista job-urilor 
+--pe care au lucrat in trecut angajatii indiferent de departamentul in care au lucrat. 
+--Discutati diferentele aparute in cod, cat si despre rezultatele obtinute.
+
+
+SELECT DISTINCT e1.first_name, e1.last_name , j.job_title, d.department_name,e1.department_id
+FROM employees e1
+LEFT JOIN departments d ON e1.department_id = d.department_id
+LEFT JOIN jobs j ON e1.job_id = j.job_id
+WHERE 
+e1.job_id IN 
+(SELECT DISTINCT h.job_id FROM employees e 
+JOIN job_history h ON e.employee_id = h.employee_id
+WHERE e.hire_date > '29-10-1993')
+ORDER BY e1.department_id DESC, j.job_title DESC;
+
+--
+--SELECT DISTINCT e1.first_name, e1.last_name , j.job_title, d.department_name,e1.department_id
+--FROM employees e1, departments d, jobs j,
+--(SELECT e.employee_id, h.job_id FROM employees e 
+--JOIN job_history h ON e.employee_id = h.employee_id
+--WHERE e.hire_date > '29-10-1993'
+--)e2
+--WHERE e1.job_id = e2.job_id 
+--AND e1.employee_id != e2.employee_id 
+--AND e1.department_id = d.department_id(+)
+--AND e1.job_id = j.job_id
+--ORDER BY e1.department_id DESC, j.job_title DESC;
+
+
+--2C
+--Sa se afiseze numele complet, job-ul (titlul) actual si departamentul (numele) actual
+--pentru angajatii care in prezent lucreaza intr-un departament sau pe un job
+--pe care au lucrat in trecut si alti salariati angajati dupa 29-Octombrie-1993. 
+--Discutati diferentele aparute in cod, cat si despre rezultatele obtinute.
+
+--
+--SELECT DISTINCT e1.first_name, e1.last_name , j.job_title, d.department_name,e1.department_id
+--FROM employees e1, departments d, jobs j,
+--(SELECT e.employee_id, h.job_id, h.department_id FROM employees e 
+--JOIN job_history h ON e.employee_id = h.employee_id
+--WHERE e.hire_date > '29-10-1993'
+--)e2
+--WHERE (e1.job_id = e2.job_id OR e1.department_id = e2.department_id)
+--AND e1.employee_id != e2.employee_id 
+--AND e1.department_id = d.department_id(+)
+--AND e1.job_id = j.job_id(+)
+--ORDER BY 1;
+--ORDER BY e1.department_id DESC, j.job_title DESC;
+
+
+
+SELECT DISTINCT e1.first_name, e1.last_name , j.job_title, d.department_name,e1.department_id
+FROM employees e1
+LEFT JOIN departments d ON e1.department_id = d.department_id
+LEFT JOIN jobs j ON e1.job_id = j.job_id
+WHERE 
+e1.department_id IN 
+(SELECT DISTINCT h.department_id FROM employees e 
+JOIN job_history h ON e.employee_id = h.employee_id
+WHERE e.hire_date > '29-10-1993' )
+OR
+e1.job_id IN 
+(SELECT DISTINCT h.job_id FROM employees e 
+JOIN job_history h ON e.employee_id = h.employee_id
+WHERE e.hire_date > '29-10-1993')
+ORDER BY e1.department_id DESC, j.job_title DESC;
+

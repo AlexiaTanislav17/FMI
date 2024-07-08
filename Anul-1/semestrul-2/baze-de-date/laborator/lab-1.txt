@@ -1,0 +1,44 @@
+SELECT employee_id, last_name,salary*12 "ANNUAL SALARY"
+FROM employees;
+
+SELECT employee_id, last_name,salary*12
+FROM employees;
+
+describe jobs;
+select * from jobs;
+
+SELECT employee_id, last_name,salary*12 "ANNUAL SALARY"
+FROM employees
+WHERE salary*12>50000;
+
+SELECT employee_id, last_name,salary*12 "ANNUAL SALARY"
+FROM employees
+WHERE salary*12>50000
+AND employee_id<140
+ORDER BY "ANNUAL SALARY" DESC;
+
+SELECT employee_id, first_name || ' ' || Last_name
+FROM employees;
+
+SELECT sysdate
+FROM dual;  --iti afiseaza data curenta
+
+SELECT to_char(sysdate, 'DD/MM/YYYY')
+FROM dual;  --iti afiseaza data curenta
+
+SELECT to_char(sysdate, 'DAY/MONTH/YEAR')
+FROM dual;  --iti afiseaza data curenta
+
+--NUMELE LUNII IN CARE SA ANGAJAT FIECAE SLARIAT
+SELECT to_char(hire_date, 'MONTH')
+FROM employees;
+
+--ORD DESCRESC TOTI ANGAJATII IN FUNCTIE DE COMSINIONUL LOR
+SELECT employee_id,commission_pct
+FROM employees
+ORDER BY commission_pct DESC;
+
+--ORD DESCRESC TOTI ANGAJATII IN FUNCTIE DE COMSINIONUL LOR CARE E DIF DE NULL
+SELECT employee_id,nvl(commission_pct, 0) commission
+FROM employees
+ORDER BY commission DESC;
