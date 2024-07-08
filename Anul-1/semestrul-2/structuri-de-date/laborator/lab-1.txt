@@ -1,0 +1,184 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+void bubbleSort(vector<int>& v) {
+    int n = v.size();
+    for (int i = 0; i < n - 1; ++i) {
+        for (int j = 0; j < n - i - 1; ++j) {
+            if (v[j] > v[j + 1]) {
+                swap(v[j], v[j + 1]);
+            }
+        }
+    }
+}
+
+void selectionSort(vector<int>& v) {
+    int n = v.size();
+    for (int i = 0; i < n - 1; ++i) {
+        int minIdx = i;
+        for (int j = i + 1; j < n; ++j) {
+            if (v[j] < v[minIdx]) {
+                minIdx = j;
+            }
+        }
+        swap(v[i], v[minIdx]);
+    }
+}
+
+void insertionSort(vector<int>& v) {
+    int n = v.size();
+    for (int i = 1; i < n; ++i) {
+        int key = v[i];
+        int j = i - 1;
+        while (j >= 0 && v[j] > key) {
+            v[j + 1] = v[j];
+            j--;
+        }
+        v[j + 1] = key;
+    }
+}
+
+
+void merge(vector<int>& v, int left, int mid, int right) {
+    int n1 = mid - left + 1;
+    int n2 = right - mid;
+
+    vector<int> L(n1), R(n2);
+    for (int i = 0; i < n1; ++i) {
+        L[i] = v[left + i];
+    }
+    for (int i = 0; i < n2; ++i) {
+        R[i] = v[mid + 1 + i];
+    }
+
+    int i = 0, j = 0, k = left;
+    while (i < n1 && j < n2) {
+        if (L[i] <= R[j]) {
+            v[k++] = L[i++];
+        } else {
+            v[k++] = R[j++];
+        }
+    }
+
+    while (i < n1) {
+        v[k++] = L[i++];
+    }
+
+    while (j < n2) {
+        v[k++] = R[j++];
+    }
+}
+
+void mergeSort(vector<int>& v, int left, int right) {
+    if (left < right) {
+        int mid = left + (right - left) / 2;
+        mergeSort(v, left, mid);
+        mergeSort(v, mid + 1, right);
+        merge(v, left, mid, right);
+    }
+}
+
+
+int partition(vector<int>& v, int low, int high) {
+    int pivot = v[high];
+    int i = low - 1;
+
+    for (int j = low; j <= high - 1; ++j) {
+        if (v[j] < pivot) {
+            ++i;
+            swap(v[i], v[j]);
+        }
+    }
+    swap(v[i + 1], v[high]);
+    return i + 1;
+}
+
+void quickSort(vector<int>& v, int low, int high) {
+    if (low < high) {
+        int pi = partition(v, low, high);
+        quickSort(v, low, pi - 1);
+        quickSort(v, pi + 1, high);
+    }
+}
+
+
+int main() {
+    vector<int> v = {64, 34, 25, 12, 22, 11, 90, 34};
+    bubbleSort(v);
+//    selectionSort(v);
+//    insertionSort(v);
+//    mergeSort(v,0,v.size()-1);
+//    quickSort(v, 0, v.size()-1);
+    cout << "vector sortat: ";
+    for (int x : v) {
+        cout << x << " ";
+    }
+    cout << endl;
+    return 0;
+}
+
+
+
+
+
+
+---------------------------------------------------------------------------------------------------------
+
+
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+void heapify(std::vector<int>& v, int n, int i) {
+    int largest = i; // cel mai mare e radacina
+    int left = 2 * i + 1; 
+    int right = 2 * i + 2; 
+
+    // daca copilul stg > radacina
+    if (left < n && v[left] > v[largest]) {
+        largest = left;
+    }
+
+    // daca copilul dr > radacina
+    if (right < n && v[right] > v[largest]) {
+        largest = right;
+    }
+
+    // cel mai mare nu e radacina
+    if (largest != i) {
+        std::swap(v[i], v[largest]);
+
+        // heapify pe restu 
+        heapify(v, n, largest);
+    }
+}
+
+void heapSort(std::vector<int>& v) {
+    int n = v.size();
+
+    // reface vectorul, face heap
+    for (int i = n / 2 - 1; i >= 0; --i) {
+        heapify(v, n, i);
+    }
+
+    // extrage elem cu elem din heap
+    for (int i = n - 1; i >= 0; --i) {
+        // Move current root to end
+        std::swap(v[0], v[i]);
+
+        // max heapify pe heapul redus
+        heapify(v, i, 0);
+    }
+}
+
+int main() {
+    vector<int> v = {23,45,55,1,48,90};
+    heapSort(v);
+    for (int i : v) {
+        cout << i << " ";
+    }
+    cout << endl;
+    return 0;
+}

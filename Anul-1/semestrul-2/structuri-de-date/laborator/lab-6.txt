@@ -1,0 +1,359 @@
+// Prim
+#include <bits/stdc++.h>
+#include <iostream>
+#include <vector>
+using namespace std;
+
+#define V 5  //nr vf
+
+//functie pt a gasi min key value care nu sunt in mst
+int minKey(int key[], bool mstSet[])
+{
+	int min = INT_MAX, min_index;
+
+	for (int v = 0; v < V; v++)
+		if (mstSet[v] == false && key[v] < min)
+			min = key[v], min_index = v;
+
+	return min_index;
+}
+
+void printMST(int parent[], int graph[V][V])
+{
+	cout << "Margini\t Adancime\n";
+	for (int i = 1; i < V; i++)
+		cout << parent[i] << " - " << i << " \t"
+			<< graph[i][parent[i]] << " \n";
+}
+
+// construieste si af mst prin matrice adiacenta/lista de adiacenta
+void primMST(int graph[V][V])
+{
+	int parent[V];
+	int key[V];
+	bool mstSet[V];
+
+	// Initialize all keys as INFINITE
+	for (int i = 0; i < V; i++)
+		key[i] = INT_MAX, mstSet[i] = false;
+
+	// Always include first 1st vertex in MST.
+	// Make key 0 so that this vertex is picked as first
+	// vertex.
+	key[0] = 0;
+
+	// First node is always root of MST
+	parent[0] = -1;
+
+	// The MST will have V vertices
+	for (int count = 0; count < V - 1; count++) {
+		
+		// Pick the minimum key vertex from the
+		// set of vertices not yet included in MST
+		int u = minKey(key, mstSet);
+
+		// Add the picked vertex to the MST Set
+		mstSet[u] = true;
+
+		// Update key value and parent index of
+		// the adjacent vertices of the picked vertex.
+		// Consider only those vertices which are not
+		// yet included in MST
+		for (int v = 0; v < V; v++)
+
+			// graph[u][v] is non zero only for adjacent
+			// vertices of m mstSet[v] is false for vertices
+			// not yet included in MST Update the key only
+			// if graph[u][v] is smaller than key[v]
+			if (graph[u][v] && mstSet[v] == false
+				&& graph[u][v] < key[v])
+				parent[v] = u, key[v] = graph[u][v];
+	}
+
+	printMST(parent, graph);
+}
+
+int main()
+{
+	int graph[V][V] = { { 0, 2, 0, 6, 0 },
+						{ 2, 0, 3, 8, 5 },
+						{ 0, 3, 0, 0, 7 },
+						{ 6, 8, 0, 0, 9 },
+						{ 0, 5, 7, 9, 0 } };
+
+	primMST(graph);
+
+	return 0;
+}
+
+------------------------------------alta varianta--------------------------------------------
+
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+// functie pt nodul min
+int nodMin(vector<int>& nod, vector<int>& mstVf, int vf) {
+    int min = 1000000; // valoare mare arbitrara
+    int minIndex = -1;
+
+    for (int v = 0; v < vf; v++) {
+        if (!mstVf[v] && nod[v] < min) {
+            min = nod[v];
+            minIndex = v;
+        }
+    }
+
+    return minIndex;
+}
+
+void printMST(vector<int>& mst, vector<vector<int>>& matAd, int vf) {
+    cout << "Muchii\t Adancime\n";
+    for (int i = 1; i < vf; i++) {
+        cout << mst[i] << " - " << i << " \t" << matAd[i][mst[i]] << " \n";
+    }
+}
+
+void primMST(vector<vector<int>>& matAd, int vf) {
+    vector<int> mst(vf); // vector pt arbore mst
+    vector<int> nod(vf, 1000000); // vector cu val mari de incpeut pt a lua nodul minim 
+    vector<int> mstVf(vf, 0); // vector cu vf din mst
+
+    nod[0] = 0;
+    mst[0] = -1; // primul nod e radacina mst
+
+    for (int c = 0; c < vf - 1; c++) {
+        int nm = nodMin(nod, mstVf, vf);
+        mstVf[nm] = 1;
+
+        for (int j = 0; j < vf; j++) {
+            if (matAd[nm][j] && !mstVf[j] && matAd[nm][j] < nod[j]) {
+                mst[j] = nm;
+                nod[j] = matAd[nm][j];
+            }
+        }
+    }
+
+    printMST(mst, matAd, vf);
+}
+
+int main() {
+    int vf = 5;
+    vector<vector<int>> matAd = {
+        {0, 2, 0, 6, 0},
+        {2, 0, 3, 8, 5},
+        {0, 3, 0, 0, 7},
+        {6, 8, 0, 0, 9},
+        {0, 5, 7, 9, 0},
+    };
+
+    primMST(matAd, vf);
+
+    return 0;
+}
+
+
+
+----------------------------------------------------------------------------------------------------------
+
+//kruskal alg
+#include <bits/stdc++.h> 
+using namespace std; 
+ 
+class DSU { 
+	int* parent; 
+	int* rank; 
+
+public: 
+	DSU(int n) 
+	{ 
+		parent = new int[n]; 
+		rank = new int[n]; 
+
+		for (int i = 0; i < n; i++) { 
+			parent[i] = -1; 
+			rank[i] = 1; 
+		} 
+	} 
+
+	int find(int i) 
+	{ 
+		if (parent[i] == -1) 
+			return i; 
+
+		return parent[i] = find(parent[i]); 
+	} 
+
+	void unite(int x, int y) 
+	{ 
+		int s1 = find(x); 
+		int s2 = find(y); 
+
+		if (s1 != s2) { 
+			if (rank[s1] < rank[s2]) { 
+				parent[s1] = s2; 
+			} 
+			else if (rank[s1] > rank[s2]) { 
+				parent[s2] = s1; 
+			} 
+			else { 
+				parent[s2] = s1; 
+				rank[s1] += 1; 
+			} 
+		} 
+	} 
+}; 
+
+class Graph { 
+	vector<vector<int> > edgelist; 
+	int V; 
+
+public: 
+	Graph(int V) { this->V = V; } 
+ 
+	void addEdge(int x, int y, int w) 
+	{ 
+		edgelist.push_back({ w, x, y }); 
+	} 
+
+	void kruskals_mst() 
+	{ 
+
+		sort(edgelist.begin(), edgelist.end()); 
+ 
+		DSU s(V); 
+		int ans = 0; 
+		cout << "Following are the edges in the "
+				"constructed MST"
+			<< endl; 
+		for (auto edge : edgelist) { 
+			int w = edge[0]; 
+			int x = edge[1]; 
+			int y = edge[2]; 
+
+
+			if (s.find(x) != s.find(y)) { 
+				s.unite(x, y); 
+				ans += w; 
+				cout << x << " -- " << y << " == " << w 
+					<< endl; 
+			} 
+		} 
+		cout << "Minimum Cost Spanning Tree: " << ans; 
+	} 
+}; 
+
+int main() 
+{ 
+	Graph g(4); 
+	g.addEdge(0, 1, 10); 
+	g.addEdge(1, 3, 15); 
+	g.addEdge(2, 3, 4); 
+	g.addEdge(2, 0, 6); 
+	g.addEdge(0, 3, 5); 
+
+	g.kruskals_mst(); 
+
+	return 0; 
+}
+
+
+-------------------------------alta varianta--------------------------------------------------
+
+//kruskal alg
+
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+int find(vector<int>& parent, int v) {
+    if (parent[v] != v) {
+        parent[v] = find(parent, parent[v]);
+    }
+    return parent[v];
+}
+
+void unionSets(vector<int>& parent, vector<int>& nivel, int u, int v) {
+    int radU = find(parent, u);
+    int radV = find(parent, v);
+
+    if (radU != radV) {
+        if (nivel[radU] > nivel[radV]) {
+            parent[radV] = radU;
+        } else if (nivel[radU] < nivel[radV]) {
+            parent[radU] = radV;
+        } else {
+            parent[radV] = radU;
+            nivel[radU]++;
+        }
+    }
+}
+
+pair<int, int> getMinMuchie(vector<vector<int>>& matAd, vector<int>& parent) {
+    int n = matAd.size();
+    int minWeight = 1000000; // val mare arb
+    int u = -1, v = -1;
+
+    for (int i = 0; i < n; i++) {
+        for (int j = i + 1; j < n; j++) {
+            if (matAd[i][j] != 0 && matAd[i][j] < minWeight) {
+                int setI = find(parent, i);
+                int setJ = find(parent, j);
+
+                if (setI != setJ) {
+                    minWeight = matAd[i][j];
+                    u = i;
+                    v = j;
+                }
+            }
+        }
+    }
+
+    return {u, v};
+}
+
+void kruskalMST(vector<vector<int>>& matAd) {
+    int n = matAd.size();
+    vector<int> parent(n);
+    vector<int> nivel(n, 0);
+
+
+    for (int i = 0; i < n; i++) {  //fiecare nod e propriu parinte
+        parent[i] = i;
+    }
+
+    vector<pair<int, int>> mst;
+
+    while (mst.size() < n - 1) {
+        pair<int, int> muchie = getMinMuchie(matAd, parent);
+        if (muchie.first == -1 && muchie.second == -1) {
+            break;  // nu există mai multe muchii disponibile
+        }
+
+        mst.push_back(muchie);
+        unionSets(parent, nivel, muchie.first, muchie.second);
+    }
+
+    cout << "Muchii\t Adancime\n";
+    for (auto& muchie : mst) {
+        cout << muchie.first << " - " << muchie.second << " \t" << matAd[muchie.first][muchie.second] << endl;
+    }
+}
+
+int main() {
+    int n = 5; // nr noduri
+    vector<vector<int>> matAd = {
+        {0, 2, 0, 6, 0},
+        {2, 0, 3, 8, 5},
+        {0, 3, 0, 0, 7},
+        {6, 8, 0, 0, 9},
+        {0, 5, 7, 9, 0},
+    };
+
+    kruskalMST(matAd);
+
+    return 0;
+}
+

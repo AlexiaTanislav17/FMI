@@ -1,0 +1,108 @@
+#include <iostream>
+#include <stack>
+#include <string>
+
+
+bool verificaParanteze(const std::string& expresie) {
+    std::stack<char> stiva;
+    for (char paranteza : expresie) {
+        if (paranteza == '(' || paranteza == '[' || paranteza == '{') {
+            stiva.push(paranteza);
+        } else if (paranteza == ')' || paranteza == ']' || paranteza == '}') {
+
+            if (stiva.empty() ||
+                (paranteza == ')' && stiva.top() != '(') ||
+                (paranteza == ']' && stiva.top() != '[') ||
+                (paranteza == '}' && stiva.top() != '{')) {
+                return false;
+            }
+            stiva.pop();
+        }
+    }
+    return stiva.empty();
+}
+
+int main() {
+    std::string expresie;
+    std::cout << "Introduceti o expresie: ";
+    std::cin >> expresie;
+
+    if (verificaParanteze(expresie)) {
+        std::cout << "parantezele sunt corecte.\n";
+    } else {
+        std::cout << "parantezele nu sunt corecte.\n";
+    }
+
+    return 0;
+}
+
+
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------
+
+
+#include <iostream>
+#include <stack>
+#include <queue>
+#include <vector>
+
+using namespace std;
+
+vector<int> f(vector<int>& v) {
+    int n = v.size();
+    vector<int> vr(n, -1);  // vector deafult cu elem -1
+    stack<int> st;  // stiva pt indicii elem
+
+    for (int i = 0; i < n; i++) {
+        while (!st.empty() && v[i] > v[st.top()]) {
+            vr[st.top()] = v[i];  // modif rez pt indicele din vf stivei
+            st.pop();  // pop indice
+        }
+        st.push(i);  // punem indice elem curent pe stiva
+    }
+
+    return vr;
+}
+
+
+int main() {
+    int nr;
+    cout << "scrie nr de elem pt vector: ";
+    cin >> nr;
+       vector<int> v(nr, 0);
+    for (int i = 0; i < nr; i++){
+        cout << "elem: ";
+        cin >> v[i];
+    }
+    vector<int> vr = f(v);  // vectorul final cu rezultate
+    queue<int> q;    // coada cu rezultate din vector
+
+    for (int elem : vr) {
+        q.push(elem);
+    }
+
+    while (!q.empty()) {      //af
+        cout << q.front() << " ";
+        q.pop();
+    }
+
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
