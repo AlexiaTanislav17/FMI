@@ -1,0 +1,324 @@
+/*
+ * Tanislav Alexia 132
+ * Clion
+ * Bahrim Dragos
+ */
+
+#include <iostream>
+#include <list>
+#include <string>
+#include <algorithm>
+using namespace std;
+
+
+int idElement = 0;
+
+ class Zid {
+ private:
+     int id;
+     int inaltime;
+     int lungime;
+     int grosime;
+ public:
+     Zid(int I, int i, int l, int g);
+     Zid(Zid& z);
+     ~Zid() = default;
+     void setID(int i);
+     void citire();
+     void afisare();
+ };
+
+Zid::Zid(int I, int i, int l, int g): id(I), inaltime(i), lungime(l), grosime(g) {}
+Zid::Zid(Zid& z): id(z.id), inaltime(z.inaltime), lungime(z.lungime), grosime(z.grosime) {}
+void Zid::setID(int i) { id = i; }
+void Zid::citire() {
+    cout << "inlatime: ";
+    cin >> inaltime;
+    cout << "lungime: ";
+    cin >> lungime;
+    cout << "grosime: ";
+    cin >> grosime;
+}
+void Zid::afisare() {
+    cout << "id: " << id << endl;
+    cout << "inlatime: " << inaltime << endl;
+    cout << "lungime: " << lungime <<  endl;
+    cout << "grosime: " << grosime << endl;
+}
+
+
+
+
+class Turn {
+private:
+    int id;
+    int putereRaza;
+public:
+    Turn(int i, int pr);
+    Turn(Turn& t);
+    ~Turn() = default;
+    void setID(int i);
+    void citire();
+    void afisare();
+};
+
+Turn::Turn(int i, int pr): id(i), putereRaza(pr) {}
+Turn::Turn(Turn& t): id(t.id), putereRaza(t.putereRaza) {}
+void Turn::setID(int i) { id = i; }
+void Turn::citire() {
+    cout << "putere raza: ";
+    cin >> putereRaza;
+}
+void Turn::afisare() {
+    cout << "id: " << id << endl;
+    cout << "putere raza: " << putereRaza << endl;
+}
+
+
+
+
+class Robot {
+protected:
+    int id;
+    int damage;
+    int nivel;
+    int viata;
+public:
+    Robot(int i, int d, int n, int v);
+    Robot(Robot& t);
+    virtual ~Robot() = default;
+    virtual void setID(int i);
+    virtual void citire();
+    virtual void afisare();
+};
+
+Robot::Robot(int i, int d, int n, int v): id(i), damage(d), nivel(n), viata(v) {}
+Robot::Robot(Robot& r): id(r.id), damage(r.damage), nivel(r.nivel), viata(r.viata) {}
+void Robot::setID(int i) { id = i; }
+void Robot::citire() {}
+void Robot::afisare() {}
+
+
+
+class RobotAerian: public Robot {
+private:
+    int autonomieZbor;
+public:
+    RobotAerian(int i, int d, int n, int v, int az);
+    RobotAerian(RobotAerian& r);
+    ~RobotAerian() = default;
+    void citire() override;
+    void afisare() override;
+};
+
+RobotAerian::RobotAerian(int i, int d, int n, int v, int az): Robot(i,d,n,v), autonomieZbor(az) {};
+RobotAerian::RobotAerian(RobotAerian& r): Robot(r), autonomieZbor(r.autonomieZbor) {};
+void RobotAerian::citire() {
+    cout << "damage: ";
+    cin >> damage;
+    cout << "nivel: ";
+    cin >> nivel;
+    cout << "viata: ";
+    cin >> viata;
+    cout << "autonomie zbor: ";
+    cin >> autonomieZbor;
+
+}
+void RobotAerian::afisare() {
+    cout << "id: " << id << endl;
+    cout << "damage: " << damage << endl;
+    cout << "nivel: "<< nivel << endl;
+    cout << "viata: "<< viata << endl;
+    cout << "autonomie zbor: "<< autonomieZbor << endl;
+}
+
+
+
+class RobotTerestru: public Robot {
+private:
+    int nrGloante;
+    int scut;
+public:
+    RobotTerestru(int i,int d, int n, int v, int ng, int s = 0);
+    RobotTerestru(RobotTerestru& r);
+    ~RobotTerestru() = default;
+    void citire() override;
+    void afisare() override;
+};
+
+RobotTerestru::RobotTerestru(int i, int d, int n, int v, int ng, int s): Robot(i,d,n,v), nrGloante(ng), scut(s){};
+RobotTerestru::RobotTerestru(RobotTerestru& r): Robot(r), nrGloante(r.nrGloante), scut(r.scut) {};
+void RobotTerestru::citire() {
+    cout << "damage: ";
+    cin >> damage;
+    cout << "nivel: ";
+    cin >> nivel;
+    cout << "viata: ";
+    cin >> viata;
+    cout << "nr gloante: ";
+    cin >> nrGloante;
+    cout << "scut = 0 daca nu are si 1 daca are: ";
+    cin >> scut;
+}
+void RobotTerestru::afisare() {
+    cout << "id: " << id << endl;
+    cout << "damage: " << damage << endl;
+    cout << "nivel: "<< nivel << endl;
+    cout << "viata: "<< viata << endl;
+    cout << "nr gloante: "<< nrGloante << endl;
+    cout << "scut: " << scut << endl;
+}
+
+
+//template <typename T>
+//class Jucator {
+//private:
+//    int puncte;
+//    list<T> inventar;
+//public:
+//    Jucator(int p, list<T> i);
+//    Jucator(Jucator &j);
+//    void setPunctaj(int p);
+//    void citire();
+//    void afisare();
+//};
+//
+//template <typename T>
+//Jucator<T>::Jucator(int p, list<T> i): puncte(p), inventar(i) {};
+//
+//template <typename T>
+//Jucator<T>::Jucator(Jucator &j): puncte(j.puncte), inventar(j.inventar) {};
+//
+//template <typename T>
+//void Jucator<T>::setPunctaj(int p) {
+//    puncte = p;
+//}
+
+//template <typename T>
+//void Jucator<T>::citire() {
+//    puncte = 50000;
+//    idElement++;
+//    int n;
+//    string e;
+//    cout << "cate elemente vrei sa adaugi: ";
+//    cin >> n;
+//    for (int i=1; i<=n; i++){
+//        cout << "ce vrei sa adaugi? zid/turn/robotA/robotT";
+//        cin >> e;
+//        if (e == "zid") {
+//            puncte = puncte - 300;
+//            Zid z(0,0, 0,0);
+//            z.setID(idElement);
+//            z.citire();
+//            z.afisare();
+//            inventar.push_back(z);
+//        }
+//        if (e == "turn") {
+//            puncte = puncte - 500;
+//            Turn t(0,0);
+//            t.setID(idElement);
+//            t.citire();
+//            t.afisare();
+//            inventar.push_back(t);
+//        }
+//        if (e == "robotA") {
+//            puncte = puncte - 100;
+//            RobotAerian ra(0,0, 0,0, 0);
+//            ra.setID(idElement);
+//            ra.citire();
+//            ra.afisare();
+//            inventar.push_back(ra);
+//        }
+//        if (e == "robotT") {
+//            puncte = puncte - 50;
+//            RobotTerestru rt(0,0, 0,0, 0);
+//            rt.setID(idElement);
+//            rt.citire();
+//            rt.afisare();
+//            inventar.push_back(rt);
+//        }
+//    }
+//
+//}
+
+//template <typename T>
+//void Jucator<T>::afisare() {
+//    cout << "punctaj ramasa: " << puncte << endl;
+//    for (auto i : inventar) {
+//
+//    }
+//}
+
+
+template <typename T>
+void jucator() {
+    int puncte = 50000;
+    list<T> inventar;
+    idElement++;
+    int n;
+    string e;
+    cout << "cate elemente vrei sa adaugi: ";
+    cin >> n;
+    for (int i=1; i<=n; i++){
+        cout << "ce vrei sa adaugi? zid/turn/robotA/robotT";
+        cin >> e;
+        if (e == "zid") {
+            puncte = puncte - 300;
+            Zid z(0,0, 0,0);
+            z.setID(idElement);
+            z.citire();
+            z.afisare();
+            inventar.push_back(z);
+        }
+        if (e == "turn") {
+            puncte = puncte - 500;
+            Turn t(0,0);
+            t.setID(idElement);
+            t.citire();
+            t.afisare();
+            inventar.push_back(t);
+        }
+        if (e == "robotA") {
+            puncte = puncte - 100;
+            RobotAerian ra(0,0, 0,0, 0);
+            ra.setID(idElement);
+            ra.citire();
+            ra.afisare();
+            inventar.push_back(ra);
+        }
+        if (e == "robotT") {
+            puncte = puncte - 50;
+            RobotTerestru rt(0,0, 0,0, 0);
+            rt.setID(idElement);
+            rt.citire();
+            rt.afisare();
+            inventar.push_back(rt);
+        }
+    }
+    for (auto i : inventar){
+        i.afisare();
+    }
+
+}
+
+//template <typename T = Zid>;
+
+
+
+int main() {
+    Zid z(0,0,0,0);
+    z.citire();
+    z.setID(idElement);
+    z.afisare();
+    idElement++;
+    Zid z1(0,0,0,0);
+    z1.citire();
+    z1.setID(idElement);
+    z1.afisare();
+    Turn t(0,0);
+    t.citire();
+    t.setID(idElement);
+    t.afisare();
+    //jucator<Zid>();
+    return 0;
+}

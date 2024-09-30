@@ -1,0 +1,115 @@
+#include <iostream>
+using namespace std;
+
+int x = 10;
+
+void f(int x){    // exemplu rezolutie de scop
+    //x = 30;
+    cout<<::x;    // operator de rezolutie de scop
+}
+
+class Materie{
+
+private:
+    //const int nota;
+    string denumire;
+    int an;
+
+public:
+//    void afisare(){
+//        cout<<"denumire = "<<denumire<<" "<<an;
+//    }
+//    void set_an(int a){          // setter
+//        an = a;
+//    }
+//
+//    string get_denumire(){
+//        return denumire;
+//    }
+
+    void afisare();
+    void set_an(int);
+    string get_denumire();
+    Materie(string s = "anonim", int a = 2024);
+    ~Materie();
+
+    int get_an(){
+        return an;
+    }
+
+//    Materie(){                 //constructor de initializare explicit
+//        denumire = "anonim";
+//        an = 2024;
+//    }
+//    Materie(string s){
+//        denumire = s;
+//        an = 1000;
+//    }
+//    Materie(string s, int a){
+//        denumire = s;
+//        an = a;
+//    }
+//    Materie(string s = "anonim", int a = 2024){   // constructor pt toate 3 var de mai sus
+//        denumire = s;
+//        an = a;
+//    }
+    //trb neaparat ca ultimul parametru sa aiba parametru implicit ca la python
+//    Materie(string s = "anonim", int a = 2024): denumire(s), an(a){}  //lista de initializare a constructorilor
+//    ~Materie(){     // destructor
+//        cout<<"destructor pentru "<<denumire<<endl;
+//    }7
+
+};
+
+// ca sa nu aglomeram clasa, scriem asa:
+Materie::Materie(string s, int a): denumire(s), an(a){}
+void Materie::afisare(){ cout<<"denumire "<<denumire<<" an "<<an<<endl; }
+Materie::~Materie(){ cout<<"destructor pentru "<<denumire<<endl; }
+void Materie::set_an(int a) { an = a; }      //setter
+string Materie::get_denumire() { return denumire; }
+
+int main() {
+
+    int x = 20;
+    f(x);
+
+    Materie A;                        // constructor de initializare, implicit
+    Materie B("SDA");              // constrcutor - parametrizat; trebuie explicit
+    Materie C("LFA",9);         // constructor - parametrizat; trebuie explicit
+
+    A.afisare();                      // functie membra afisare
+    cout<<endl;
+    B.afisare();
+    cout<<endl;
+    C.afisare();
+    cout<<endl;
+
+
+//    C.an = 10;
+    C.set_an(10);
+    C.afisare();
+
+    //cout<<A;                        //supraincarcare operator<<
+    //A = A + 10;                     // supraincarcare operator +
+
+//    if (B == C){                    // supraincarcare operator==
+//        cout<<"aceleasi";
+//    }
+
+    // exemplu tip de referinta
+    int a(100);                        // a=100
+    int& b = a;                        // alias pt a ; arata catre aceeasi zona de memorie
+    cout<<a<<" "<<b<<endl;
+    a = a + 10;
+    cout<<a<<" "<<b<<endl;
+    b = b + 30;
+    
+    int c = 200;
+    b = c;
+    cout<<a<<" "<<b<<endl;
+    
+//    int &d;  // eroare, neint.
+//    d = c;
+
+    return 0;
+}
