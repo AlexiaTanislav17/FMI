@@ -1,0 +1,35 @@
+package Classroom;
+
+import java.util.Arrays;
+import java.util.Comparator;
+
+public class Main {
+    public static void main(String[] args) throws Exception {
+        Student[] studenti = new Student[7];
+
+        studenti[0] = new Student("Gigel Marc", 18, new Address("Lalelelor", 15, "Bucuresti", "Romania"), 1, 131, new int[][]{{1, 4, 7, 8}, {2, 3, 4, 5}, {6, 7, 8, 9}, {10, 10, 6, 10}});
+        studenti[1] = new Student("Maria Ioana", 19, new Address("Grivitei", 32, "Bacau", "Romania"), 1, 132, new int[][]{{6, 7, 8, 9}, {7, 8, 9, 10}, {8, 9, 10, 10}, {9, 10, 10, 10}});
+        studenti[2] = new Student("Horatiu Macel", 20, new Address("Zambilelor", 16, "Buzau", "Romania"), 2, 243, new int[][]{{7, 8, 9, 10}, {8, 9, 10, 10}, {9, 10, 10, 10}, {10, 10, 10, 10}});
+        studenti[3] = new Student("Violeta Pamp", 18, new Address("Limonadei", 5, "Arges", "Romania"), 2, 244, new int[][]{{8, 9, 10, 10}, {9, 10, 10, 10}, {10, 10, 10, 10}, {10, 10, 10, 10}});
+        studenti[4] = new Student("Cornel Creasta", 19, new Address("Strazilor", 13, "Constanta", "Romania"), 3, 335, new int[][]{{9, 10, 10, 10}, {10, 10, 5, 10}, {10, 10, 6, 6}, {10, 4, 10, 10}});
+        studenti[5] = new Student("Luminita Clopotica", 20, new Address("Jocurilor", 7, "Timisoara", "Romania"), 3, 346, new int[][]{{10, 10, 9, 10}, {10, 5, 10, 10}, {10, 8, 7, 10}, {9, 10, 3, 10}});
+        studenti[6] = new Student("Marcel Sticla", 21, new Address("Kalimera", 110, "Athena", "Grecia"), 6, 337, new int[][]{{6, 7, 8, 9}, {10, 9, 7, 5}, {10, 9, 10, 10}, {8, 8, 7, 10}});
+
+        for(int i=0; i<7; i++){
+            studenti[i].getSituation();
+        }
+
+        System.out.println("\n");
+        System.out.println("Top 3 studenti cu cea mai mare medie generala: ");
+        Arrays.sort(studenti, new Comparator<Student>() {
+            @Override
+            public int compare(Student s1, Student s2) {
+                return Float.compare(s2.getYearAverage(), s1.getYearAverage());
+            }
+        });
+
+        for(int i=0; i<3; i++){
+            studenti[i].getSituation();
+        }
+    }
+}

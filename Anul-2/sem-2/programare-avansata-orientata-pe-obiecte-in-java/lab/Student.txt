@@ -1,0 +1,70 @@
+package Classroom;
+
+final public class Student extends Person {
+    
+    private int studyYear;
+    private int studyGroup;
+    private int[][] gradesPerDiscipline = new int[4][4];
+    
+    public Student(String name, int age, Address address, int year, int group, int[][] grades) {
+        super(name, age, address);
+        this.studyYear = year;
+        this.studyGroup = group;
+        this.gradesPerDiscipline = grades;
+    }
+    
+    public void Afiseaza() {
+        super.Afiseaza();
+        System.out.println("Year: " + studyYear);
+        System.out.println("Group: " + studyGroup);
+        // trb sa afisez notele 
+        // for (int i = 0; i < gradesPerDiscipline.length; i++) {
+        //     System.out.println("Materia " + (i + 1) + ": ");
+        //     for (int j = 0; j < gradesPerDiscipline[i].length; j++) {
+        //         System.out.println(gradesPerDiscipline[i][j] + " ");
+        //     }
+        // }
+    }
+
+    public float getYearAverage() {
+        // media mediilor pt fiecare materie = media generala
+        float medieGenerala = 0.0f;
+        float medieMaterie = 0.0f;
+        int nrNote= 0 ;
+
+        for (int i = 0; i < gradesPerDiscipline.length; i++) {
+            medieMaterie = 0.0f;
+            
+            if (gradesPerDiscipline[i].length >= 2 ) {
+                nrNote++;
+            }
+
+            for (int j = 0; j < gradesPerDiscipline[i].length; j++) {
+                medieMaterie += gradesPerDiscipline[i][j];
+            }
+            medieMaterie = medieMaterie / gradesPerDiscipline[i].length;
+            medieGenerala += medieMaterie;
+        }
+
+        medieGenerala = medieGenerala / 4;
+
+        if (nrNote == 4){
+            return medieGenerala;
+        } else {
+            System.out.println("Studentul nu are toate notele: ");
+            return 0.0f;
+        }
+            
+    }
+
+    public void getSituation() {
+        // afiseaza numele studentului, anul de sutdiu, grupa si media generala
+        Afiseaza();
+        System.out.println("Media generala: " + getYearAverage());
+    }
+    
+    public static void main(String[] args) {
+        //
+    }
+    
+}
