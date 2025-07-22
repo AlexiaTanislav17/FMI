@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  server:
+    build: .
+    container_name: server
+    volumes:
+      - ./app:/app
+    networks:
+      - retea_comuna
+    tty: true
+    stdin_open: true
+    command: python /app/server.py
+
+  client:
+    build: .
+    container_name: client
+    volumes:
+      - ./app:/app
+    networks:
+      - retea_comuna
+    depends_on:
+      - server
+    tty: true
+    stdin_open: true
+    command: bash -c "sleep 5 && python /app/client.py server"
+
+networks:
+  retea_comuna:
+    driver: bridge
