@@ -1,0 +1,351 @@
+Care sunt următorii λ-termeni (presupunem u, v , w , x , y, z ∈ V ,
+distincte două câte două)?
+
+(λy.(x (λw.((v w )x ))))[x := u v ]
+  = (λy.((u v) (λw.((v w ) (u v) ))))
+
+(λy.(x (λx.x )))[x := λy.(xy )]
+  = (λy.((λy.(xy )) (λx.x )))
+
+(λy.(x (λx.x )))[x := λx.(xy )]
+  = (λz.(x (λx.x )))[x := λx.(x y)]
+  = (λz.((λx.(x y)) (λx.x )))
+
+
+1. Fie I. N. SE L. distincte două câte două. Notam while I <= 2 * N do (S:= S + I; I := I + 2)
+cu Pgm.
+(a) (2 puncte) Să se descrie formal execuţia lui Pgm, dintr-o stare iniţială cu sigma(N) = 10 sigma(I) = 19 sigma(S) = 81 folosind semantica operaţionala big-step SAU cea small-step
+
+
+Body ::= (S:= S + I; I := I + 2)
+
+```                                                     
+                                                                                                         ------------------- (Id)   ----------------- (Id)                -------------------(Id) ------------------(Num)                                              ------------------(Num) -------------------(Id)
+                                                                                                          <S, sigma> => <81>        <I, sigma> => 19                      <I, sigma1> => <19>     <2, sigma1> => <2>                                                   <2, sigma'> => <2>      <N, sigma'> => <10>
+                             ------------------ (Num)  ------------------- (Id)                           ------------------------------------------------(Add)           -----------------------------------------------(Add)                 -------------------(Id) -----------------------------------------------(Mul)
+                             <2, sigma> => <2>          <N, sigma> => <10>                                <S + I, sigma> => <100>                                         <I + 2, sigma1> => <21>                                              <I, sigma'> => <21>     <2*N, sigma'>  => <20>
+------------------ (Id)      --------------------------------------------------- (Mul)                    ----------------------------------------------------- (Asgn)    ----------------------------------------------------(Asgn)           ----------------------------------------------------------------------------(Leq-False)
+<I, sigma > =>  <19>         <2*N, sigma> => <20>                                                         <S := S + I, sigma> => <sigma[S |-> 100]>                       <I := I + 2, sigma1> => <sigma1[I |-> 21]>                           <I <= 2*N, sigma'> => <false>
+---------------------------------------------------------------------------------------(Leq-True)         ---------------------------------------------------------------------------------------------------------                            ----------------------------------------------------------------------------------------(While-False)
+< I <= 2 * N, sigma >  => <true>                                                                          <Body, sigma>  => <sigma'>                                                                                                           <Pgm, sigma'> => <sigma'>
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------(While-True)
+< Pgm , sigma >  => <sigma'>
+
+
+sigma1 ::= sigma[S |-> 100] = {N |-> 10, I |-> 19, S |-> 100 }
+sigma' ::= sigma1[I |-> 21] = {N |-> 10, I |-> 21, S |-> 100 }
+
+ 1. <2, sigma> => <2> (Num)
+ 2. <N, sigma> => <10> (Id)
+ 3.  <2*N, sigma> => <20>  din (1) și (2) folosind (Mul)
+ 4. <I, sigma > =>  <19> (Id)
+ 5. < I <= 2 * N, sigma >  => <true> din (4) și (3) folosind (Leq-True)
+
+
+
+< Pgm , sigma >
+  ---
+=WHILE=> <if I <= 2*N then (Body ; Pgm) else skip, sigma>
+             -
+=Id=> <if 19 <= 2*N then (Body ; Pgm) else skip, sigma>
+                  -
+=Id=> <if 19 <= 2*10 then (Body ; Pgm) else skip, sigma>
+                ----  
+=Mul=> <if 19 <= 20 then (Body ; Pgm) else skip, sigma>
+           --------
+=Leq-True=> <if true then (Body ; Pgm) else skip, sigma>
+             -----------------------------------
+=If-True=> < (S := S + I; I := I + 2) ; Pgm, sigma>
+                   -
+=If-True=> < (S := 81 + I; I := I + 2) ; Pgm, sigma>
+
+```
+
+Gamma = emptyset
+
+(λx y z.z x y) (λa b c.b) (λd e.e)
+
+Am redenumit variabilele astfel incat sa fie toate distincte.
+Presupun ca fiecarei variariabile x îi asociez un tip X
+
+c(((λx.λ y.λ z.z x y) (λa.λ b.λ c.b)) (λd.λ e.e), F)
+= c(((λx y z.z x y) (λa b c.b)), G) U c((λd e.e), H) U {G = H -> F}
+=  c((λx y z.z x y), I) U c((λa b c.b), J) U {I = J -> G} U c((λe.e), K) U {H = D -> K}  U {G = H -> F}
+= {I = J -> G} U {H = D -> K}  U {G = H -> F} U
+  c((λy z.z x y), L) U {I = X -> L} U
+  c((λb c.b), M) U {J = A -> M} U
+  c(e, N) U {K = E -> N}
+= {I = J -> G, H = D -> K, G = H -> F, I = X -> L,
+   J = A -> M, K = E -> N} U
+  c((λz.z x y), O) U {L = Y -> O} U
+  c((λc.b), P) U {M = B -> P} U
+  { E = N }
+= {I = J -> G, H = D -> K, G = H -> F, I = X -> L,
+   J = A -> M, K = E -> N, L = Y -> O, M = B -> P,
+   E = N } U
+  c((z x y), Q) U { O = Z -> Q} U
+  c(b, R) U {P = C -> R}
+= {I = J -> G, H = D -> K, G = H -> F, I = X -> L,
+   J = A -> M, K = E -> N, L = Y -> O, M = B -> P,
+   E = N, O = Z -> Q, P = C -> R } U
+  c((z x), S) U c(y, T) U {S = T -> Q}
+  { B = R }
+= {I = J -> G, H = D -> K, G = H -> F, I = X -> L,
+   J = A -> M, K = E -> N, L = Y -> O, M = B -> P,
+   E = N, O = Z -> Q, P = C -> R, S = T -> Q,
+   B = R } U
+   c(z, V) U c(x, W) U {V = W -> S}
+   { Y = T }
+= {I = J -> G, H = D -> K, G = H -> F, I = X -> L,
+   J = A -> M, K = E -> N, L = Y -> O, M = B -> P,
+   E = N, O = Z -> Q, P = C -> R, S = T -> Q,
+   B = R, V = W -> S, Y = T, Z = V, X = W }
+
+
+Rezolvat
+I = (A -> (R -> (C -> R))) -> ((D -> (N -> N)) -> F)
+H = D -> (N -> N)
+X = ((A -> (R -> (C -> R)))) 
+Z = ((A -> (R -> (C -> R)))) -> (T -> Q)
+Y = T
+B = R
+E = N
+V = ((A -> (R -> (C -> R)))) -> (T -> Q)
+S = T -> Q
+P = C -> R
+L = T -> ((((A -> (R -> (C -> R)))) -> (T -> Q)) -> Q)
+K = N -> N
+J = A -> M
+M = R -> (C -> R)
+O = (((A -> (R -> (C -> R)))) -> (T -> Q)) -> Q,
+G = (D -> (N -> N)) -> F
+W = (A -> (R -> (C -> R)))
+T = (D -> (N -> N))
+
+Ecuatii
+F = (((A -> (R -> (C -> R)))) -> (((D -> (N -> N))) -> Q)) -> Q
+
+|- (λx y z.z x y) (λa b c.b) (λd e.e) : (((A -> (R -> (C -> R)))) -> (((D -> (N -> N))) -> Q)) -> Q
+
+
+Gamma = {x : X}
+
+c(x x, A)
+= c(x, B) U c(x, C) U {B = C -> A}
+= { X = B, X = C, B = C -> A}
+
+Rezolva
+X = B
+B = C 
+
+Ecuatii
+C = C -> A
+esec
+
+deci termenul x x nu poate avea tip
+
+
+
+
+
+c(x y, A) = X = Y -> A
+
+λy.((x y) (λz.y))
+
+
+
+```
+---------------------------------(var) -------------- (var)           --------------------- (var)
+Gamma |- x : Y -> ((Z -> Y) -> B)      Gamma |- y : Y                 Gamma, z : Z |- y : Y
+----------------------------------------------------------- (app)     ----------------------- (abs)
+Gamma |- x y : (Z -> Y) -> B                                           Gamma |- λz.y : Z -> Y
+---------------------------------------------------------------------------------------------------- (app)
+x : Y -> ((Z -> Y) -> B), y : Y |- (x y) (λz.y) : B
+-------------------------------------------------------------------------------------------------------- (abs)
+x : Y -> ((Z -> Y) -> B) |- λy.((x y) (λz.y)) : Y -> B
+------------------------------------------------------------------------------------------------------------- (abs)
+|- λx.λy.((x y) (λz.y)) : (Y -> ((Z -> Y) -> B)) -> (Y -> B)
+
+```
+
+Notam Gamma = x : Y -> ((Z -> Y) -> B), y : Y
+
+
+
+Verificați dacă următorii termeni se pot unifica:
+ f(f(g(x), h(y)), h(z)),
+ f(f(u, h(h(x))), h(y)),
+ f(v, w)
+
+
+-------------
+
+
+
+R = {
+    ț = f(f(g(x), h(y)), h(z)),
+    ț = f(f(u, h(h(x))), h(y)),
+    ț = f(v, w)
+    -----------
+}
+
+S = {}
+
+---------------------REZOLVA
+
+R = {
+    f(v, w) = f(f(g(x), h(y)), h(z)),
+    --------------------------------
+    f(v, w) = f(f(u, h(h(x))), h(y)),
+}
+
+S = {
+        ț = f(v, w)
+}
+
+
+----------------------DESCOMPUNE
+
+R = {
+    v = f(g(x), h(y)),
+    w = h(z),
+    ---------
+    f(v, w) = f(f(u, h(h(x))), h(y)),
+}
+
+S = {
+        ț = f(v, w)
+}
+
+---------------------REZOLVA
+
+R = {
+    v = f(g(x), h(y)),
+    -----------------
+    f(v, h(z)) = f(f(u, h(h(x))), h(y)),
+}
+
+S = {
+        ț = f(v, h(z))
+        w = h(z),
+}
+
+---------------------REZOLVA
+
+R = {
+    f(f(g(x), h(y)), h(z)) = f(f(u, h(h(x))), h(y)),
+    -----------------------------------------------
+}
+
+S = {
+        ț = f(f(g(x), h(y)), h(z))
+        w = h(z),
+        v = f(g(x), h(y)),
+}
+
+--------------------DESCOMPUNE
+
+
+R = {
+    f(g(x), h(y)) = f(u, h(h(x))),
+    h(z) = h(y),
+    -----------
+}
+
+S = {
+        ț = f(f(g(x), h(y)), h(z))
+        w = h(z),
+        v = f(g(x), h(y)),
+}
+
+--------------------DESCOMPUNE
+
+
+R = {
+    f(g(x), h(y)) = f(u, h(h(x))),
+    z = y,
+    ----
+}
+
+S = {
+        ț = f(f(g(x), h(y)), h(z))
+        w = h(z),
+        v = f(g(x), h(y)),
+}
+
+--------------------REZOLVA
+
+R = {
+    f(g(x), h(y)) = f(u, h(h(x))),
+    -----------------------------
+}
+
+S = {
+    ț = f(f(g(x), h(y)), h(y))
+    w = h(y),
+    v = f(g(x), h(y)),
+    z = y,
+}
+
+-----------------------DESCOMPUNE
+
+R = {
+    g(x) = u,
+    --------
+    h(y) = h(h(x)),
+}
+
+S = {
+    ț = f(f(g(x), h(y)), h(y))
+    w = h(y),
+    v = f(g(x), h(y)),
+    z = y,
+}
+
+----------------------REZOLVA
+
+
+R = {
+    h(y) = h(h(x)),
+    --------------
+}
+
+S = {
+    ț = f(f(g(x), h(y)), h(y))
+    w = h(y),
+    v = f(g(x), h(y)),
+    z = y,
+    u = g(x),
+}
+
+------------------------DESCOMPUNE
+
+R = {
+    y = h(x),
+    --------
+}
+
+S = {
+    ț = f(f(g(x), h(y)), h(y))
+    w = h(y),
+    v = f(g(x), h(y)),
+    z = y,
+    u = g(x),
+}
+
+---------------------------REZOLVA
+
+
+R = {}
+
+S = {
+    ț = f(f(g(x), h(h(x))), h(h(x)))
+    w = h(h(x)),
+    v = f(g(x), h(h(x))),
+    z = h(x),
+    u = g(x),
+    y = h(x),
+}
+
+Deci problema are solutie cu GCU dat de S
+
