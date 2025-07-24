@@ -1,0 +1,72 @@
+
+#include <iostream>
+#include <vector>
+#include <stack>
+using namespace std;
+
+// DFS plus stack-ul pt sortarea topologica
+void topologicalSortUtil(int v, vector<vector<int>>& adj,
+                         vector<bool>& visited, stack<int>& st) {
+
+    // nodul curent => vizitat
+    visited[v] = true;
+
+    // pt toti vecinii nodului curent
+    for (int i : adj[v]) {
+        if (!visited[i])
+            topologicalSortUtil(i, adj, visited, st);
+    }
+
+    // adaug nodul curent in stiva
+    st.push(v);
+}
+
+
+vector<int> topologicalSort(vector<vector<int>>& adj) {
+    int V = adj.size(); // nr noduri
+
+    stack<int> st;
+    vector<bool> visited(V, false);
+
+    // fol functia dfs modificata pt fiecare nod nevizitat
+    for (int i = 0; i < V; i++) {
+        if (!visited[i])
+            topologicalSortUtil(i, adj, visited, st);
+    }
+
+    vector<int> ans;
+
+    // mutam elementele din stack in vectorul rezultat
+    while (!st.empty()) {
+        ans.push_back(st.top());
+        st.pop();
+    }
+
+    return ans;
+}
+
+int main() {
+    int n, m;
+    cout << "nr noduri si nr muchii: ";
+    cin >> n >> m;
+
+    // lista adiacenta
+    vector<vector<int>> adj(n);
+
+    cout << "muchiile u v (pt u -> v):\n";
+    for (int i = 0; i < m; i++) {
+        int u, v;
+        cin >> u >> v;
+        adj[u].push_back(v); // adaug muchia orientata u -> v
+    }
+
+    vector<int> ans = topologicalSort(adj);
+
+    cout << "Topological Sort Order: ";
+    for (auto node : ans) {
+        cout << node << " ";
+    }
+    cout << endl;
+
+    return 0;
+}

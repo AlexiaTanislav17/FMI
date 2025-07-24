@@ -1,0 +1,110 @@
+#include <iostream>
+#include <vector>
+#include <queue>
+#include <climits>
+#include <algorithm>
+using namespace std;
+
+struct Edge {
+    int u, v, weight;
+    bool operator<(const Edge &other) const {
+        return weight < other.weight;
+    }
+};
+
+struct DisjointSet {
+    vector<int> parent, rank;
+
+    DisjointSet(int n) {
+        parent.resize(n);
+        rank.resize(n, 0);
+        for (int i = 0; i < n; i++) parent[i] = i;
+    }
+
+    int find(int x) {
+        if (parent[x] != x)
+            parent[x] = find(parent[x]); // path compression
+        return parent[x];
+    }
+
+    bool unite(int x, int y) {
+        int rootX = find(x), rootY = find(y);
+        if (rootX == rootY) return false;
+        if (rank[rootX] < rank[rootY])
+            swap(rootX, rootY);
+        parent[rootY] = rootX;
+        if (rank[rootX] == rank[rootY])
+            rank[rootX]++;
+        return true;
+    }
+};
+
+int kruskal(int n, vector<Edge> &edges) {
+    sort(edges.begin(), edges.end()); // sortam muchiile după cost
+    DisjointSet ds(n);
+    int mstWeight = 0;
+
+    for (const auto &edge : edges) {
+        if (ds.unite(edge.u, edge.v)) { // daca nu face ciclu
+            mstWeight += edge.weight;
+            cout << "Added edge: " << edge.u << " - " << edge.v << " (weight " << edge.weight << ")\n";
+        }
+    }
+    return mstWeight;
+}
+
+
+int prim(int n, vector<Edge> &edges) {
+    vector<int> minWeight(n, INT_MAX); // cost minim pt fiecare nod
+    vector<bool> inMST(n, false);     // noduri incluse in mst
+    int mstWeight = 0;              
+
+    minWeight[0] = 0; // incep de la nodul 0
+
+    for (int count = 0; count < n; count++) {
+        // gasm nodul cu costul minim care nu este inclus in mst
+        int u = -1;
+        for (int i = 0; i < n; i++) {
+            if (!inMST[i] && (u == -1 || minWeight[i] < minWeight[u])) {
+                u = i;
+            }
+        }
+
+        // adaug nodul in mst
+        inMST[u] = true;
+        mstWeight += minWeight[u];
+
+        // updatam costurile pentru vecinii nodului u
+        for (const auto &edge : edges) {
+            if ((edge.u == u && !inMST[edge.v]) || (edge.v == u && !inMST[edge.u])) {
+                int v = (edge.u == u) ? edge.v : edge.u;
+                minWeight[v] = min(minWeight[v], edge.weight);
+            }
+        }
+    }
+
+    return mstWeight;
+}
+
+int main() {
+    int n, m;
+    cout << "nr noduri si nr muchii: ";
+    cin >> n >> m;
+
+    vector<Edge> edges;
+    cout << "muchiile (nod1 nod2 cost): \n";
+    for (int i = 0; i < m; i++) {
+        int u, v, weight;
+        cin >> u >> v >> weight;
+        edges.push_back({u, v, weight});
+    }
+
+    cout << "\n Kruskal: \n ";
+    int mstWeightKruskal = kruskal(n, edges);
+    cout << "Minimum Spanning Tree Weight: " << mstWeightKruskal << endl;
+
+    cout << "\n Prim: \n ";
+    int mstWeightPrim = prim(n, edges);
+    cout << "Minimum Spanning Tree Weight: " << mstWeightPrim << endl;
+    return 0;
+}

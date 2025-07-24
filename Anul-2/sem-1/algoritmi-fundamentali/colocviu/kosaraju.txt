@@ -1,0 +1,86 @@
+//#include <iostream>
+//#include <vector>
+//#include <stack>
+//#include <algorithm>
+//
+//using namespace std;
+//
+//void dfs(int node, vector<vector<int>>& graph, vector<bool>& visited, stack<int>& finishStack) {
+//    visited[node] = true;
+//    for (int neighbor : graph[node]) {
+//        if (!visited[neighbor]) {
+//            dfs(neighbor, graph, visited, finishStack);
+//        }
+//    }
+//    finishStack.push(node);
+//}
+//
+//void dfsTranspose(int node, vector<vector<int>>& transposedGraph, vector<bool>& visited, vector<int>& component) {
+//    visited[node] = true;
+//    component.push_back(node);
+//    for (int neighbor : transposedGraph[node]) {
+//        if (!visited[neighbor]) {
+//            dfsTranspose(neighbor, transposedGraph, visited, component);
+//        }
+//    }
+//}
+//
+//void kosaraju(int n, vector<vector<int>>& graph) {
+//    stack<int> finishStack;
+//    vector<bool> visited(n, false);
+//
+//    // Pasul 1: Parcurgere DFS pe graful original pentru a obține ordinea de finalizare
+//    for (int i = 0; i < n; ++i) {
+//        if (!visited[i]) {
+//            dfs(i, graph, visited, finishStack);
+//        }
+//    }
+//
+//    // Pasul 2: Construirea grafului transpus
+//    vector<vector<int>> transposedGraph(n);
+//    for (int i = 0; i < n; ++i) {
+//        for (int neighbor : graph[i]) {
+//            transposedGraph[neighbor].push_back(i);
+//        }
+//    }
+//
+//    // Pasul 3: Parcurgere DFS pe graful transpus în ordinea inversă a finalizării
+//    fill(visited.begin(), visited.end(), false);
+//    while (!finishStack.empty()) {
+//        int node = finishStack.top();
+//        finishStack.pop();
+//
+//        if (!visited[node]) {
+//            vector<int> component;
+//            dfsTranspose(node, transposedGraph, visited, component);
+//
+//            // Afișarea componentei tare conexe
+//            cout << "Componenta tare conexa: ";
+//            for (int v : component) {
+//                cout << v << " ";
+//            }
+//            cout << endl;
+//        }
+//    }
+//}
+//
+//int main() {
+//    int n, m;
+//    cout << "Introdu numarul de noduri: ";
+//    cin >> n;
+//    cout << "Introdu numarul de muchii: ";
+//    cin >> m;
+//
+//    vector<vector<int>> graph(n);
+//    cout << "Introdu muchiile (nodurile sunt indexate de la 0 la " << n - 1 << "):\n";
+//    for (int i = 0; i < m; ++i) {
+//        int u, v;
+//        cin >> u >> v;
+//        graph[u].push_back(v);
+//    }
+//
+//    cout << "Componentele tare conexe sunt:\n";
+//    kosaraju(n, graph);
+//
+//    return 0;
+//}

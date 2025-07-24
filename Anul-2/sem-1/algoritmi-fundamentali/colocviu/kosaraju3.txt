@@ -1,0 +1,95 @@
+#include <iostream>
+#include <vector>
+#include <stack>
+using namespace std;
+
+// DFS pentru a popula stiva bazată pe timpul de terminare
+void dfs(int v, vector<bool> &visited, stack<int> &Stack, vector<vector<int>> &adjList) {
+    visited[v] = true;
+    for (int u : adjList[v]) {
+        if (!visited[u])
+            dfs(u, visited, Stack, adjList);
+    }
+    Stack.push(v);
+}
+
+// DFS pe graful transpus
+void dfsT(int v, vector<bool> &visited, vector<vector<int>> &transposedAdjList) {
+    visited[v] = true;
+    cout << v << " ";
+    for (int u : transposedAdjList[v]) {
+        if (!visited[u])
+            dfsT(u, visited, transposedAdjList);
+    }
+}
+
+// Construirea listei de adiacență din lista de muchii
+void buildAdjList(vector<vector<int>> &adjList, const vector<int> &edges_from, const vector<int> &edges_to) {
+    for (size_t i = 0; i < edges_from.size(); i++) {
+        adjList[edges_from[i]].push_back(edges_to[i]);
+    }
+}
+
+// Construirea listei de adiacență transpusă din lista de muchii
+void buildTransposedAdjList(vector<vector<int>> &transposedAdjList, const vector<int> &edges_from, const vector<int> &edges_to) {
+    for (size_t i = 0; i < edges_from.size(); i++) {
+        transposedAdjList[edges_to[i]].push_back(edges_from[i]);
+    }
+}
+
+// Algoritmul lui Kosaraju
+void kosaraju(int V, const vector<int> &edges_from, const vector<int> &edges_to) {
+    vector<vector<int>> adjList(V);
+    buildAdjList(adjList, edges_from, edges_to);
+
+    vector<bool> visited(V, false);
+    stack<int> Stack;
+
+    // Pasul 1: Parcurgere DFS pe graful original
+    for (int i = 0; i < V; i++) {
+        if (!visited[i])
+            dfs(i, visited, Stack, adjList);
+    }
+
+    // Pasul 2: Construirea grafului transpus
+    vector<vector<int>> transposedAdjList(V);
+    buildTransposedAdjList(transposedAdjList, edges_from, edges_to);
+
+    // Pasul 3: Parcurgere DFS pe graful transpus în ordinea stivei
+    fill(visited.begin(), visited.end(), false);
+
+    while (!Stack.empty()) {
+        int v = Stack.top();
+        Stack.pop();
+        if (!visited[v]) {
+            dfsT(v, visited, transposedAdjList);
+            cout << "\n";
+        }
+    }
+}
+
+int main() {
+    int V; // Numărul de noduri
+    cout << "Introdu numarul de noduri: ";
+    cin >> V;
+
+    int m; // Numărul de muchii
+    cout << "Introdu numarul de muchii: ";
+    cin >> m;
+
+    vector<int> edges_from; // Lista nodurilor sursă ale muchiilor
+    vector<int> edges_to;   // Lista nodurilor destinație ale muchiilor
+
+    cout << "Introdu muchiile (u v):\n";
+    for (int i = 0; i < m; i++) {
+        int u, v;
+        cin >> u >> v;
+        edges_from.push_back(u);
+        edges_to.push_back(v);
+    }
+
+    cout << "Componentele tare conexe sunt:\n";
+    kosaraju(V, edges_from, edges_to);
+
+    return 0;
+}

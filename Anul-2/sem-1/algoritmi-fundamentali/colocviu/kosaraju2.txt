@@ -1,0 +1,89 @@
+// Detectare componente tare conexe
+
+#include <iostream>
+#include <vector>
+#include <stack>
+#include <algorithm>
+
+using namespace std;
+
+const int MAXN = 100010;
+
+vector<int> graph[MAXN];
+vector<int> reverseGraph[MAXN];
+bool visited[MAXN];
+stack<int> finishStack;
+vector<vector<int>> sccs;
+
+void dfs1(int node) {
+    visited[node] = true;
+    for (int neighbor : graph[node]) {
+        if (!visited[neighbor]) {
+            dfs1(neighbor);
+        }
+    }
+    finishStack.push(node);
+}
+
+void dfs2(int node, vector<int>& scc) {
+    visited[node] = true;
+    scc.push_back(node);
+    for (int neighbor : reverseGraph[node]) {
+        if (!visited[neighbor]) {
+            dfs2(neighbor, scc);
+        }
+    }
+}
+
+void kosaraju(int n) {
+    // Step 1: Perform DFS and push nodes to stack in finishing order
+    fill(visited, visited + MAXN, false);
+    for (int i = 1; i <= n; i++) {
+        if (!visited[i]) {
+            dfs1(i);
+        }
+    }
+
+    // Step 2: Reverse the graph
+    for (int i = 1; i <= n; i++) {
+        for (int neighbor : graph[i]) {
+            reverseGraph[neighbor].push_back(i);
+        }
+    }
+
+    // Step 3: Perform DFS on the reversed graph in the order of the stack
+    fill(visited, visited + MAXN, false);
+    while (!finishStack.empty()) {
+        int node = finishStack.top();
+        finishStack.pop();
+        if (!visited[node]) {
+            vector<int> scc;
+            dfs2(node, scc);
+            sccs.push_back(scc);
+        }
+    }
+}
+
+int main() {
+    int n, m; // Number of vertices and edges
+    cin >> n >> m;
+
+    for (int i = 0; i < m; i++) {
+        int u, v;
+        cin >> u >> v;
+        graph[u].push_back(v);
+    }
+
+    kosaraju(n);
+
+    // Output the strongly connected components
+    cout << "Strongly Connected Components:" << endl;
+    for (const auto& scc : sccs) {
+        for (int node : scc) {
+            cout << node << " ";
+        }
+        cout << endl;
+    }
+
+    return 0;
+}
