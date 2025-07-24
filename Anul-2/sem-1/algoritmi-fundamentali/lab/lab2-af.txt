@@ -1,0 +1,144 @@
+#include <iostream>
+#include <fstream>
+#include <vector>
+using namespace std;
+
+
+
+void graf(char s){
+
+    std::ifstream fin("graf.in");
+    
+    int a[100][100];
+    int v, m;
+    int stg,dr;
+
+    if(s == 'n'){
+        cout << "graf neorientat" << endl;
+        fin>> v >> m;
+        for (int i=0; i<m; i++){
+            fin >>stg>>dr;
+            a[stg][dr] = 1;
+            a[dr][stg] = 1;
+        }
+    
+        for (int i=1; i<=v; i++){
+            for (int j=1; j<=v; j++){
+                cout<<a[i][j]<<" ";
+            }
+            cout<<endl;
+        }
+        
+    }else {
+        cout << "graf orientat" << endl;
+        fin >> v >> m;
+        for (int i=0; i<m; i++){
+            fin >>stg>>dr;
+            a[stg][dr] = 1;
+        }
+    
+        for (int i=1; i<=v; i++){
+            for (int j=1; j<=v; j++){
+                cout<<a[i][j]<<" ";
+            }
+            cout<<endl;
+        }
+        
+    }
+
+
+}
+
+
+
+
+
+void listaAd(char s) {
+    std::ifstream fin("graf.in");
+    vector<int> a[100];
+    int v, m;
+    int stg,dr;
+    fin>>v>>m;
+
+    if (s == 'o'){
+        for (int i=0; i<m; i++){
+            fin>>stg>>dr;
+            a[stg].push_back(dr);
+        }
+    }else{
+        for (int i=0; i<m; i++){
+            fin>>stg>>dr;
+            a[stg].push_back(dr);
+            a[dr].push_back(stg);
+        }
+    }
+
+    for (int i = 1; i<=v; i++){
+        cout << i << ":";
+        for(int j =0; j<a[i].size(); j++){
+            cout << a[i][j] << " ";
+        }
+        cout << "\n";
+    }
+
+
+}
+
+
+void listaAdInMatr(char s) {
+    std::ifstream fin("graf.in");
+    vector<int> a[100];
+    int v, m;
+    int stg,dr;
+    fin>>v>>m;
+
+    if (s == 'o'){
+        for (int i=0; i<m; i++){
+            fin>>stg>>dr;
+            a[stg].push_back(dr);
+        }
+    }else{
+        for (int i=0; i<m; i++){
+            fin>>stg>>dr;
+            a[stg].push_back(dr);
+            a[dr].push_back(stg);
+        }
+    }
+
+    for (int i = 1; i<=v; i++){
+        cout << i << ":";
+        for(int j =0; j<a[i].size(); j++){
+            cout << a[i][j] << " ";
+        }
+        cout << "\n";
+    }
+    
+    int b[100][100];
+    
+    for (int i=1; i<=v; i++){
+        for(int j =0; j<a[i].size(); j++){
+            b[i][a[i][j]] = 1;
+        }
+    }
+    
+    for (int i=1; i<=v; i++){
+        for (int j=1; j<=v; j++){
+            cout<<b[i][j]<<" ";
+        }
+        cout<<endl;
+    }
+
+
+}
+
+
+
+int main()
+{
+    char s;
+    cin >> s;
+    //graf(s);
+    //listaAd(s);
+    listaAdInMatr(s);
+    return 0;
+}

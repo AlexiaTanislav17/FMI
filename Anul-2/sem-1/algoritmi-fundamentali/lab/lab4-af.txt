@@ -1,0 +1,99 @@
+#include <bits/stdc++.h> 
+#include <iostream>
+#include <fstream>
+using namespace std; 
+
+class Vectori { 
+	int* parent; 
+	int* rang; 
+
+public: 
+	Vectori(int n){ 
+		parent = new int[n]; 
+		rang = new int[n]; 
+
+		for (int i = 0; i < n; i++){ 
+			parent[i] = -1; 
+			rang[i] = 1; 
+		} 
+	} 
+
+	int find(int i){ 
+		if (parent[i] == -1){ 
+			return i; 
+		}
+		return parent[i] = find(parent[i]); 
+	} 
+
+	void unite(int x, int y){ 
+		int s1 = find(x); 
+		int s2 = find(y); 
+
+		if (s1 != s2){ 
+			if (rang[s1] < rang[s2]){ 
+				parent[s1] = s2; 
+			}else{
+			    if (rang[s1] > rang[s2]){ 
+				    parent[s2] = s1; 
+			    }else{ 
+				    parent[s2] = s1; 
+				    rang[s1] += 1; 
+			    } 
+			}
+		} 
+	} 
+}; 
+
+class Graf { 
+	vector<vector<int> > listaMuchii; 
+	int vf; 
+
+public: 
+	Graf(int vf) { 
+	    this->vf = vf; 
+	} 
+ 
+	void addMuchie(int x, int y, int w){ 
+		listaMuchii.push_back({ w, x, y }); 
+	} 
+
+	void kruskalAPM(){ 
+		sort(listaMuchii.begin(), listaMuchii.end()); //sorteaza muchiile
+
+		Vectori s(vf); 
+		int ans = 0; 
+		cout << "muchiile din apm: " << endl; 
+		for (auto muchie : listaMuchii){ 
+			int w = muchie[0]; 
+			int x = muchie[1]; 
+			int y = muchie[2]; 
+
+			if (s.find(x) != s.find(y)){ //nu face ciclu
+				s.unite(x, y); 
+				ans += w; 
+				cout << "[" << x << ", " << y << "] cu costul " << w 
+					<< endl; 
+			} 
+		} 
+		cout << "apm: " << ans; 
+	} 
+}; 
+
+int main() 
+{ 
+	Graf g(9);
+	g.addMuchie(1, 3, 2); 
+	g.addMuchie(1, 2, 1); 
+	g.addMuchie(1, 4, 1); 
+	g.addMuchie(2, 5, 2); 
+	g.addMuchie(2, 9, 3); 
+	g.addMuchie(3, 5, 1); 
+	g.addMuchie(5, 7, 4);
+	g.addMuchie(7, 6, 2);
+	g.addMuchie(8, 6, 5);
+	g.addMuchie(4, 6, 3);
+
+	g.kruskalAPM(); 
+
+	return 0; 
+}

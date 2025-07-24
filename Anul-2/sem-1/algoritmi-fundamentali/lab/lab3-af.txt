@@ -1,0 +1,49 @@
+#include <iostream>
+#include <fstream>
+#include <vector>
+#include <queue>
+using namespace std;
+
+
+    int viz[100];
+    int n, m, nod;
+    int stg,dr;
+    queue<int> q;
+    vector<int> v[100];
+
+
+void graf(int x){
+
+    ifstream fin("graf.in");
+    
+    
+    fin >> n >> m;
+    for (int i=1; i<=m; i++){
+        fin>>stg>>dr;
+        v[stg].push_back(dr);
+        v[dr].push_back(stg);
+    }
+    
+    viz[x] = 1;
+    q.push(x);
+    
+    while (q.size()){
+        nod = q.front();
+        q.pop();
+        cout<<nod<<" ";
+        for (auto vecin: v[nod]){
+            if(viz[vecin]==0){
+                q.push(vecin);
+                viz[vecin]=1;
+            }
+        }
+    }
+
+}
+
+
+int main()
+{
+    graf(1);
+    return 0;
+}
