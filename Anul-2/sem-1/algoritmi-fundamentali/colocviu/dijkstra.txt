@@ -1,0 +1,72 @@
+
+#include <iostream>
+#include <vector>
+#include <queue>
+#include <climits>
+using namespace std;
+
+vector<int> dijkstra(int n, int source, vector<vector<int>> &adjList, vector<vector<int>> &weights) {
+    vector<int> dist(n, INT_MAX); // Distanțele minime către fiecare nod
+    priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq; // Min-heap
+
+    dist[source] = 0;
+    pq.emplace(0, source); // Adăugăm nodul sursă cu distanța 0
+
+    while (!pq.empty()) {
+        int d = pq.top().first; // Distanța minimă curentă
+        int u = pq.top().second; // Nodul curent
+        pq.pop();
+
+        if (d > dist[u]) continue; // Sărim peste nodurile deja procesate
+
+        // Relaxăm muchiile
+        for (size_t i = 0; i < adjList[u].size(); ++i) {
+            int v = adjList[u][i];
+            int weight = weights[u][i];
+            if (dist[u] + weight < dist[v]) {
+                dist[v] = dist[u] + weight;
+                pq.emplace(dist[v], v); // Adăugăm vecinul cu distanța actualizată
+            }
+        }
+    }
+
+    return dist;
+}
+
+int main() {
+    int n, m;
+    cout << "Enter number of nodes (n): ";
+    cin >> n;
+    cout << "Enter number of edges (m): ";
+    cin >> m;
+
+    vector<vector<int>> adjList(n);   // Lista de adiacență
+    vector<vector<int>> weights(n);   // Greutățile muchiilor
+
+    cout << "Enter the edges in the format (u v weight):\n";
+    for (int i = 0; i < m; ++i) {
+        int u, v, w;
+        cin >> u >> v >> w;
+        adjList[u].push_back(v);
+        adjList[v].push_back(u);  // Dacă graful este neorientat, adăugăm și muchia inversă
+        weights[u].push_back(w);
+        weights[v].push_back(w);
+    }
+
+    int source;
+    cout << "Enter source node: ";
+    cin >> source;
+
+    vector<int> distances = dijkstra(n, source, adjList, weights);
+
+    cout << "Shortest distances from node " << source << ":\n";
+    for (int i = 0; i < n; i++) {
+        if (distances[i] == INT_MAX) {
+            cout << "Node " << i << ": INF\n"; // Dacă nu există drum
+        } else {
+            cout << "Node " << i << ": " << distances[i] << endl;
+        }
+    }
+
+    return 0;
+}
