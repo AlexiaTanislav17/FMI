@@ -1,0 +1,102 @@
+#include <iostream>
+#include <fstream>
+#include <vector>
+#include <unordered_set>
+#include <algorithm>
+
+#define MAXN 100010  // 10 ^ 5 + 10
+
+using namespace std;
+
+ifstream fin("input.txt");
+
+int n, m;
+vector<int> graph[MAXN];
+vector<int> partialTree[MAXN];
+
+vector<int> parent(MAXN, -1);
+unordered_set<int> visited;
+
+bool hasSecondPartialTree = false;
+
+void resetValues(vector<int> partialTree[], vector<int> &parent, unordered_set<int> &visited)
+{
+    for (int i = 1; i <= n; i++)
+    {
+        while (!partialTree[i].empty())
+            partialTree[i].pop_back();
+    }
+    for (auto el : parent)
+        el = -1;
+    visited.clear();
+}
+
+void dfs(vector<int> graph[], vector<int> partialTree[], int node, unordered_set<int> &visited, vector<int> &parent)
+{
+    visited.insert(node);
+
+    for (const auto neighbor : graph[node])
+    {
+        if (visited.count(neighbor) == 0)
+        {
+            parent[neighbor] = node;
+            partialTree[node].push_back(neighbor);
+            partialTree[neighbor].push_back(node);
+            dfs(graph, partialTree, neighbor, visited, parent);
+        }
+        else
+        {
+            if (parent[node] != neighbor && !hasSecondPartialTree) // Does not turn back, then we found a cycle
+            {
+                hasSecondPartialTree = true;
+
+                // Erase the first road for the second dfs
+                int previousParent = parent[node];
+                // cout << endl << "DELETING" << previousParent << " " << node << endl;
+                graph[previousParent].erase(remove(graph[previousParent].begin(), graph[previousParent].end(), node), graph[previousParent].end());
+                graph[node].erase(remove(graph[node].begin(), graph[node].end(), previousParent), graph[node].end());
+            }
+        }
+    }
+}
+
+int main()
+{
+    int x, y;
+    fin >> n >> m;
+    for (int i = 1; i <= m; i++)
+    {
+        fin >> x >> y;
+        graph[x].push_back(y);
+        graph[y].push_back(x);
+    }
+    dfs(graph, partialTree, 1, visited, parent);
+    if (hasSecondPartialTree)
+    {
+        cout << "Da" << endl;
+        for (int i = 1; i <= n; i++)
+        {
+            for (const auto node : partialTree[i])
+                cout << node << " ";
+            cout << endl;
+        }
+
+        resetValues(partialTree, parent, visited);
+
+        // Second partial tree
+
+        dfs(graph, partialTree, 1, visited, parent);
+        for (int i = 1; i <= n; i++)
+        {
+            for (const auto node : partialTree[i])
+                cout << node << " ";
+            cout << endl;
+        }
+    }
+    else
+    {
+        cout << "Nu" << endl;
+        
+    }
+    return 0;
+}

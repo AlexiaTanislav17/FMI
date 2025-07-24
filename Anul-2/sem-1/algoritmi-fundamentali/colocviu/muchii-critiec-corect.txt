@@ -1,0 +1,85 @@
+
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+int dfs(int i, int p, vector<int>& rank, int k,
+        vector<int> adj[], vector<vector<int>>& ans,
+        vector<int>& vis)
+{
+    // Set rank of the ith node to k which is depth
+    rank[i] = k;
+
+    // Mark ith node as visited
+    vis[i] = 1;
+
+    int minDepth = INT_MAX;
+
+    // Exploring all the neighbours of node i
+    for (auto ch : adj[i]) {
+        // Avoid parent-child loop
+        if (ch != p) {
+
+            // If neighbour is already visited, take minimum with rank of ch
+            if (vis[ch]) {
+                minDepth = min(minDepth, rank[ch]);
+            }
+                // If neighbour is not visited, explore deeper
+            else {
+                int minRank = dfs(ch, i, rank, k + 1, adj, ans, vis);
+
+                // If dfs returns smaller depth, current edge is in a cycle
+                // Else, push the edge to the answer as a critical edge
+                if (rank[i] < minRank) {
+                    ans.push_back({ i, ch });
+                }
+                minDepth = min(minRank, minDepth);
+            }
+        }
+    }
+    return minDepth;
+}
+
+// Function to calculate critical edges
+vector<vector<int>> criticalConnections(int V, vector<int> adj[])
+{
+    vector<vector<int>> ans;
+    vector<int> rank(V, -1), vis(V, 0);
+    dfs(0, -1, rank, 0, adj, ans, vis);
+
+    // Sort edges in lexicographical order
+    for (int i = 0; i < ans.size(); i++) {
+        sort(ans[i].begin(), ans[i].end());
+    }
+    sort(ans.begin(), ans.end());
+    return ans;
+}
+
+// Driver code
+int main()
+{
+    int n,m;
+    cout << "nr noduri si nr muchii ";
+    cin >> n >> m;
+
+    vector<int> adj[n];
+// nodurile incep de la 0
+    cout << "muchiile (u v): \n";
+    for (int i = 0; i < m; i++) {
+        int u, v;
+        cin >> u >> v;
+        adj[u].push_back(v);
+        adj[v].push_back(u); // graf neorientat
+    }
+
+    vector<vector<int>> ans = criticalConnections(n, adj);
+
+    cout << "muchiile critice (puncte de articulatie):\n";
+    for (int i = 0; i < ans.size(); i++) {
+        cout << ans[i][0] << " " << ans[i][1] << endl;
+    }
+
+    return 0;
+}
+

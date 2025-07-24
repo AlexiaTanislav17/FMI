@@ -1,0 +1,75 @@
+
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+void dfs(vector<int> adj[], int V, vector<int>& vis, int i, int curr)
+{
+    vis[curr] = 1;
+    for (auto x : adj[curr]) {
+        if (x != i) {
+            if (!vis[x]) {
+                dfs(adj, V, vis, i, x);
+            }
+        }
+    }
+}
+
+void AP(vector<int> adj[], int V)
+{
+    // Iterating over all the vertices and for each vertex i remove the vertex and check whether the graph remains connected
+    for (int i = 1; i <= V; i++) {
+
+        // number of components of graph
+        int components = 0;
+
+        vector<int> vis(V + 1, 0);
+
+        // Iterating over the graph after removing vertex i and its associated edges
+        for (int j = 1; j <= V; j++) {
+            if (j != i) {
+
+                // If the jth vertex is not visited it will
+                // form a new component.
+                if (!vis[j]) {
+                    components++;
+                    dfs(adj, V, vis, i, j);
+                }
+            }
+        }
+        // If number of components is more than 1 after removing the ith vertex then vertex i is an articulation point
+        if (components > 1) {
+            cout << i << "\n";
+        }
+    }
+}
+
+void addEdge(vector<int> adj[], int u, int v)
+{
+    adj[u].push_back(v);
+    adj[v].push_back(u);
+}
+
+
+int main()
+{
+    int n,m;
+    cout << "nr noduri si nr muchii: ";
+    cin >> n >> m;
+
+    // graf cu n noduri
+    vector<int> adj[n + 1];
+
+    cout << "muchiile (u v): \n";
+    for (int i = 0; i < m; i++) {
+        int u, v;
+        cin >> u >> v;
+        addEdge(adj, u, v);
+    }
+
+    cout << "nodurile critice:\n";
+    AP(adj, n);
+
+    return 0;
+}

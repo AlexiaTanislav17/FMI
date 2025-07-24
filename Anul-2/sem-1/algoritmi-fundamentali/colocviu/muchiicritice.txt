@@ -1,0 +1,66 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+void dfs(int u, int parent, vector<vector<int>> &graph, vector<int> &discovery,
+         vector<int> &low, int &time, vector<pair<int, int>> &criticalEdges) {
+    discovery[u] = low[u] = ++time;
+
+    for (int v : graph[u]) {
+        if (v == parent) continue; // Evităm muchia către părinte
+
+        if (discovery[v] == -1) { // Dacă nodul v nu a fost vizitat
+            dfs(v, u, graph, discovery, low, time, criticalEdges);
+            low[u] = min(low[u], low[v]);
+
+            // Verificăm dacă muchia (u, v) este critică
+            if (low[v] > discovery[u]) {
+                criticalEdges.emplace_back(u, v);
+            }
+        } else { // Dacă v a fost deja vizitat, actualizăm low[u]
+            low[u] = min(low[u], discovery[v]);
+        }
+    }
+}
+
+vector<pair<int, int>> findCriticalEdges(int n, vector<vector<int>> &graph) {
+    vector<int> discovery(n, -1), low(n, -1);
+    vector<pair<int, int>> criticalEdges;
+    int time = 0;
+
+    for (int i = 0; i < n; i++) {
+        if (discovery[i] == -1) {
+            dfs(i, -1, graph, discovery, low, time, criticalEdges);
+        }
+    }
+
+    return criticalEdges;
+}
+
+
+int main() {
+    int n, m; // n - numărul de noduri, m - numărul de muchii
+    cout << "nr noduri si nr muchii: ";
+    cin >> n >> m;
+
+//nodurile incep de la 1
+
+    vector<vector<int>> graph(n);
+    cout << "muchii nod1 nod2: \n";
+    for (int i = 0; i < m; i++) {
+        int u, v;
+        cin >> u >> v;
+        graph[u].push_back(v);
+        graph[v].push_back(u); // graf neorientat
+    }
+
+    vector<pair<int, int>> criticalEdges = findCriticalEdges(n, graph);
+
+    cout << "muchiile critice: \n";
+    for (auto& [u, v] : criticalEdges) {
+        cout << u << " - " << v << endl;
+    }
+
+    return 0;
+}
