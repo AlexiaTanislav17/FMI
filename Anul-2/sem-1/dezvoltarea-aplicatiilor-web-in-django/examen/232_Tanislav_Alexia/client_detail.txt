@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Detalii cleint</title>
+</head>
+<body>
+    <h1>Detalii client</h1>
+    <p>Nume: {{ client.nume }}</p>
+    <p>Prenume: {{ client.prenume }}</p>
+    <p>Data Nașterii: {{ client.data_nasterii }}</p>
+    <p>Email: {{ client.email }}</p>
+    <h2>Comenzi:</h2>
+    <ul>
+        {% for comanda in client.comanda.all %}
+            <li>{{ comanda.produs }} - {{ comanda.pret}}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

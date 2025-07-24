@@ -1,0 +1,11 @@
+from django.urls import path, re_path
+from . import views
+
+
+urlpatterns = [
+	path("", views.index, name="index"),
+    path('clienti/', views.clienti_list, name='clienti_list'),
+    path('client/<int:id>/', views.client_detail, name='client_detail'),
+	path('add-comanda/', views.add_comanda, name='add_comanda'),
+
+]

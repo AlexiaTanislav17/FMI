@@ -1,0 +1,16 @@
+from django import forms
+from .models import Client, Comanda
+
+class ComandaForm(forms.ModelForm):
+    class Meta:
+        model = Comanda
+        fields = ['produs', 'pret', 'client']
+
+    def clean(self):
+        cleaned_data = super().clean()
+        produs = cleaned_data.get("produs")
+        pret = cleaned_data.get("pret")
+
+        if pret<=0:
+            self.add_error('pret', "pretul trebuie sa fie mai mare de 0")
+

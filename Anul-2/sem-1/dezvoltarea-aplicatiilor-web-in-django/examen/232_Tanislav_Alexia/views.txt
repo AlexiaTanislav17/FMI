@@ -1,0 +1,37 @@
+from django.http import HttpResponse
+from django.shortcuts import get_object_or_404, redirect, render
+from django.core.mail import send_mail
+from .models import Client
+from .models import Comanda
+from .forms import ComandaForm
+
+# Create your views here.
+
+def index(request):
+	return HttpResponse("un raspuns")
+
+def clienti_list(request):
+    clienti = Client.objects.all()
+    return render(request, 'aplicatieExam/clienti_list.html', {'clienti': clienti})
+
+def client_detail(request, id):
+    client = get_object_or_404(Client, id=id)
+    return render(request, 'aplicatieExam/client_detail.html', {'client': client})
+
+def add_comanda(request):
+    if request.method == 'POST':
+        form = ComandaForm(request.POST)
+        if form.is_valid():
+            client = form.save()
+            
+            if Comanda.objects.count() == 3:
+                send_mail(
+                    'Comanda aduagata',
+                    f'Numele client: {client.nume} {client.prenume}',
+                    'test.tweb.node@gmail.com',
+                    ['alexia.tanislav04@gmail.com'],
+                )
+            return redirect('clienti_list')
+    else:
+        form = ComandaForm()
+    return render(request, 'aplicatieExam/add-comanda.html', {'form': form})

@@ -1,0 +1,21 @@
+CREATE TABLE IF NOT EXISTS public.django_migrations (
+    id BIGSERIAL PRIMARY KEY,
+    app VARCHAR(255) NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    applied TIMESTAMP WITH TIME ZONE NOT NULL
+);
+
+GRANT ALL ON DATABASE info_2024 TO alexia ;
+GRANT ALL ON SCHEMA django to alexia ;
+ALTER ROLE alexia SET search_path = django,public;
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA django TO alexia ;
+GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA django TO alexia ;
+GRANT ALL PRIVILEGES ON ALL FUNCTIONS IN SCHEMA django TO alexia ;
+
+select * from django.aplicatie_exemplu_prajitura;
+
+--------------------------------------------------------------------
+
+
+class Planta(models.Model):
+    nume = models.CharField(max_length=100)
