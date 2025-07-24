@@ -1,0 +1,72 @@
+
+#include <iostream>
+#include <vector>
+#include <cstring>
+using namespace std;
+
+bool isSafe(int v, int pos, vector<vector<int>>& graph, vector<int>& path) {
+    // verif daca nodul v poate fi inclus in ciclu
+    if (graph[path[pos - 1]][v] == 0) return false; // nu e muchie intre ultimele 2 noduri
+    for (int i = 0; i < pos; i++) {
+        if (path[i] == v) return false; // verif daca nodul v a fost deja inclus
+    }
+    return true;
+}
+
+bool hamiltonianCycleUtil(int n, vector<vector<int>>& graph, vector<int>& path, int pos) {
+    // daca am inclus toate nodurile, verif daca e o muchie intre ultimul nod si nodul de start
+    if (pos == n) {
+        if (graph[path[pos - 1]][path[0]] == 1) {
+            return true; // ciclul este complet
+        }
+        return false;
+    }
+
+    // incercam sa adaugam fiecare nod la ciclu
+    for (int v = 1; v < n; v++) {
+        if (isSafe(v, pos, graph, path)) {
+            path[pos] = v;
+            if (hamiltonianCycleUtil(n, graph, path, pos + 1)) {
+                return true;
+            }
+            // backtrack: daca nu gasm o sol, revenim si incercam alta optiune
+            path[pos] = -1;
+        }
+    }
+
+    return false; // nu e ciclu Hamiltonian
+}
+
+void hamiltonianCycle(int n, vector<vector<int>>& graph) {
+    vector<int> path(n, -1);
+
+    // primul nod
+    path[0] = 0;
+
+    if (hamiltonianCycleUtil(n, graph, path, 1)) {
+        cout << "Ciclul Hamiltonian: ";
+        for (int i = 0; i < n; i++) {
+            cout << path[i] << " ";
+        }
+        cout << endl;
+    } else {
+        cout << "Nu e ciclu Hamiltonian!" << endl;
+    }
+}
+
+int main() {
+    int n = 5; 
+    vector<vector<int>> graph(n, vector<int>(n, 0));
+
+    // Adăugăm muchii (graful este neorientat)
+    graph[0][1] = graph[1][0] = 1;
+    graph[0][3] = graph[3][0] = 1;
+    graph[1][2] = graph[2][1] = 1;
+    graph[2][3] = graph[3][2] = 1;
+    graph[2][4] = graph[4][2] = 1;
+    graph[4][0] = graph[0][4] = 1;
+
+    hamiltonianCycle(n, graph);
+
+    return 0;
+}

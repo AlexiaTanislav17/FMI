@@ -1,0 +1,114 @@
+#include <iostream>
+#include <vector>
+#include <stack>
+#include <algorithm>
+using namespace std;
+
+
+bool isConnected(int n, vector<vector<int>>& adj) {
+    vector<bool> visited(n, false);
+
+    
+    int start = -1;
+    for (int i = 0; i < n; i++) {
+        if (adj[i].size() > 0) {
+            start = i;
+            break;
+        }
+    }
+
+    if (start == -1) return true; 
+
+    // DFS pentru a verifica conexitatea grafului
+    stack<int> s;
+    s.push(start);
+    visited[start] = true;
+
+    while (!s.empty()) {
+        int u = s.top();
+        s.pop();
+
+        for (int v : adj[u]) {
+            if (!visited[v]) {
+                visited[v] = true;
+                s.push(v);
+            }
+        }
+    }
+
+    for (int i = 0; i < n; i++) {
+        if (adj[i].size() > 0 && !visited[i]) {
+            return false;  
+        }
+    }
+    return true;
+}
+
+
+bool isEulerian(int n, vector<vector<int>>& adj) {
+    for (int i = 0; i < n; i++) {
+        if (adj[i].size() % 2 != 0) { // Grad impar
+            return false;
+        }
+    }
+    return true;
+}
+
+
+void findEulerianCycle(int n, vector<vector<int>>& adj) {
+    
+    if (!isConnected(n, adj) || !isEulerian(n, adj)) {
+        cout << "Nu există ciclu Eulerian!" << endl;
+        return;
+    }
+
+    stack<int> stack;
+    vector<int> cycle;
+    vector<vector<int>> adjCopy = adj;
+
+    stack.push(0); 
+
+    while (!stack.empty()) {
+        int u = stack.top();
+        if (!adjCopy[u].empty()) {
+            int v = adjCopy[u].back();
+            adjCopy[u].pop_back();
+            auto it = find(adjCopy[v].begin(), adjCopy[v].end(), u);
+            if (it != adjCopy[v].end()) adjCopy[v].erase(it); // Îndepărtăm muchia și din celălalt nod
+            stack.push(v);
+        } else {
+            cycle.push_back(u);
+            stack.pop();
+        }
+    }
+
+
+    for (int i = cycle.size() - 1; i >= 0; i--) {
+        cout << cycle[i] << " ";
+    }
+    cout << endl;
+}
+
+int main() {
+    int n, m;
+    cout << "nr noduri (n): ";
+    cin >> n;
+    cout << "nr muchii (m): ";
+    cin >> m;
+
+
+    vector<vector<int>> adj(n);
+
+    cout << "muchiile (u v) (graful este neorientat):\n";
+    for (int i = 0; i < m; i++) {
+        int u, v;
+        cin >> u >> v;
+        adj[u].push_back(v);
+        adj[v].push_back(u); // Graful este neorientat
+    }
+
+    cout << "Ciclul Eulerian: ";
+    findEulerianCycle(n, adj);
+
+    return 0;
+}
