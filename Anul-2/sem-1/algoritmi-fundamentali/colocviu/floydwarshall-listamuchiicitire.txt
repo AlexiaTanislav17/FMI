@@ -1,0 +1,61 @@
+
+#include <iostream>
+#include <vector>
+#include <climits>
+using namespace std;
+
+void floydWarshall(int n, vector<vector<int>> &graph) {
+    // matricea distantelor
+    vector<vector<int>> dist = graph;
+
+    // alg Floyd-Warshall
+    for (int k = 0; k < n; k++) { // nodul intermediar
+        for (int i = 0; i < n; i++) { // nodul sursa
+            for (int j = 0; j < n; j++) { // nodul destinatie
+                if (dist[i][k] != INT_MAX && dist[k][j] != INT_MAX) {
+                    dist[i][j] = min(dist[i][j], dist[i][k] + dist[k][j]);
+                }
+            }
+        }
+    }
+
+    cout << "Shortest distances between all pairs of nodes:\n";
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            if (dist[i][j] == INT_MAX) {
+                cout << "INF ";
+            } else {
+                cout << dist[i][j] << " ";
+            }
+        }
+        cout << endl;
+    }
+}
+
+int main() {
+    int n, m;
+    cout << "Enter the number of nodes (n): ";
+    cin >> n;
+    cout << "Enter the number of edges (m): ";
+    cin >> m;
+
+    // graf cu distante mari intre noduri
+    vector<vector<int>> graph(n, vector<int>(n, INT_MAX));
+
+    // distantele de la nod la el insusi = 0
+    for (int i = 0; i < n; i++) {
+        graph[i][i] = 0;
+    }
+
+    cout << "Enter the edges in the format (u v weight):\n";
+    for (int i = 0; i < m; i++) {
+        int u, v, w;
+        cin >> u >> v >> w;
+        graph[u][v] = w;
+        graph[v][u] = w;  // graf neorientat
+    }
+
+    floydWarshall(n, graph);
+
+    return 0;
+}
