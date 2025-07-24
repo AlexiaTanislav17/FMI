@@ -1,0 +1,54 @@
+#include <iostream>
+#include <vector>
+#include <tuple>
+#include <climits>
+using namespace std;
+
+void bellmanFord(int n, int src, vector<tuple<int, int, int>> &edges) {
+    // Inițializăm distanțele
+    vector<int> dist(n, INT_MAX);
+    dist[src] = 0;
+
+    // Relaxăm toate muchiile de |V| - 1 ori
+    for (int i = 0; i < n - 1; i++) {
+        for (auto &[u, v, cost] : edges) {
+            if (dist[u] != INT_MAX && dist[u] + cost < dist[v]) {
+                dist[v] = dist[u] + cost;
+            }
+        }
+    }
+
+    // Verificăm pentru cicluri negative
+    for (auto &[u, v, cost] : edges) {
+        if (dist[u] != INT_MAX && dist[u] + cost < dist[v]) {
+            cout << "Graph contains a negative weight cycle.\n";
+            return;
+        }
+    }
+
+    // Afișăm distanțele
+    cout << "Shortest distances from source " << src << ":\n";
+    for (int i = 0; i < n; i++) {
+        if (dist[i] == INT_MAX) {
+            cout << "INF ";
+        } else {
+            cout << dist[i] << " ";
+        }
+    }
+    cout << endl;
+}
+
+int main() {
+    int n = 5; 
+    vector<tuple<int, int, int>> edges = {
+        {0, 1, -1}, {0, 2, 4},
+        {1, 2, 3}, {1, 3, 2}, {1, 4, 2},
+        {3, 2, 5}, {3, 1, 1},
+        {4, 3, -3}
+    };
+
+    int src = 0; // Nodul sursă
+    bellmanFord(n, src, edges);
+
+    return 0;
+}

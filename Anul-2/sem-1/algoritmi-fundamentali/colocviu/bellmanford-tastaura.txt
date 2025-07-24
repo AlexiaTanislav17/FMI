@@ -1,0 +1,66 @@
+#include <iostream>
+#include <vector>
+#include <tuple>
+#include <climits>
+using namespace std;
+
+void bellmanFord(int n, int src, vector<tuple<int, int, int>> &edges) {
+    // init distantele
+    vector<int> dist(n, INT_MAX);
+    dist[src] = 0;
+
+    // relaxam toate muchiile de |V| - 1 ori
+    for (int i = 0; i < n - 1; i++) {
+        for (auto &[u, v, cost] : edges) {
+            if (dist[u] != INT_MAX && dist[u] + cost < dist[v]) {
+                dist[v] = dist[u] + cost;
+            }
+        }
+    }
+
+    // verif pt cicluri negative
+    for (auto &[u, v, cost] : edges) {
+        if (dist[u] != INT_MAX && dist[u] + cost < dist[v]) {
+            cout << "Graph contains a negative weight cycle.\n";
+            return;
+        }
+    }
+
+    // af dist
+    cout << "Shortest distances from source " << src << ":\n";
+    for (int i = 0; i < n; i++) {
+        if (dist[i] == INT_MAX) {
+            cout << "INF ";
+        } else {
+            cout << dist[i] << " ";
+        }
+    }
+    cout << endl;
+}
+
+int main() {
+    int n, m;
+    cout << "Enter number of nodes (n): ";
+    cin >> n;
+    cout << "Enter number of edges (m): ";
+    cin >> m;
+
+    vector<tuple<int, int, int>> edges; // lista de muchii
+
+    cout << "Enter the edges in the format (u v cost):\n";
+    for (int i = 0; i < m; i++) {
+        int u, v, cost;
+        cin >> u >> v >> cost;
+        edges.push_back(make_tuple(u, v, cost)); // add muchia
+    }
+
+    int src;
+    cout << "Enter the source node: ";
+    cin >> src;
+
+    bellmanFord(n, src, edges);
+
+    return 0;
+}
+
+
