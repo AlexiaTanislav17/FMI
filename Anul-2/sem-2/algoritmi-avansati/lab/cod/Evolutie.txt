@@ -1,0 +1,71 @@
+Generatia 1 (detaliata):
+Cromozom  1: 1011010000111110111011, x=1.112256, f(x)=1.875143
+Cromozom  2: 0000101001101001111010, x=-0.877964, f(x)=0.351214
+Cromozom  3: 0100101110111011101010, x=-0.112503, f(x)=1.874840
+Cromozom  4: 1010110110110110111010, x=1.035717, f(x)=1.963007
+Cromozom  5: 0001111000011111010011, x=-0.647005, f(x)=0.934380
+Cromozom  6: 0010111101111110110010, x=-0.443415, f(x)=1.359968
+Cromozom  7: 0000010010000000100011, x=-0.947241, f(x)=0.155495
+Cromozom  8: 0001110111000001001000, x=-0.651316, f(x)=0.924472
+Cromozom  9: 0011010110001001011000, x=-0.372618, f(x)=1.488539
+Cromozom 10: 1001000001010110001010, x=0.691444, f(x)=2.213349
+Cromozom 11: 0010001010010011101010, x=-0.594803, f(x)=1.051406
+Cromozom 12: 0011010100110110110001, x=-0.376399, f(x)=1.481925
+Cromozom 13: 1101010000001101100011, x=1.484996, f(x)=1.279783
+Cromozom 14: 1001100010000000000100, x=0.787113, f(x)=2.167566
+Cromozom 15: 1111111111000111101111, x=1.997425, f(x)=0.007718
+Cromozom 16: 1101111010111110100000, x=1.610284, f(x)=1.017271
+Cromozom 17: 1011110111101001110110, x=1.225549, f(x)=1.723579
+Cromozom 18: 1000101001111111100111, x=0.623029, f(x)=2.234864
+Cromozom 19: 1110011000100001011100, x=1.696844, f(x)=0.817565
+Cromozom 20: 0111101111111101010101, x=0.453003, f(x)=2.247791
+
+Generatia 2: max fitness = 2.247791, fitness mediu = 1.507197
+Generatia 3: max fitness = 2.247791, fitness mediu = 1.856852
+Generatia 4: max fitness = 2.247791, fitness mediu = 1.861250
+Generatia 5: max fitness = 2.247791, fitness mediu = 1.937799
+Generatia 6: max fitness = 2.247791, fitness mediu = 2.076150
+Generatia 7: max fitness = 2.249240, fitness mediu = 2.023829
+Generatia 8: max fitness = 2.249240, fitness mediu = 2.077850
+Generatia 9: max fitness = 2.249240, fitness mediu = 2.121178
+Generatia 10: max fitness = 2.249436, fitness mediu = 2.152944
+Generatia 11: max fitness = 2.249436, fitness mediu = 2.160632
+Generatia 12: max fitness = 2.249436, fitness mediu = 2.122598
+Generatia 13: max fitness = 2.249436, fitness mediu = 2.027454
+Generatia 14: max fitness = 2.249436, fitness mediu = 2.094273
+Generatia 15: max fitness = 2.249437, fitness mediu = 2.188710
+Generatia 16: max fitness = 2.249437, fitness mediu = 2.188366
+Generatia 17: max fitness = 2.249437, fitness mediu = 2.153024
+Generatia 18: max fitness = 2.249990, fitness mediu = 2.172243
+Generatia 19: max fitness = 2.249990, fitness mediu = 2.246074
+Generatia 20: max fitness = 2.249990, fitness mediu = 2.245326
+Generatia 21: max fitness = 2.249990, fitness mediu = 2.245299
+Generatia 22: max fitness = 2.249991, fitness mediu = 2.209838
+Generatia 23: max fitness = 2.249991, fitness mediu = 2.244930
+Generatia 24: max fitness = 2.249991, fitness mediu = 2.210937
+Generatia 25: max fitness = 2.249991, fitness mediu = 2.199359
+Generatia 26: max fitness = 2.249991, fitness mediu = 2.208266
+Generatia 27: max fitness = 2.249991, fitness mediu = 2.217400
+Generatia 28: max fitness = 2.249991, fitness mediu = 2.109337
+Generatia 29: max fitness = 2.249991, fitness mediu = 2.244343
+Generatia 30: max fitness = 2.249991, fitness mediu = 2.248301
+Generatia 31: max fitness = 2.249991, fitness mediu = 2.137741
+Generatia 32: max fitness = 2.249991, fitness mediu = 2.186821
+Generatia 33: max fitness = 2.249991, fitness mediu = 2.118385
+Generatia 34: max fitness = 2.249991, fitness mediu = 2.149828
+Generatia 35: max fitness = 2.249991, fitness mediu = 2.180361
+Generatia 36: max fitness = 2.249991, fitness mediu = 2.104806
+Generatia 37: max fitness = 2.249991, fitness mediu = 2.121570
+Generatia 38: max fitness = 2.249991, fitness mediu = 2.177224
+Generatia 39: max fitness = 2.249991, fitness mediu = 2.091777
+Generatia 40: max fitness = 2.249991, fitness mediu = 2.104924
+Generatia 41: max fitness = 2.249991, fitness mediu = 2.120807
+Generatia 42: max fitness = 2.249991, fitness mediu = 2.232008
+Generatia 43: max fitness = 2.249991, fitness mediu = 2.233784
+Generatia 44: max fitness = 2.250000, fitness mediu = 2.235740
+Generatia 45: max fitness = 2.250000, fitness mediu = 2.231069
+Generatia 46: max fitness = 2.250000, fitness mediu = 2.223452
+Generatia 47: max fitness = 2.250000, fitness mediu = 2.231568
+Generatia 48: max fitness = 2.250000, fitness mediu = 2.224166
+Generatia 49: max fitness = 2.250000, fitness mediu = 2.206939
+Generatia 50: max fitness = 2.250000, fitness mediu = 2.213245
